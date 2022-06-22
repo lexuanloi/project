@@ -1,6 +1,7 @@
 package com.example.demo2.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,5 +46,14 @@ public class UserService {
 		User userByEmail = userRepo.getUserByEmail(email);
 		
 		return userByEmail == null;
+	}
+	
+	public User get(Integer id) throws UserNotFoundException {
+		try {
+			return userRepo.findById(id).get();
+		} catch (NoSuchElementException ex) {
+			throw new UserNotFoundException("Could not find any user with ID "+id);
+		}
+		
 	}
 }

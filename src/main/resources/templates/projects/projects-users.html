@@ -887,7 +887,7 @@
                                         <div class="col">                      
                                             <h4 class="card-title">Our Reguler Users</h4>             
                                         </div><!--end col-->       
-                                        <div th:if="${mess != null}"  class="alert alert-success text-center" align="center">[[${mess}]]</div>                                
+                                        <div th:if="${message != null}"  class="alert alert-success text-center" align="center">[[${message}]]</div>                                
                                     </div>  <!--end row-->                                  
                                 </div><!--end card-header-->
                                 <div class="card-body">    
@@ -917,69 +917,10 @@
                                                 
                                                 </td>
                                                 <td>                                                       
-                                                    <a href="#"><i class="las la-pen text-secondary font-16"></i></a>
+                                                    <a th:href="@{'/users/edit/'+${user.id}}"><i class="las la-pen text-secondary font-16"></i></a>
                                                     <a href="#"><i class="las la-trash-alt text-secondary font-16"></i></a>
                                                 </td>
                                             </tr>
-<!--                                             <tr>
-                                                <td><img src="assets/images/users/user-4.jpg" alt="" class="rounded-circle thumb-sm me-1"> Richard Ali</td>
-                                                <td>Administrator</td>
-                                                <td>RichardAli@example.com</td>
-                                                <td>+41 123456789</td>
-                                                <td><span class="badge badge-soft-success">Active</span></td>
-                                                <td>                                                       
-                                                    <a href="#"><i class="las la-pen text-secondary font-16"></i></a>
-                                                    <a href="#"><i class="las la-trash-alt text-secondary font-16"></i></a>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><img src="assets/images/users/user-5.jpg" alt="" class="rounded-circle thumb-sm me-1"> Juan Clark</td>
-                                                <td>Contributor</td>
-                                                <td>JuanClark@example.com</td>
-                                                <td>+65 123456789</td>
-                                                <td><span class="badge badge-soft-success">Active</span></td>
-                                                <td>                                                       
-                                                    <a href="#"><i class="las la-pen text-secondary font-16"></i></a>
-                                                    <a href="#"><i class="las la-trash-alt text-secondary font-16"></i></a>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><img src="assets/images/users/user-6.jpg" alt="" class="rounded-circle thumb-sm me-1"> Albert Hull</td>
-                                                <td>Agent</td>
-                                                <td>AlbertHull@example.com</td>
-                                                <td>+88 123456789</td>
-                                                <td><span class="badge badge-soft-success">Active</span></td>
-                                                <td>                                                       
-                                                    <a href="#"><i class="las la-pen text-secondary font-16"></i></a>
-                                                    <a href="#"><i class="las la-trash-alt text-secondary font-16"></i></a>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><img src="assets/images/users/user-7.jpg" alt="" class="rounded-circle thumb-sm me-1"> Crystal Darling</td>
-                                                <td>Contributor</td>
-                                                <td>CrystalDarling@example.com</td>
-                                                <td>+56 123456789</td>
-                                                <td><span class="badge badge-soft-danger">Deactivated</span></td>
-                                                <td>                                                       
-                                                    <a href="#"><i class="las la-pen text-secondary font-16"></i></a>
-                                                    <a href="#"><i class="las la-trash-alt text-secondary font-16"></i></a>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><img src="assets/images/users/user-8.jpg" alt="" class="rounded-circle thumb-sm me-1"> Thomas Milligan</td>
-                                                <td>Administrator</td>
-                                                <td>homasMilligan@example.com</td>
-                                                <td>+35 123456789</td>
-                                                <td><span class="badge badge-soft-danger">Deactivated</span></td>
-                                                <td>                                                       
-                                                    <a href="#"><i class="las la-pen text-secondary font-16"></i></a>
-                                                    <a href="#"><i class="las la-trash-alt text-secondary font-16"></i></a>
-                                                </td>
-                                            </tr> -->
                                             </tbody>
                                         </table><!--end /table-->
                                     </div><!--end /tableresponsive-->
