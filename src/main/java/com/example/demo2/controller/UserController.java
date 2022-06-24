@@ -53,7 +53,7 @@ public class UserController {
 		System.out.println(user);
 		service.save(user);
 		
-		redirectAttributes.addFlashAttribute("mess", "Add New User Successfully");
+		redirectAttributes.addFlashAttribute("message", "Add New User Successfully");
 		
 		return "redirect:/users";
 	}
