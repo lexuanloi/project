@@ -918,12 +918,34 @@
                                                 </td>
                                                 <td>                                                       
                                                     <a th:href="@{'/users/edit/'+${user.id}}"><i class="las la-pen text-secondary font-16"></i></a>
-                                                    <a href="#"><i class="las la-trash-alt text-secondary font-16"></i></a>
+                                                    <a th:href="@{'/users/delete/'+${user.id}}" th:userId="${user.id}" class="delete"><i class="las la-trash-alt text-secondary font-16"></i></a>
                                                 </td>
                                             </tr>
                                             </tbody>
                                         </table><!--end /table-->
                                     </div><!--end /tableresponsive-->
+
+<!-- notification -->
+<div class="modal  text-center" id="comfirmModal" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Comfirmtion</h4>
+                <button type="button" class="close"
+                    data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <span id="comfirmText"></span>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-success" href="" id="yes-btn">Yes</a>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end notification -->
+
                                     <div class="row">
                                         <div class="col">
                                            <a class="btn btn-outline-light btn-sm px-4 "  th:href="@{/new-user}">+ Add New</a>
@@ -1010,8 +1032,22 @@
             <!-- end page content -->
         </div>
         <!-- end page-wrapper -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script> 
+        <!-- Javascript  --> 
+        <script title="text/javascript">
+            $(document).ready(function(){
+                $(".delete").on("click",function(e){
+                    e.preventDefault();
+                    link = $(this);
+                    userId = link.attr("userId");
+                    $("#comfirmText").text("Bạn có chắc chắn muốn xoá User id "+userId)
+                    $("#yes-btn").attr("href",link.attr("href"));
+                    $("#comfirmModal").modal("show");
+                });
+            });
+        </script>
+        <!-- End Javascrip -->
 
-        <!-- Javascript  -->   
         <!-- App js -->
         <script src="assets/js/app.js"></script>
 

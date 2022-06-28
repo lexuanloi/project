@@ -9,4 +9,6 @@ import com.example.demo2.entity.User;
 public interface UserRepository extends CrudRepository<User, Integer> {
 	@Query("Select u from User u where u.email = :email")
 	public User getUserByEmail(@Param("email") String email);
+
+	public Long countById(Integer id);
 }

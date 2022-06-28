@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,11 +52,10 @@ public class UserController {
 	}
 	
 	@PostMapping("/users/save")
-	public String saveUser(User user, RedirectAttributes redirectAttributes) {
-		System.out.println(user);
+	public String saveUser(User user,RedirectAttributes redirectAttributes) {
 		service.save(user);
 		
-		redirectAttributes.addFlashAttribute("message", "Add New User Successfully");
+		redirectAttributes.addFlashAttribute("message", "Thêm user mới thành công");
 		
 		return "redirect:/users";
 	}
@@ -75,5 +77,18 @@ public class UserController {
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
 			return "redirect:/users";
 		}
+	}
+
+	@RequestMapping("/users/delete/{id}")
+	public String deleteUser(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+		try {
+			service.delete(id);
+				redirectAttributes.addFlashAttribute("message", "Xoá user id " +id+ " thành công!");
+			return "redirect:/users";
+
+		} catch (UserNotFoundException ex) {		
+			redirectAttributes.addFlashAttribute("message", ex.getMessage());	
+		}
+		return "redirect:/users";
 	}
 }
