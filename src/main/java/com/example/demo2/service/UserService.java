@@ -3,6 +3,8 @@ package com.example.demo2.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import com.example.demo2.entity.Role;
 import com.example.demo2.entity.User;
 
 @Service
+@Transactional
 public class UserService {
 	
 	@Autowired
@@ -32,7 +35,7 @@ public class UserService {
 		return (List<Role>) roleRepo.findAll();
 	}
 
-	public void save(User user) {
+	public User save(User user) {
 		boolean isUpdatingUser = (user.getId() != null);
 		if (isUpdatingUser) {
 			User existingUser = userRepo.findById(user.getId()).get();
@@ -45,7 +48,7 @@ public class UserService {
 			encodePassword(user);
 		}
 		
-		userRepo.save(user);
+		return userRepo.save(user);
 	}
 	
 	private void encodePassword(User user) {
@@ -86,5 +89,9 @@ public class UserService {
 			throw new UserNotFoundException("Không tìm thấy user nào với id : "+id);
 		}
 		userRepo.deleteById(id);
+	}
+	
+	public void updateUserEnableStatus(Integer id, boolean enable) {
+		userRepo.updateEnableStatus(id, enable);
 	}
 }

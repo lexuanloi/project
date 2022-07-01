@@ -1,5 +1,6 @@
 package com.example.demo2.entity;
 
+import java.beans.Transient;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -130,6 +131,14 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", roles=" + roles + "]";
+	}
+	
+	@Transient
+	public String getPhotoImagePath() {
+		if (id == null || photo == null) {
+			return "/assets/images/user.jpg";
+		}
+		return "/users/" + this.id + "/" + this.photo;
 	}
 	
 }

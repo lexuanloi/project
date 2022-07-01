@@ -907,13 +907,16 @@
                                             <tbody>
                                             <tr th:each="user : ${listUsers}">
                                             	<td>[[${user.id}]]</td>
-                                                <td><img src="assets/images/users/user-3.jpg" alt="" class="rounded-circle thumb-sm me-1">[[${user.firstName}]]</td>
+                                                <td>
+                                                <img th:src="@{${user.photoImagePath}}" alt="" class="rounded-circle thumb-sm me-1">
+                                                [[${user.firstName}]]                                                                                           
+                                                </td>
                                                 <td>[[${user.roles}]]</td>
                                                 <td>[[${user.email}]]</td>
                                                 <td>+21 1234 56789</td>
                                                 <td>
-                                                <span class="badge badge-soft-success" th:if="${user.enable}==true">Active</span>
-                                                <span class="badge badge-soft-danger" th:if="${user.enable}==false">Inactive</span>
+                                                <a class="badge badge-soft-success fas fa-check-circle" th:if="${user.enable == true}" th:href="@{'/users/' + ${user.id} + '/enable/false'}" title="Disable this user">Active</a>
+                                                <a class="badge badge-soft-danger fas fa-check-circle" th:if="${user.enable == false}" th:href="@{'/users/' + ${user.id} + '/enable/true'}" title="Enable this user">Inactive</a>
                                                 
                                                 </td>
                                                 <td>                                                       
