@@ -846,15 +846,15 @@
 					<div class="card radius-10">
 						<div class="card-body">
 						
-							<form th:action="@{/users/save}" method="post" th:object="${user}" 
-                            enctype="multipart/form-data"
+							<form th:action="@{/users/save}" method="post" 
+                            enctype="multipart/form-data" th:object="${user}" 
 							onsubmit="return checkEmailUnique(this);">
                             <input type="hidden" th:field="*{id}"/>
 								<h5 class="mb-3">[[${pageTitle}]]</h5>
 								<div
 									class="mb-4 d-flex flex-column gap-3 align-items-center justify-content-center">
 									<div class="user-change-photo shadow">
-										<img id="thumbnail" alt="photos preview" th:src="@{${user.photoImagePath}}">
+										<img id="thumbnail" alt="photos preview"  th:src="@{${user.photoImagePath}}">
 										<input type="file" id="imgupload" name="image" style="display: none;"  accept="image.png, image.jpg" multiple/>
                                     	<input type="hidden" th:field="*{photo}"/>
 									</div>

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -38,10 +39,29 @@ public class UserController {
 	}
 	
 	@RequestMapping("/users")
-	public String ListAll(Model model) {
-		List<User> listUsers = service.listAll();
+	public String listFirstPage(Model model) {
+		return listByPage(1, model);
+	}
+	
+	@RequestMapping("/page/{pageNum}")
+	public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model) {
+		Page<User> page = service.listByPage(pageNum);
+		List<User> listUsers = page.getContent();
+		
+		long startCount = (pageNum - 1) * UserService.USERS_PER_PAGE +1 ;
+		long endCount = startCount + UserService.USERS_PER_PAGE - 1;
+		if (endCount > page.getTotalElements()) {
+			endCount = page.getTotalElements();
+		}
+		
+		model.addAttribute("currentPage",pageNum);
+		model.addAttribute("totalPages",page.getTotalPages());	
+		model.addAttribute("startCount",startCount);
+		model.addAttribute("endCount", endCount);
+		model.addAttribute("totalItems", page.getTotalElements());
 		model.addAttribute("listUsers",listUsers);
-		return "/projects/projects-users";
+		
+		return"/projects/projects-users";
 	}
 	
 	@RequestMapping("/new-user" )
@@ -59,7 +79,7 @@ public class UserController {
 	@PostMapping("/users/save")
 	public String saveUser(User user,RedirectAttributes redirectAttributes, @RequestParam("image") MultipartFile multipartFile) throws IOException {
 		if (!multipartFile.isEmpty()) {
-		System.out.println(multipartFile.getOriginalFilename());
+//		System.out.println(multipartFile.getOriginalFilename());
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 			user.setPhoto(fileName);
 			User saveUser = service.save(user);
@@ -69,16 +89,14 @@ public class UserController {
 			FileUploadUtil.clearDir(uploadDir);
 			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 		}else {
-			if (user.getPhoto().isEmpty()) {
-				user.setPhoto(null);
+			if (user.getPhoto().isEmpty()) user.setPhoto(null);
 				service.save(user);	
-			}
 		}	
 		redirectAttributes.addFlashAttribute("message", "Thêm user mới thành công");
 		
 		return "redirect:/users";
 	}
-	
+
 	@RequestMapping("/users/edit/{id}")
 	public String editUser(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {
 		try {

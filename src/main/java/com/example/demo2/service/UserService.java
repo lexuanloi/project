@@ -1,11 +1,14 @@
 package com.example.demo2.service;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,8 @@ import com.example.demo2.entity.User;
 @Transactional
 public class UserService {
 	
+	public static final int USERS_PER_PAGE = 2 ;
+	
 	@Autowired
 	private UserRepository userRepo;
 	
@@ -29,6 +34,11 @@ public class UserService {
 	
 	public List<User> listAll(){
 		return (List<User>) userRepo.findAll();
+	}
+	
+	public Page<User> listByPage(int pageNum) {
+		PageRequest pageable = PageRequest.of(pageNum - 1, pageNum);
+		return userRepo.findAll(pageable);
 	}
 	
 	public List<Role> listRoles(){
@@ -58,14 +68,11 @@ public class UserService {
 	
 	public boolean isEmailUnique(Integer id, String email) {
 		User userByEmail = userRepo.getUserByEmail(email);
-		if (userByEmail==null) {
-			return true;
-		}
+		if (userByEmail==null) return true;
+		
 		boolean isCreatingNew = (id==null);
 		if (isCreatingNew) {
-			if (userByEmail != null) {
-				return false;
-			}
+			if (userByEmail != null) return false;
 		}else {
 			if (userByEmail.getId() != id) {
 				return false;
