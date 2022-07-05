@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 //@EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 @SpringBootApplication
 //(exclude = {SecurityAutoConfiguration.class })
-//@ComponentScan({"com.example.demo2.entity","com.example.demo2.dao"})
+@ComponentScan({"com.example.demo2.entity","com.example.demo2.dao"})
 @ComponentScan("com.example.demo2")
 public class Demo2Application {
 	
