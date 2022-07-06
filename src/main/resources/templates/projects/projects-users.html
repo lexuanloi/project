@@ -829,12 +829,16 @@
                         </div><!--end col-->
                     </div>
                     <!-- end page title end breadcrumb -->
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 20px;">
                     	<div class="col">
                         	<a class="btn btn-outline-blue btn-sm px-4 " th:href="@{/new-user}">Thêm User</a>
                         </div>
-                        <br>
-                        <br>            
+                    	<div class="col" style="text-align: right;">
+                        	<a th:href="@{/users/export/csv}" type="button" class="btn btn-primary"><i class="fas fa-file-csv"></i></a>
+                        	<a th:href="@{/users/export/excel}" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i></a>
+                        	<!-- <a type="button" class="btn btn-primary">docx</a -->
+                        	<a th:href="@{/users/export/pdf}" type="button" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
+                        </div>           
                     </div><!--end row-->    
                     <div class="row">
                         <div class="col-12">
@@ -852,24 +856,12 @@
                                         <table class="table table-striped">
                                             <thead class="thead-light">
                                             <tr>
-                                             	<th>ID</th>
-                                                <th>
-                                                <a	th:if="${sortField != 'firstName'}"
-                                                	th:href="@{'/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${sortDir} + ${keyword != null ? '$keyword=' + keyword : ' '}}">
-                                                 Name 
-                                                 </a>
-                                                <a	th:if="${sortField == 'firstName'}"
-                                                	th:href="@{'/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${revereSortDir}  + ${keyword != null ? '$keyword=' + keyword : ' '}}">
-                                                 Name 
-                                                 </a>
-                                                <span th:if="${sortField== 'firstName'}"
-													  th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}">
-												</span>
-												</th>
+                                             	<th th:replace="fragments :: column_link('id', 'ID')"/>
+                                             	<th th:replace="fragments :: column_link('firstName', 'Name')"/>
+                                             	<th th:replace="fragments :: column_link('email', 'Email')"/>                                            	
                                                 <th>Rols</th>
-                                                <th>Email</th>
                                                 <th>Contact No</th>
-                                                <th>Status</th>
+                                             	<th th:replace="fragments :: column_link('enable', 'Status')"/>                                            	
                                                 <th>Action</th>
                                             </tr>
                                             </thead>
@@ -880,8 +872,8 @@
                                                 <img th:src="@{${user.photoImagePath}}" alt="" class="rounded-circle thumb-sm me-1">
                                                 [[${user.firstName}]]                                                                                           
                                                 </td>
-                                                <td>[[${user.roles}]]</td>
                                                 <td>[[${user.email}]]</td>
+                                                <td>[[${user.roles}]]</td>
                                                 <td>+21 1234 56789</td>
                                                 <td>
                                                 <a class="badge badge-soft-success fas fa-check-circle" th:if="${user.enable == true}" th:href="@{'/users/' + ${user.id} + '/enable/false'}" title="Disable this user">Active</a>
@@ -928,20 +920,20 @@
                                             <span>user từ [[${startCount}]] đến [[${endCount}]] của [[${totalItems}]]</span>
                                                 <ul class="pagination pagination-sm mb-0">
 	                                                <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-	                                                	<a class="page-link" th:href="@{'/page/1?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
+	                                                	<a th:replace="fragments :: page_link('1', 'First')"></a>
 	                                                </li>
                                                     <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                                                        <a class="page-link" th:href="@{'/page/'+${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" >Previous</a>
+                                                        <a th:replace="fragments :: page_link(${currentPage - 1}, 'Previous')"></a>
                                                     </li>
                                                     <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}" 
                                                     	th:each="i : ${#numbers.sequence(1, totalPages)}">
-                                                    	<a class="page-link" th:href="@{'/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                                                    	<a th:replace="fragments :: page_link(${i}, ${i})"></a>
                                                     </li>                                                   
                                                     <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                                                        <a class="page-link" th:href="@{'/page/'+${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+                                                        <a th:replace="fragments :: page_link(${currentPage + 1}, 'Next')"></a>
                                                     </li>
                                                     <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                                                    	<a class="page-link" th:href="@{'/page/'+${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+                                                    	<a th:replace="fragments :: page_link(${totalPages}, 'Last')">Last</a>
                                                     </li>
                                                 </ul><!--end pagination-->
                                             </nav><!--end nav-->       

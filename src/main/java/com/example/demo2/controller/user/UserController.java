@@ -1,7 +1,9 @@
-package com.example.demo2.controller;
+package com.example.demo2.controller.user;
 
 import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 
 import com.example.demo2.entity.Role;
 import com.example.demo2.entity.User;
@@ -60,7 +61,7 @@ public class UserController {
 			endCount = page.getTotalElements();
 		}
 		
-		String revereSortDir = sortDir.equals("asc") ? "desc" : "asc";
+		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 		
 		model.addAttribute("currentPage",pageNum);
 		model.addAttribute("totalPages",page.getTotalPages());	
@@ -71,7 +72,7 @@ public class UserController {
 		model.addAttribute("listUsers",listUsers);
 		model.addAttribute("sortField",sortField);
 		model.addAttribute("sortDir",sortDir);
-		model.addAttribute("revereSortDir",revereSortDir);
+		model.addAttribute("reverseSortDir",reverseSortDir);
 		model.addAttribute("keyword",keyword);
 
 		
@@ -106,9 +107,14 @@ public class UserController {
 			if (user.getPhoto().isEmpty()) user.setPhoto(null);
 				service.save(user);	
 		}	
-		redirectAttributes.addFlashAttribute("message", "Thêm user mới thành công");
+		redirectAttributes.addFlashAttribute("message", "Lưu user thành công");
 		
-		return "redirect:/users";
+		return getRedirectURLtoAffectedUser(user);
+	}
+
+	private String getRedirectURLtoAffectedUser(User user) {
+		String firstPartOfEmail = user.getEmail().split("@")[0];
+		return "redirect:/page/1?sortField=id&sortDir=asc&keyword=" + firstPartOfEmail;
 	}
 
 	@RequestMapping("/users/edit/{id}")
@@ -151,5 +157,28 @@ public class UserController {
 		String message = "User id " + id +" đã được đổi sang trạng thái " + status;
 		redirectAttributes.addFlashAttribute("message", message);
 		return "redirect:/users";
+	}
+	
+	@RequestMapping("/users/export/csv")
+	public void exportCSV(HttpServletResponse response) throws IOException {
+		List<User> listUsers = service.listAll();
+		
+		UserCsvExporter exporter = new UserCsvExporter();
+		exporter.export(listUsers, response);		
+	}
+	
+	@RequestMapping("/users/export/excel")
+	public void exportExcel(HttpServletResponse response) throws IOException {
+		List<User> listUsers = service.listAll();
+		
+		UserExcelExporter exporter = new UserExcelExporter();
+		exporter.export(listUsers, response);		
+	}
+	@RequestMapping("/users/export/pdf")
+	public void exportPdf(HttpServletResponse response) throws IOException {
+		List<User> listUsers = service.listAll();
+		
+		UserPdfExporter exporter = new UserPdfExporter();
+		exporter.export(listUsers, response);		
 	}
 }
