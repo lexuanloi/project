@@ -27,7 +27,7 @@ import com.example.demo2.service.UserService;
 import com.example.demo2.util.FileUploadUtil;
 
 @Controller
-@RequestMapping("/users")
+//@RequestMapping("/users")
 public class UserController {
 
 	@Autowired
