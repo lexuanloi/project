@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!-- <meta charset="utf-8" />
@@ -18,18 +18,19 @@
             <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
             <!-- App favicon -->
-            <link rel="shortcut icon" href="assets/images/favicon.ico">
+            <link rel="shortcut icon" th:href="@{./assets/images/favicon.ico}">
 
        
 
      <!-- App css -->
-     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-     <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+         <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+         <link th:href="@{/assets/css/icons.min.css}" rel="stylesheet" type="text/css" />
+         <link th:href="@{/assets/css/app.min.css}" rel="stylesheet" type="text/css" />
 
 </head>
 
 <body id="body" class="auth-page" style="background-image: url('assets/images/p-1.png'); background-size: cover; background-position: center center;">
+
    <!-- Log In page -->
     <div class="container-md">
         <div class="row vh-100 d-flex justify-content-center">
@@ -48,15 +49,21 @@
                                     </div>
                                 </div>
                                 <div class="card-body pt-0">                                    
-                                    <form class="my-4" action="index.html">            
+                                    <form class="my-4" th:action="@{/login}" method="post">    
+                                    	<div class="alert alert-danger border-0" th:if="${param.error}">
+                                    		<p class="text-center">Tài khoản hoặc mật khâu không đúng</p>
+                                    	</div>        
+                                    	<div class="alert alert-warning border-0" th:if="${param.logout}">
+                                    		<p class="text-center">Bạn đã đăng xuất.</p>
+                                    	</div>        
                                         <div class="form-group mb-2">
-                                            <label class="form-label" for="username">Username</label>
-                                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">                               
+                                            <label class="form-label" for="username">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>                               
                                         </div><!--end form-group--> 
             
                                         <div class="form-group">
                                             <label class="form-label" for="userpassword">Password</label>                                            
-                                            <input type="password" class="form-control" name="password" id="userpassword" placeholder="Enter password">                            
+                                            <input type="password" class="form-control" name="password" id="userpassword" placeholder="Enter password" required>                            
                                         </div><!--end form-group--> 
             
                                         <div class="form-group row mt-3">
@@ -74,7 +81,7 @@
                                         <div class="form-group mb-0 row">
                                             <div class="col-12">
                                                 <div class="d-grid mt-3">
-                                                    <button class="btn btn-primary" type="button">Log In <i class="fas fa-sign-in-alt ms-1"></i></button>
+                                                    <button class="btn btn-primary" type="submit">Log In <i class="fas fa-sign-in-alt ms-1"></i></button>
                                                 </div>
                                             </div><!--end col--> 
                                         </div> <!--end form-group-->                           

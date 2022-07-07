@@ -1,6 +1,9 @@
 package com.example.demo2.controller.user;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,10 +21,10 @@ import com.example.demo2.entity.User;
 public class UserCsvExporter extends AbstractExporter{
 	
 	public void export(List<User> listUsers, HttpServletResponse response) throws IOException {
-		super.setResponseHeader(response, "text/csv", ".csv");
+		super.setResponseHeader(response, "text/csv; charset=UTF-8", ".csv");
 		
 		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
-		
+
 		String[] csvHeader = {"User ID","E-Mail", "First Name", "Last Name", "Roles", "Enabled"};
 		String[] fileMapping = {"id", "email", "firstName", "lastName","roles", "enable"};
 		

@@ -34,13 +34,6 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
-	
-	@RequestMapping("/")
-	public String viewHome() {
-		
-		return"index";
-	}
-	
 	@RequestMapping("/users")
 	public String listFirstPage(Model model) {
 		return listByPage(1, model, "firstName", "asc", null);
