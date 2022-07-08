@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <!-- <meta charset="utf-8" />
@@ -18,18 +19,18 @@
             <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
             <!-- App favicon -->
-            <link rel="shortcut icon" th:href="@{./assets/images/favicon.ico}">
+            <link rel="shortcut icon" th:href="@{./images/favicon.ico}">
 
        
 
      <!-- App css -->
-         <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
-         <link th:href="@{/assets/css/icons.min.css}" rel="stylesheet" type="text/css" />
-         <link th:href="@{/assets/css/app.min.css}" rel="stylesheet" type="text/css" />
+         <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+         <link th:href="@{/css/icons.min.css}" rel="stylesheet" type="text/css" />
+         <link th:href="@{/css/app.min.css}" rel="stylesheet" type="text/css" />
 
 </head>
 
-<body id="body" class="auth-page" style="background-image: url('assets/images/p-1.png'); background-size: cover; background-position: center center;">
+<body id="body" class="auth-page" style="background-image: url('images/p-1.png'); background-size: cover; background-position: center center;">
 
    <!-- Log In page -->
     <div class="container-md">
@@ -42,7 +43,7 @@
                                 <div class="card-body p-0 auth-header-box">
                                     <div class="text-center p-3">
                                         <a href="index.html" class="logo logo-admin">
-                                            <img src="assets/images/logo-sm.png" height="50" alt="logo" class="auth-logo">
+                                            <img src="images/logo-sm.png" height="50" alt="logo" class="auth-logo">
                                         </a>
                                         <h4 class="mt-3 mb-1 fw-semibold text-white font-18">Let's Get Started Unikit</h4>   
                                         <p class="text-muted  mb-0">Sign in to continue to Unikit.</p>  
@@ -69,7 +70,7 @@
                                         <div class="form-group row mt-3">
                                             <div class="col-sm-6">
                                                 <div class="form-check form-switch form-switch-success">
-                                                    <input class="form-check-input" type="checkbox" id="customSwitchSuccess">
+                                                    <input class="form-check-input" type="checkbox" name="remember-me" id="customSwitchSuccess">
                                                     <label class="form-check-label" for="customSwitchSuccess">Remember me</label>
                                                 </div>
                                             </div><!--end col--> 
@@ -114,7 +115,7 @@
     </div><!--end container-->
 
     <!-- App js -->
-    <script src="assets/js/app.js"></script>
+    <script src="js/app.js"></script>
     
 </body>
 

@@ -51,14 +51,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginPage("/login")
 				.usernameParameter("email")
 				.permitAll()
-			.and().logout().permitAll();
+			.and().logout().permitAll()
+			.and()
+				.rememberMe()
+					.key("AbcDefgHijKlmnOpqrs_1234567890")
+					.tokenValiditySeconds(7 * 24 *60 *60);
 		
 //		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 	}
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/assets/images/**","/js/**","/assets/**");
+		web.ignoring().antMatchers("/images/**","/js/**","/css/**");
 	}
 	
 	

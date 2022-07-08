@@ -1,32 +1,28 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script> 
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
 <body>
+	<div class="topbar" >
     <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
     	<input type="submit" />
     </form>
-	<div class="topbar">
 		<nav class="navbar-custom" id="navbar-custom">
 			<ul class="list-unstyled topbar-nav float-end mb-0">
 				<li class="dropdown">
 				<a class="nav-link dropdown-toggle arrow-none nav-icon"
 					data-bs-toggle="dropdown" href="#" role="button"
 					aria-haspopup="false" aria-expanded="false"> <img
-						src="assets/images/flags/us_flag.jpg" alt=""
+						src="/images/flags/us_flag.jpg" alt=""
 						class="thumb-xxs rounded">
 				</a>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="#"><img
-							src="assets/images/flags/us_flag.jpg" alt="" height="15"
+							src="/images/flags/us_flag.jpg" alt="" height="15"
 							class="me-2">English</a> <a class="dropdown-item" href="#"><img
-							src="assets/images/flags/spain_flag.jpg" alt="" height="15"
+							src="/images/flags/spain_flag.jpg" alt="" height="15"
 							class="me-2">Spanish</a> <a class="dropdown-item" href="#"><img
-							src="assets/images/flags/germany_flag.jpg" alt="" height="15"
+							src="/images/flags/germany_flag.jpg" alt="" height="15"
 							class="me-2">German</a> <a class="dropdown-item" href="#"><img
-							src="assets/images/flags/french_flag.jpg" alt="" height="15"
+							src="/images/flags/french_flag.jpg" alt="" height="15"
 							class="me-2">French</a>
 					</div></li>
 				<!--end topbar-language-->
@@ -49,7 +45,7 @@
 								class="float-end text-muted ps-2">2 min ago</small>
 								<div class="media">
 									<div class="avatar-md bg-soft-primary">
-										<img src="assets/images/users/user-1.jpg" alt=""
+										<img src="images/users/user-1.jpg" alt=""
 											class="thumb-sm rounded-circle">
 									</div>
 									<div class="media-body align-self-center ms-2 text-truncate">
@@ -66,7 +62,7 @@
 								class="float-end text-muted ps-2">10 min ago</small>
 								<div class="media">
 									<div class="avatar-md bg-soft-primary">
-										<img src="assets/images/users/user-4.jpg" alt=""
+										<img src="/images/users/user-4.jpg" alt=""
 											class="thumb-sm rounded-circle">
 									</div>
 									<div class="media-body align-self-center ms-2 text-truncate">
@@ -84,7 +80,7 @@
 								class="float-end text-muted ps-2">40 min ago</small>
 								<div class="media">
 									<div class="avatar-md bg-soft-primary">
-										<img src="assets/images/users/user-2.jpg" alt=""
+										<img src="/images/users/user-2.jpg" alt=""
 											class="thumb-sm rounded-circle">
 									</div>
 									<div class="media-body align-self-center ms-2 text-truncate">
@@ -101,7 +97,7 @@
 								class="float-end text-muted ps-2">1 hr ago</small>
 								<div class="media">
 									<div class="avatar-md bg-soft-primary">
-										<img src="assets/images/users/user-5.jpg" alt=""
+										<img src="/images/users/user-5.jpg" alt=""
 											class="thumb-sm rounded-circle">
 									</div>
 									<div class="media-body align-self-center ms-2 text-truncate">
@@ -118,7 +114,7 @@
 								class="float-end text-muted ps-2">2 hrs ago</small>
 								<div class="media">
 									<div class="avatar-md bg-soft-primary">
-										<img src="assets/images/users/user-3.jpg" alt=""
+										<img src="/images/users/user-3.jpg" alt=""
 											class="thumb-sm rounded-circle">
 									</div>
 									<div class="media-body align-self-center ms-2 text-truncate">
@@ -244,7 +240,7 @@
 					<a class="nav-link dropdown-toggle nav-user" data-bs-toggle="dropdown"
 						href="#" role="button" aria-haspopup="false" aria-expanded="false">
 						<div class="d-flex align-items-center">
-							<img src="assets/images/users/user-4.jpg" alt="profile-user"
+							<img src="/images/users/user-4.jpg" alt="profile-user"
 								class="rounded-circle me-2 thumb-sm" />
 							<div>
 								<small class="d-none d-md-block font-11">Admin</small> <span
@@ -256,7 +252,7 @@
 						</div>
 					</a>
 					<div class="dropdown-menu dropdown-menu-end">
-						<a class="dropdown-item" href="#">
+						<a class="dropdown-item" th:href="@{/account}">
 							<i class="ti ti-user font-16 me-1 align-text-bottom"></i>
 							 Profile</a> 
 						<a class="dropdown-item" href="#">
@@ -301,7 +297,7 @@
 			</ul>
 		</nav>
 	</div>
-
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script> 
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#logoutLink").on("click", function(e){
@@ -309,7 +305,7 @@
 				document.logoutForm.submit();
 			});
 		});
-	
+		
 	</script>
 	
 </body>

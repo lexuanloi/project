@@ -69,7 +69,7 @@ public class UserController {
 		model.addAttribute("keyword",keyword);
 
 		
-		return"/projects/projects-users";
+		return"/users/users";
 	}
 	
 	@RequestMapping("/new-user" )
@@ -81,7 +81,7 @@ public class UserController {
 		model.addAttribute("user",user);
 		model.addAttribute("listRoles",listRoles);
 		model.addAttribute("pageTitle", "New User");
-		return "form-user";
+		return "/users/form-user";
 	}
 	
 	@PostMapping("/users/save")
@@ -120,7 +120,7 @@ public class UserController {
 			model.addAttribute("listRoles",listRoles);
 			model.addAttribute("pageTitle", "Edit User ( ID: "+id+" )");
 			
-			return "/form-user";
+			return "/users/form-user";
 
 		} catch (UserNotFoundException ex) {
 				

@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 
 import javax.transaction.Transactional;
 
+import org.apache.xmlbeans.impl.xb.xsdschema.Attribute.Use;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +34,10 @@ public class UserService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	public User getByEmail(String email) {
+		return userRepo.getUserByEmail(email);
+	}
 	
 	public List<User> listAll(){
 		return (List<User>) userRepo.findAll(Sort.by("firstName").ascending());
