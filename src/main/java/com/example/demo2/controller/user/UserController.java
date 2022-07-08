@@ -28,13 +28,13 @@ import com.example.demo2.service.UserService;
 import com.example.demo2.util.FileUploadUtil;
 
 @Controller
-//@RequestMapping("/users")
+@RequestMapping("/users")
 public class UserController {
 
 	@Autowired
 	private UserService service;
 	
-	@RequestMapping("/users")
+	@RequestMapping("/list_users")
 	public String listFirstPage(Model model) {
 		return listByPage(1, model, "firstName", "asc", null);
 	}
@@ -84,7 +84,7 @@ public class UserController {
 		return "/users/form-user";
 	}
 	
-	@PostMapping("/users/save")
+	@PostMapping("/save")
 	public String saveUser(User user,RedirectAttributes redirectAttributes, @RequestParam("image") MultipartFile multipartFile) throws IOException {
 		if (!multipartFile.isEmpty()) {
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -106,10 +106,10 @@ public class UserController {
 
 	private String getRedirectURLtoAffectedUser(User user) {
 		String firstPartOfEmail = user.getEmail().split("@")[0];
-		return "redirect:/page/1?sortField=id&sortDir=asc&keyword=" + firstPartOfEmail;
+		return "redirect:/users/page/1?sortField=id&sortDir=asc&keyword=" + firstPartOfEmail;
 	}
 
-	@RequestMapping("/users/edit/{id}")
+	@RequestMapping("/edit/{id}")
 	public String editUser(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {
 		try {
 			User user = service.get(id);
@@ -124,11 +124,11 @@ public class UserController {
 		} catch (UserNotFoundException ex) {
 				
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
-			return "redirect:/users";
+			return "redirect:/users/list_users";
 		}
 	}
 
-	@RequestMapping("/users/delete/{id}")
+	@RequestMapping("/delete/{id}")
 	public String deleteUser(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {
 		try {
 			service.delete(id);
@@ -138,20 +138,20 @@ public class UserController {
 		} catch (UserNotFoundException ex) {		
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());	
 		}
-		return "redirect:/users";
+		return "redirect:/users/list_users";
 	}
 	
-	@RequestMapping("/users/{id}/enable/{status}")
+	@RequestMapping("/{id}/enable/{status}")
 	public String updateUserEnableStatus(@PathVariable("id") Integer id,
 					@PathVariable("status") boolean enable, RedirectAttributes redirectAttributes) {
 		service.updateUserEnableStatus(id, enable);
 		String status = enable ? "enable" : "disable";
 		String message = "User id " + id +" đã được đổi sang trạng thái " + status;
 		redirectAttributes.addFlashAttribute("message", message);
-		return "redirect:/users";
+		return "redirect:/users/list_users";
 	}
 	
-	@RequestMapping("/users/export/csv")
+	@RequestMapping("/export/csv")
 	public void exportCSV(HttpServletResponse response) throws IOException {
 		List<User> listUsers = service.listAll();
 		
@@ -159,14 +159,14 @@ public class UserController {
 		exporter.export(listUsers, response);		
 	}
 	
-	@RequestMapping("/users/export/excel")
+	@RequestMapping("/export/excel")
 	public void exportExcel(HttpServletResponse response) throws IOException {
 		List<User> listUsers = service.listAll();
 		
 		UserExcelExporter exporter = new UserExcelExporter();
 		exporter.export(listUsers, response);		
 	}
-	@RequestMapping("/users/export/pdf")
+	@RequestMapping("/export/pdf")
 	public void exportPdf(HttpServletResponse response) throws IOException {
 		List<User> listUsers = service.listAll();
 		
