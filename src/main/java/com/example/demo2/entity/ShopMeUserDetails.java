@@ -1,4 +1,4 @@
-package com.example.demo2.conf;
+package com.example.demo2.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,9 +7,6 @@ import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import com.example.demo2.entity.Role;
-import com.example.demo2.entity.User;
 
 public class ShopMeUserDetails implements org.springframework.security.core.userdetails.UserDetails {
 	
@@ -70,6 +67,14 @@ public class ShopMeUserDetails implements org.springframework.security.core.user
 
 	public String getFullname() {
 		return this.user.getFirstName()+" "+this.user.getLastName();
+	}
+	
+	public void setFirstName(String firstName) {
+		this.user.setFirstName(firstName);
+	}
+	
+	public void setLastName(String lastName) {
+		this.user.setLastName(lastName);
 	}
 
 }

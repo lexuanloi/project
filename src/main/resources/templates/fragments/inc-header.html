@@ -243,11 +243,10 @@
 							<img src="/images/users/user-4.jpg" alt="profile-user"
 								class="rounded-circle me-2 thumb-sm" />
 							<div>
-								<small class="d-none d-md-block font-11">Admin</small> <span
-									class="d-none d-md-block fw-semibold font-12"
-									sec:authentication="principal.fullname"> 
+								<small class="d-none d-md-block font-11">Admin</small> 
+								<span class="d-none d-md-block fw-semibold font-12"sec:authentication="principal.fullname"> 
 									<i class="mdi mdi-chevron-down"></i>
-									</span>
+								</span>
 							</div>
 						</div>
 					</a>
@@ -262,7 +261,7 @@
 						<a class="dropdown-item" id="logoutLink" href=""><i
 							class="ti ti-power font-16 me-1 align-text-bottom"></i> Logout</a>
 					</div>
-					</li>
+				</li>
 				<li class="notification-list">
 				<a class="nav-link arrow-none nav-icon offcanvas-btn" href="#"
 					data-bs-toggle="offcanvas" data-bs-target="#Appearance"
@@ -303,9 +302,14 @@
 			$("#logoutLink").on("click", function(e){
 				e.preventDefault();
 				document.logoutForm.submit();
-			});
+			});			
+			/* customizeDropMenu(); */
 		});
-		
+/* 		function customizeDropMenu() {
+			$(".dropdown > a").click(function(){
+				location.href = this.href;
+			});
+		} */		
 	</script>
 	
 </body>

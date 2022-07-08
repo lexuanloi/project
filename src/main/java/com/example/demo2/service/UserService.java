@@ -77,6 +77,24 @@ public class UserService {
 		return userRepo.save(user);
 	}
 	
+	public User updateAccount(User userInForm) {
+		User userInDB= userRepo.findById(userInForm.getId()).get();
+		
+		if (!userInForm.getPassword().isEmpty()) {
+			userInDB.setPassword(userInForm.getPassword());
+			encodePassword(userInDB);
+		}
+		
+		if (userInForm.getPhoto() != null) {
+			userInDB.setPhoto(userInForm.getPhoto());
+		}
+		
+		userInDB.setFirstName(userInForm.getFirstName());
+		userInDB.setLastName(userInForm.getLastName());
+		
+		return userRepo.save(userInDB);
+	}
+	
 	private void encodePassword(User user) {
 		String encodePassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodePassword);

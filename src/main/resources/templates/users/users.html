@@ -1,31 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 				xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-    <head>
-        <!-- <meta charset="utf-8" />
-        <title> | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-        <meta content="Coderthemes" name="author" />
-        App favicon
-        <link rel="shortcut icon" href="assets/images/favicon.ico"> -->
-
-        <meta charset="utf-8" />
-                <title>Unikit - Admin & Dashboard Template</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-                <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-                <meta content="" name="author" />
-                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-                <!-- App favicon -->
-                <link rel="shortcut icon" href="images/favicon.ico">
-
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script> 
-         <!-- App css -->
-         <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
-         <link th:href="@{/css/icons.min.css}" rel="stylesheet" type="text/css" />
-         <link th:href="@{/css/app.min.css}" rel="stylesheet" type="text/css" />
-
+<head>
+	<meta charset="utf-8" />
+	<title>[[${pageTitle}]]</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+	<meta content="" name="author" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	
+	<!-- App favicon -->
+	<link rel="shortcut icon" href="images/favicon.ico">
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+	
+	<!-- App css -->
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/css/icons.min.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/css/app.min.css}" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -33,15 +26,11 @@
     
         <!-- leftbar-tab-menu -->      
         <div th:replace="fragments/left-sidebar" id="left-sidebar"></div>        
-        <!-- end leftbar-tab-menu-->
 
         <!-- Top Bar Start -->                          
        	<div th:replace="fragments/inc-header" id="inc-header"></div>                       
-        <!-- Top Bar End -->
 
         <div class="page-wrapper">
-
-            <!-- Page Content-->
             <div class="page-content-tab">
 
                 <div class="container-fluid">
@@ -59,10 +48,10 @@
                                     </ol>
                                 </div>
                                 <h4 class="page-title">Users</h4>
-                            </div><!--end page-title-box-->
-                        </div><!--end col-->
+                            </div>
+                        </div>
                     </div>
-                    <!-- end page title end breadcrumb -->
+
                     <div class="row" style="margin-bottom: 20px;">
                     	<div class="col">
                         	<a class="btn btn-outline-blue btn-sm px-4 " th:href="@{/new-user}">Thêm User</a>
@@ -70,7 +59,6 @@
                     	<div class="col" style="text-align: right;">
                         	<a th:href="@{/users/export/csv}" type="button" class="btn btn-primary"><i class="fas fa-file-csv"></i></a>
                         	<a th:href="@{/users/export/excel}" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i></a>
-                        	<!-- <a type="button" class="btn btn-primary">docx</a -->
                         	<a th:href="@{/users/export/pdf}" type="button" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
                         </div>           
                     </div><!--end row-->    
@@ -120,11 +108,10 @@
                                                 </td>
                                             </tr>
                                             </tbody>
-                                        </table><!--end /table-->
-                                    </div><!--end /tableresponsive-->
-
-									<!-- notification -->
-									
+                                        </table>
+                                    </div>
+                                    
+								<!-- notification -->									
 									<div class="modal  text-center" id="comfirmModal" >
 									    <div class="modal-dialog">
 									        <div class="modal-content">
@@ -142,10 +129,9 @@
 									            </div>
 									        </div>
 									    </div>
-									</div>
-									
-									<!-- end notification -->
-
+									</div>	
+								<!-- end notification -->
+								
                                     <div class="row">      
 	                                    <div class="col">
 	                                    </div>                               
@@ -175,32 +161,21 @@
                                          <div th:unless="${totalItems > 0}" style="text-align: center;">
                                          <strong>No users found</strong>
                                          </div>                            
-                                    </div><!--end row-->                                 
-                                </div><!--end card-body-->
-                            </div><!--end card-->
-                        </div> <!-- end col -->
-                    </div><!--end row-->
-
-                </div><!-- container -->
+                                    </div>                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!--Start Rightbar-->
                 <div th:replace="fragments/right-bar" id="right-bar"></div>
-                <!--end Rightbar-->
                  
                 <!--Start Footer-->
-                <!-- Footer Start -->
-                <footer class="footer text-center text-sm-start">
-                    &copy; <script>
-                        document.write(new Date().getFullYear())
-                    </script> Unikit <span class="text-muted d-none d-sm-inline-block float-end">Crafted with <i
-                            class="mdi mdi-heart text-danger"></i> by Mannatthemes</span>
-                </footer>
-                <!-- end Footer -->                
-                <!--end footer-->
+				<div th:replace="fragments/inc-footer" id="inc-footer"></div>          
+
             </div>
-            <!-- end page content -->
         </div>
-        <!-- end page-wrapper -->
 
         <!-- Javascript  --> 
         <script title="text/javascript">
@@ -219,7 +194,6 @@
 				window.location = "[[@{/users}]]"
             }
         </script>
-        <!-- End Javascrip -->
 
         <!-- App js -->
         <script src="js/app.js"></script>
