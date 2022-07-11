@@ -243,15 +243,15 @@
 							<img src="/images/users/user-4.jpg" alt="profile-user"
 								class="rounded-circle me-2 thumb-sm" />
 							<div>
-								<small class="d-none d-md-block font-11">Admin</small> 
-								<span class="d-none d-md-block fw-semibold font-12"sec:authentication="principal.fullname"> 
+								<small class="d-none d-md-block font-11" sec:authentication="principal.authorities">Admin</small> 
+								<span class="d-none d-md-block fw-semibold font-12" sec:authentication="principal.fullname"> 
 									<i class="mdi mdi-chevron-down"></i>
 								</span>
 							</div>
 						</div>
 					</a>
 					<div class="dropdown-menu dropdown-menu-end">
-						<a class="dropdown-item" th:href="@{/account}">
+						<a class="dropdown-item" th:href="@{/account}">    
 							<i class="ti ti-user font-16 me-1 align-text-bottom"></i>
 							 Profile</a> 
 						<a class="dropdown-item" href="#">
