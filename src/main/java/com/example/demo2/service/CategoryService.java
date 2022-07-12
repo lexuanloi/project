@@ -56,33 +56,6 @@ public class CategoryService {
 		}
 
 	}
-	
-	public Category save(Category category) {
-		
-		return repo.save(category);
-	}
-	
-	public Category get(Integer id) throws CategoryNotFoundException {
-		try {
-			return repo.findById(id).get();
-		} catch (NoSuchElementException ex) {
-			throw new CategoryNotFoundException("Không tìm thấy danh mục nào với id : "+id);
-		}
-		
-	}
-	
-	public void delete(Integer id) throws UserNotFoundException{
-		Long countById = repo.countById(id);
-		if(countById == null || countById == 0) {
-			throw new UserNotFoundException("Không tìm thấy danh mục nào với id : "+id);
-		}
-		repo.deleteById(id);
-	}
-	
-
-	public void updateCategoryEnableStatus(Integer id, boolean enabled) {
-		repo.updateCategoryEnableStatus(id, enabled);
-	}
 
 	public List<Category> listCategoriesUsedInForm() {
 		List<Category> categoriesUsedInForm = new ArrayList<>();
@@ -120,6 +93,33 @@ public class CategoryService {
 			listSubCategoriesUsedInForm(categoriesUsedInForm, subCategory, newSubLevel);
 		}
 		
+	}
+	
+	public Category save(Category category) {
+		
+		return repo.save(category);
+	}
+	
+	public Category get(Integer id) throws CategoryNotFoundException {
+		try {
+			return repo.findById(id).get();
+		} catch (NoSuchElementException ex) {
+			throw new CategoryNotFoundException("Không tìm thấy danh mục nào với id : "+id);
+		}
+		
+	}
+	
+	public void delete(Integer id) throws UserNotFoundException{
+		Long countById = repo.countById(id);
+		if(countById == null || countById == 0) {
+			throw new UserNotFoundException("Không tìm thấy danh mục nào với id : "+id);
+		}
+		repo.deleteById(id);
+	}
+	
+
+	public void updateCategoryEnableStatus(Integer id, boolean enabled) {
+		repo.updateCategoryEnableStatus(id, enabled);
 	}
 
 }

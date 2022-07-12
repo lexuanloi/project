@@ -94,7 +94,7 @@ public class CategoryController {
 		try {
 			service.delete(id);
 			redirectAttributes.addFlashAttribute("message", "Xoá danh mục id " + id + " thành công!");
-			return "redirect:/categories";
+			return "redirect:/categories/list_categories";
 
 		} catch (UserNotFoundException ex) {
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
@@ -103,7 +103,7 @@ public class CategoryController {
 	}
 
 
-	@RequestMapping("/{id}/enable/{status}")
+	@RequestMapping("/{id}/enabled/{status}")
 	public String updateCategoryEnableStatus(@PathVariable("id") Integer id,
 
 			@PathVariable("status") boolean enabled, RedirectAttributes redirectAttributes) {
