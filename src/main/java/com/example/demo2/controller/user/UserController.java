@@ -133,7 +133,7 @@ public class UserController {
 		try {
 			service.delete(id);
 				redirectAttributes.addFlashAttribute("message", "Xoá user id " +id+ " thành công!");
-			return "redirect:/users";
+			return "redirect:/users/list_users";
 
 		} catch (UserNotFoundException ex) {		
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());	

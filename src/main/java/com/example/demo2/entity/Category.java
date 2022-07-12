@@ -1,5 +1,6 @@
 package com.example.demo2.entity;
 
+import java.beans.Transient;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,6 +46,40 @@ public class Category {
 
 	public Category(Integer id) {
 		this.id = id;
+	}
+
+	public static Category copyIdAndName(Category category) {
+		Category copyCategory = new Category();
+		copyCategory.setId(category.getId());
+		copyCategory.setName(category.getName());
+		
+		return copyCategory;
+	}
+	
+	public static Category copyIdAndName(Integer id, String name) {
+		Category copyCategory = new Category();
+		copyCategory.setId(id);
+		copyCategory.setName(name);
+		
+		return copyCategory;
+	}
+
+	public static Category copyFull(Category category) {
+		Category copyCategory = new Category();
+		copyCategory.setId(category.getId());
+		copyCategory.setName(category.getName());
+		copyCategory.setImage(category.getImage());
+		copyCategory.setAlias(category.getAlias());
+		copyCategory.setEnabled(category.isEnabled());
+		
+		return copyCategory;
+	}
+	
+	public static Category copyFull(Category category, String name) {
+		Category copyCategory = Category.copyFull(category);
+		copyCategory.setName(name);
+		
+		return copyCategory;
 	}
 
 	public Category(String name) {
@@ -116,5 +151,17 @@ public class Category {
 		this.children = children;
 	}
 	
+	@Override
+	public String toString() {
+		return "Category [id ="+id+"name=" +name+"alias="+alias+"image="+image+"]";
+	}
+	
+	@Transient
+	public String getImagePath() {
+		if (id == null || image == null) return "/images/no_image.jpg";
+
+		return "/category-images/" + this.id + "/" + this.image;
+	}
+
 	
 }

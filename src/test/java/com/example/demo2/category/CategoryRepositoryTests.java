@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import org.springframework.test.annotation.Rollback;
 
+import com.example.demo2.dao.CategoryRepository;
 import com.example.demo2.entity.Category;
 
 

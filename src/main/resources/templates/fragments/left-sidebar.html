@@ -126,6 +126,8 @@
 								<!--end nav-item-->
 								<li class="nav-item" sec:authorize="hasAuthority('Admin')"><a class="nav-link"
 									th:href="@{/users/list_users}">Users</a></li>
+								<li class="nav-item" sec:authorize="hasAuthority('Admin')"><a class="nav-link"
+									th:href="@{/categories/list_categories}">Categories</a></li>
 								<!--end nav-item-->
 								<li class="nav-item"><a class="nav-link"
 									href="projects-create.html">Project Create</a></li>

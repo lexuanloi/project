@@ -1,33 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 				xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-    <head>
-        <!-- <meta charset="utf-8" />
-        <title> | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-        <meta content="Coderthemes" name="author" />
-        App favicon
-        <link rel="shortcut icon" href="assets/images/favicon.ico"> -->
+<head>
+	<meta charset="utf-8" />
+	
+	<title>[[${pageTitle}]]</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+	<meta content="" name="author" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-        <meta charset="utf-8" />
-                <title>Unikit - Admin & Dashboard Template</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-                <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-                <meta content="" name="author" />
-                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<!-- App favicon -->
+	<link rel="shortcut icon" th:href="@{./images/favicon.ico}">
 
-                <!-- App favicon -->
-                <link rel="shortcut icon" th:href="@{./images/favicon.ico}">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
 
-       
+ 	<!-- App css -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/js/bootstrap.min.js}" rel="stylesheet" type="text/js" />
+	<link th:href="@{/js/popper.min.js}" rel="stylesheet" type="text/js" />
+    <link th:href="@{/css/icons.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/css/app.min.css}" rel="stylesheet" type="text/css" />
+		
+	
 
-         <!-- App css -->
-         <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
-         <link th:href="@{/css/icons.min.css}" rel="stylesheet" type="text/css" />
-         <link th:href="@{/css/app.min.css}" rel="stylesheet" type="text/css" />
-
-    </head>
+</head>
 
     <body id="body" class="dark-sidebar">
         
