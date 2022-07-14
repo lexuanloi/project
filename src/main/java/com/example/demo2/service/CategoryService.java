@@ -36,7 +36,7 @@ public class CategoryService {
 				String name = "--" + subCategory.getName();
 				hierarchicalCategories.add(Category.copyFull(subCategory,name));
 				
-				listSubHierarchicalCategories(hierarchicalCategories, rootCategory, 1);
+				listSubHierarchicalCategories(hierarchicalCategories, subCategory, 1);
 			}
 		}
 		return hierarchicalCategories;
@@ -52,13 +52,14 @@ public class CategoryService {
 			}
 			name += subCategory.getName();
 			hierarchicalCategories.add(Category.copyFull(subCategory,name));
-			listSubHierarchicalCategories(hierarchicalCategories, subCategory, newSubLevel + 1);
+			listSubHierarchicalCategories(hierarchicalCategories, subCategory, newSubLevel);
 		}
 
 	}
 
 	public List<Category> listCategoriesUsedInForm() {
 		List<Category> categoriesUsedInForm = new ArrayList<>();
+		
 		Iterable<Category> categoriesInDB = repo.findAll();
 		
 		for (Category category : categoriesInDB) {
@@ -120,6 +121,19 @@ public class CategoryService {
 
 	public void updateCategoryEnableStatus(Integer id, boolean enabled) {
 		repo.updateCategoryEnableStatus(id, enabled);
+	}
+	
+	public String checkUnique(Integer id, String name, String alias) {
+		boolean isCreatingNew = (id == null || id == 0);
+		
+		Category categoryByName = repo.findByName(name);
+		
+		if (isCreatingNew) {
+			if (categoryByName != null) {
+				return "DuplicateName";
+			}
+		}
+		return "ok";
 	}
 
 }
