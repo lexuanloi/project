@@ -1,6 +1,6 @@
 package com.example.demo2.entity;
 
-import java.beans.Transient;
+import javax.persistence.Transient;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -71,6 +71,7 @@ public class Category {
 		copyCategory.setImage(category.getImage());
 		copyCategory.setAlias(category.getAlias());
 		copyCategory.setEnabled(category.isEnabled());
+		copyCategory.setHasChildren(category.getChildren().size() > 0);
 		
 		return copyCategory;
 	}
@@ -93,7 +94,13 @@ public class Category {
 		this(name);
 		this.parent = parent;
 	}
-
+	
+	public Category(Integer id, String name, String alias) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.alias = alias;
+	}
 
 	public Integer getId() {
 		return id;
@@ -163,5 +170,14 @@ public class Category {
 		return "/category-images/" + this.id + "/" + this.image;
 	}
 
+	@Transient
+	private boolean hasChildren;
+
+	public boolean isHasChildren() {
+		return hasChildren;
+	}
 	
+	public void setHasChildren(boolean hasChildren) {
+		this.hasChildren = hasChildren;
+	}
 }

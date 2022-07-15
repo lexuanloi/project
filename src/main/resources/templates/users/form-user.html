@@ -21,7 +21,8 @@
 	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
 	<link th:href="@{/css/icons.min.css}" rel="stylesheet" type="text/css" />
 	<link th:href="@{/css/app.min.css}" rel="stylesheet" type="text/css" />
-
+	<link th:href="@{/js/common_form.js}" rel="stylesheet" type="text/css" />
+ 
 </head>
 <body id="body" class="dark-sidebar">
 
@@ -32,49 +33,48 @@
 	<div th:replace="fragments/inc-header" id="inc-header"></div>
 
 	<div class="page-wrapper">
-
-            <div class="page-content-tab">
-
-                <div class="container-fluid">
-                    <!-- Page-Title -->
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="page-title-box">
-                                <div class="float-end">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="#">Unikit</a>
-                                        </li><!--end nav-item-->
-                                        <li class="breadcrumb-item"><a href="#">Projects</a>
-                                        </li><!--end nav-item-->
-                                        <li class="breadcrumb-item active">Users</li>
-                                    </ol>
-                                </div>
-                                <h4 class="page-title">Users</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+		<div class="page-content-tab">
+			<div class="container-fluid">
+				<!-- Page-Title -->
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="page-title-box">
+							<div class="float-end">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="#">Unikit</a></li>
+									<!--end nav-item-->
+									<li class="breadcrumb-item"><a href="#">Projects</a></li>
+									<!--end nav-item-->
+									<li class="breadcrumb-item active">Users</li>
+								</ol>
+							</div>
+							<h4 class="page-title">Users</h4>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="row">
 				<div class="col-lg-8 mx-auto">
 					<div class="card radius-10">
 						<div class="card-body">
-						
-							<form th:action="@{/users/save}" method="post" 
-                            enctype="multipart/form-data" th:object="${user}" 
-							onsubmit="return checkEmailUnique(this);">
-                            <input type="hidden" th:field="*{id}"/>
+							<form th:action="@{/users/save}" method="post"
+								enctype="multipart/form-data" th:object="${user}"
+								onsubmit="return checkEmailUnique(this);">
+								<input type="hidden" th:field="*{id}" />
 								<h5 class="mb-3">[[${pageTitle}]]</h5>
 								<div
 									class="mb-4 d-flex flex-column gap-3 align-items-center justify-content-center">
 									<div class="user-change-photo shadow">
-										<img id="thumbnail" alt="photos preview"  th:src="@{${user.photoImagePath}}">
-										<input type="file" id="imgupload" name="image" style="display: none;"  accept="image.png, image.jpg" multiple/>
-                                    	<input type="hidden" th:field="*{photo}"/>
+										<img id="thumbnail" alt="photos preview"
+											th:src="@{${user.photoImagePath}}"> <input type="file"
+											id="imgupload" name="image" style="display: none;"
+											accept="image.png, image.jpg" multiple /> <input
+											type="hidden" th:field="*{photo}" />
 									</div>
-                                   
-									<button type="button" onClick ="fn_saveimg()"class="btn btn-outline-dark btn-sm radius-30 px-4">      
-										<i class="fas fa-image"></i>
-										Change Photo
+
+									<button type="button" onClick="fn_saveimg()"
+										class="btn btn-outline-dark btn-sm radius-30 px-4">
+										<i class="fas fa-image"></i> Change Photo
 									</button>
 								</div>
 								<h5 class="mb-0 mt-4">User Information</h5>
@@ -82,7 +82,7 @@
 								<div class="row g-3">
 									<div class="col-6">
 										<label class="form-label">Email address</label> <input
-											type="email" class="form-control"  th:field="*{email}"
+											type="email" class="form-control" th:field="*{email}"
 											required minlength="8" maxlength="128"
 											placeholder="xyz@example.com">
 									</div>
@@ -99,11 +99,13 @@
 									</div>
 									<div class="col-6">
 										<label class="form-label">Password</label> <input
-											th:if="${user.id == null}" type="password" class="form-control" th:field="*{password}"
-											required minlength="4" maxlength="20" placeholder="password">
+											th:if="${user.id == null}" type="password"
+											class="form-control" th:field="*{password}" required
+											minlength="4" maxlength="20" placeholder="password">
 										<label class="form-label">Password</label> <input
-											th:if="${user.id != null}"type="password" class="form-control" th:field="*{password}"
-											minlength="4" maxlength="20" placeholder="password"> 
+											th:if="${user.id != null}" type="password"
+											class="form-control" th:field="*{password}" minlength="4"
+											maxlength="20" placeholder="password">
 									</div>
 									<div class="col-6">
 										<label class="form-label">Role</label>
@@ -120,17 +122,18 @@
 										<label class="form-label">Enable</label> <input
 											type="checkbox" th:field="*{enable}" />
 									</div>
-								</div>						
+								</div>
 								<div class="mt-3" align="center">
-									<input type="submit" class="btn btn-dark px-4" value="Save" />			
-									<a type="button" class="btn btn-blue px-4" th:href="@{/users/list_users}" >Cancel</a>									
+									<input type="submit" class="btn btn-dark px-4" value="Save" />
+									<a type="button" class="btn btn-blue px-4"
+										th:href="@{/users/list_users}">Cancel</a>
 								</div>
 							</form>
-						</div>			
+						</div>
 					</div>
 				</div>
 			</div>
-			
+
 			<!-- warning -->
 			<div class="modal  text-center" id="modalDialog" aria-hidden="true">
 				<div class="modal-dialog">
@@ -151,56 +154,55 @@
 				</div>
 			</div>
 			<!-- end warning -->
-			
-                <!--Start Rightbar-->                
-               	<div th:replace="fragments/right-bar" id="right-bar"></div>
-                 
-                <!--Start Footer-->
-				<div th:replace="fragments/inc-footer" id="inc-footer"></div>
-              
-            </div>            
-        </div>
 
-        <!-- Javascript  -->
+			<!--Start Rightbar-->
+			<div th:replace="fragments/right-bar" id="right-bar"></div>
+
+			<!--Start Footer-->
+			<div th:replace="fragments/inc-footer" id="inc-footer"></div>
+
+		</div>
+	</div>
+
+	<!-- Javascript  -->
 	<script type="text/javascript">
 		// $(document).ready(function(){
-        //     $("#imgupload").change(function(){
-        //         fileSize = this.files[0].size;
-        //         alert("File size: "+fileSize);
-        //         if (fileSize>500768) {
-        //             this.setCustomValidity("Bạn phải chọn ảnh ít hơn 500MB !");
-        //             this.reportValidity();
-        //         }else{
-        //             this.setCustomValidity("");
-        //             showImgThumbnail(this);
-        //         }
-        //     });
-        // });
-        function fn_saveimg(){
-            $("#imgupload").trigger("click");
-            $("#imgupload").change(function(){
-                fileSize = this.files[0].size;
-                // alert("File size: "+fileSize);
-                if (fileSize>500768) {
-                    alert("Bạn phải chọn ảnh ít hơn 500MB !");
-                    // this.setCustomValidity("Bạn phải chọn ảnh ít hơn 500MB !");
-                    // this.reportValidity();
-                }else{
-                    // this.setCustomValidity("");
-                    showImgThumbnail(this);
-                }
-                
-            });
-        }
+		//     $("#imgupload").change(function(){
+		//         fileSize = this.files[0].size;
+		//         alert("File size: "+fileSize);
+		//         if (fileSize>500768) {
+		//             this.setCustomValidity("Bạn phải chọn ảnh ít hơn 500MB !");
+		//             this.reportValidity();
+		//         }else{
+		//             this.setCustomValidity("");
+		//             showImgThumbnail(this);
+		//         }
+		//     });
+		// });
+		function fn_saveimg() {
+			$("#imgupload").trigger("click");
+			$("#imgupload").change(function() {
+				fileSize = this.files[0].size;
+				// alert("File size: "+fileSize);
+				if (fileSize > 500768) {
+					alert("Bạn phải chọn ảnh ít hơn 500MB !");
+					// this.setCustomValidity("Bạn phải chọn ảnh ít hơn 500MB !");
+					// this.reportValidity();
+				} else {
+					// this.setCustomValidity("");
+					showImgThumbnail(this);
+				}
+			});
+		}
 
-        function showImgThumbnail(input){
-            var reader = new FileReader();
-            reader.onload = function(e){
-                $("#thumbnail").attr("src", e.target.result);
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-			
+		function showImgThumbnail(input) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$("#thumbnail").attr("src", e.target.result);
+			};
+			reader.readAsDataURL(input.files[0]);
+		}
+
 		function checkEmailUnique(form) {
 			url = "[[@{/users/check_email}]]";
 			userEmail = $("#email").val();
@@ -212,34 +214,31 @@
 				_csrf : csrfValue
 			};
 
-			$.post(
-					url,
-					params,
-					function(response) {
-						if (response == "ok") {
-                            form.submit(); 
-						} else if (response == "Duplicated") {
-							showModalDialog("Warning",
-									"Email đã được đăng kí: " + userEmail);
-						} else {
-							showModalDialog("Lỗi kết nối",
-									"Không thể kết nối tới máy chủ");
-						}
-
-					}).fail(
-					function() {
-						showModalDialog("Lỗi kết nối",
-								"Không thể kết nối tới máy chủ");
-					});
-
+			$.post(url, params, function(response) {
+				if (response == "ok") {
+					form.submit();
+				} else if (response == "Duplicated") {
+					showWarningModal("Email đã được đăng kí: " + userEmail);
+				} else {
+					showErrorModal("Không thể kết nối tới máy chủ");
+				}
+			}).fail(function() {
+				showErrorModal("Không thể kết nối tới máy chủ");
+			});
 			return false;
 		}
-
 		function showModalDialog(title, message) {
 			$("#modalTitle").text(title);
 			$("#modalBody").text(message);
 			$("#modalDialog").modal("show");
+		}
 
+		function showErrorModal(message) {
+			showModalDialog("Error", message);
+		}
+
+		function showWarningModal(message) {
+			showModalDialog("Warning", message);
 		}
 	</script>
 

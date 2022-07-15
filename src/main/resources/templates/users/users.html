@@ -24,182 +24,159 @@
 
 </head>
 
-    <body id="body" class="dark-sidebar">
-    
-        <!-- leftbar-tab-menu -->      
-        <div th:replace="fragments/left-sidebar" id="left-sidebar"></div>        
+<body id="body" class="dark-sidebar">
 
-        <!-- Top Bar Start -->                          
-       	<div th:replace="fragments/inc-header" id="inc-header"></div>                       
+	<!-- leftbar-tab-menu -->
+	<div th:replace="fragments/left-sidebar" id="left-sidebar"></div>
 
-        <div class="page-wrapper">
-            <div class="page-content-tab">
+	<!-- Top Bar Start -->
+	<div th:replace="fragments/inc-header" id="inc-header"></div>
 
-                <div class="container-fluid">
-                    <!-- Page-Title -->
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="page-title-box">
-                                <div class="float-end">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="#">Unikit</a>
-                                        </li><!--end nav-item-->
-                                        <li class="breadcrumb-item"><a href="#">Projects</a>
-                                        </li><!--end nav-item-->
-                                        <li class="breadcrumb-item active">Users</li>
-                                    </ol>
-                                </div>
-                                <h4 class="page-title">Users</h4>
-                            </div>
-                        </div>
-                    </div>
+	<div class="page-wrapper">
+		<div class="page-content-tab">
+			<div class="container-fluid">
+				<!-- Page-Title -->
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="page-title-box">
+							<div class="float-end">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="#">Unikit</a></li>
+									<!--end nav-item-->
+									<li class="breadcrumb-item"><a href="#">Projects</a></li>
+									<!--end nav-item-->
+									<li class="breadcrumb-item active">Users</li>
+								</ol>
+							</div>
+							<h4 class="page-title">Users</h4>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="margin-bottom: 20px;">
+					<div class="col-4">
+						<a class="btn btn-outline-blue btn-sm px-4 "
+							th:href="@{/users/new-user}">Thêm User</a>
+					</div>
+					<div class="col-4" style="text-align: right;">
+						<a th:href="@{/users/export/csv}" type="button" class="btn btn-primary"><i class="fas fa-file-csv"></i></a> 
+						<a th:href="@{/users/export/excel}" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i></a>
+						<a th:href="@{/users/export/pdf}" type="button" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
+					</div>
+				</div>
+				<!--end row-->
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-header">
+								<div class="row align-items-center">
+									<div class="col">
+										<h4 class="card-title">Tất cả người dùng</h4>
+									</div>
+									<!--end col-->
+									<div th:if="${message != null}"
+										class="alert alert-success text-center" align="center">[[${message}]]</div>
+								</div>
+								<!--end row-->
+							</div>
+							<!--end card-header-->
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<thead class="thead-light">
+											<tr>
+												<th th:replace="fragments/fragments :: column_link('id', 'ID')" />
+												<th th:replace="fragments/fragments :: column_link('firstName', 'Name')" />
+												<th th:replace="fragments/fragments :: column_link('email', 'Email')" />
+												<th>Rols</th>
+												<th>Contact No</th>
+												<th th:replace="fragments/fragments :: column_link('enable', 'Status')" />
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="user : ${listUsers}">
+												<td>[[${user.id}]]</td>
+												<td><img th:src="@{${user.photoImagePath}}" alt="" class="rounded-circle thumb-sm me-1">
+													[[${user.firstName}]]</td>
+												<td>[[${user.email}]]</td>
+												<td>[[${user.roles}]]</td>
+												<td>+21 1234 56789</td>
+												<td><a class="badge badge-soft-success fas fa-check-circle" title="Disable this user"
+													th:if="${user.enable == true}" th:href="@{'/users/' + ${user.id} + '/enable/false'}" >Active</a>
+													<a class="badge badge-soft-danger fas fa-check-circle" title="Enable this user"
+													th:if="${user.enable == false}" th:href="@{'/users/' + ${user.id} + '/enable/true'}">Inactive</a></td>
+												<td><a th:href="@{'/users/edit/'+${user.id}}"><i class="las la-pen text-secondary font-16"></i></a>
+													<a th:href="@{'/users/delete/'+${user.id}}" th:userId="${user.id}" class="delete">
+														<i class="las la-trash-alt text-secondary font-16"></i></a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 
-                    <div class="row" style="margin-bottom: 20px;">
-                    	<div class="col">
-                        	<a class="btn btn-outline-blue btn-sm px-4 " th:href="@{/users/new-user}">Thêm User</a>
-                        </div>
-                    	<div class="col" style="text-align: right;">
-                        	<a th:href="@{/users/export/csv}" type="button" class="btn btn-primary"><i class="fas fa-file-csv"></i></a>
-                        	<a th:href="@{/users/export/excel}" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i></a>
-                        	<a th:href="@{/users/export/pdf}" type="button" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
-                        </div>           
-                    </div><!--end row-->    
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="row align-items-center">
-                                        <div class="col">                      
-                                            <h4 class="card-title">Tất cả người dùng</h4>             
-                                        </div><!--end col-->       
-                                        <div th:if="${message != null}"  class="alert alert-success text-center" align="center">[[${message}]]</div>                                
-                                    </div>  <!--end row-->                                  
-                                </div><!--end card-header-->
-                                <div class="card-body">    
-                                    <div class="table-responsive">
-                                        <table class="table table-striped">
-                                            <thead class="thead-light">
-                                            <tr>
-                                             	<th th:replace="fragments/fragments :: column_link('id', 'ID')"/>
-                                             	<th th:replace="fragments/fragments :: column_link('firstName', 'Name')"/>
-                                             	<th th:replace="fragments/fragments :: column_link('email', 'Email')"/>                                            	
-                                                <th>Rols</th>
-                                                <th>Contact No</th>
-                                             	<th th:replace="fragments/fragments :: column_link('enable', 'Status')"/>                                            	
-                                                <th>Action</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr th:each="user : ${listUsers}">
-                                            	<td>[[${user.id}]]</td>
-                                                <td>
-                                                <img th:src="@{${user.photoImagePath}}" alt="" class="rounded-circle thumb-sm me-1">
-                                                [[${user.firstName}]]                                                                                           
-                                                </td>
-                                                <td>[[${user.email}]]</td>
-                                                <td>[[${user.roles}]]</td>
-                                                <td>+21 1234 56789</td>
-                                                <td>
-                                                <a class="badge badge-soft-success fas fa-check-circle" th:if="${user.enable == true}" th:href="@{'/users/' + ${user.id} + '/enable/false'}" title="Disable this user">Active</a>
-                                                <a class="badge badge-soft-danger fas fa-check-circle" th:if="${user.enable == false}" th:href="@{'/users/' + ${user.id} + '/enable/true'}" title="Enable this user">Inactive</a>
-                                                
-                                                </td>
-                                                <td>                                                       
-                                                    <a th:href="@{'/users/edit/'+${user.id}}"><i class="las la-pen text-secondary font-16"></i></a>
-                                                    <a th:href="@{'/users/delete/'+${user.id}}" th:userId="${user.id}" class="delete"><i class="las la-trash-alt text-secondary font-16"></i></a>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    
-								<!-- notification -->									
-									<div class="modal  text-center" id="comfirmModal" >
-									    <div class="modal-dialog">
-									        <div class="modal-content">
-									            <div class="modal-header">
-									                <h4 class="modal-title">Delete Comfirmtion</h4>
-									                <button type="button" class="close"
-									                    data-dismiss="modal">&times;</button>
-									            </div>
-									            <div class="modal-body">
-									                <span id="comfirmText"></span>
-									            </div>
-									            <div class="modal-footer">
-									                <a class="btn btn-success" href="" id="yes-btn">Yes</a>
-									                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-									            </div>
-									        </div>
-									    </div>
-									</div>	
+								<!-- notification -->
+								<div class="modal  text-center" id="comfirmModal">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">Delete Comfirmtion</h4>
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+											</div>
+											<div class="modal-body">
+												<span id="comfirmText"></span>
+											</div>
+											<div class="modal-footer">
+												<a class="btn btn-success" href="" id="yes-btn">Yes</a>
+												<button type="button" class="btn btn-danger"
+													data-dismiss="modal">No</button>
+											</div>
+										</div>
+									</div>
+								</div>
 								<!-- end notification -->
+								<div th:replace="fragments/fragments :: pagination('/users', 'users')"></div>
 								
-                                    <div class="row">      
-	                                    <div class="col">
-	                                    </div>                               
-                                        <div class="col-auto" th:if="${totalItems > 0}">
-                                            <nav aria-label="...">
-                                            <span>user từ [[${startCount}]] đến [[${endCount}]] của [[${totalItems}]]</span>
-                                                <ul class="pagination pagination-sm mb-0">
-	                                                <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-	                                                	<a th:replace="fragments/fragments :: page_link('1', 'First')"></a>
-	                                                </li>
-                                                    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                                                        <a th:replace="fragments/fragments :: page_link(${currentPage - 1}, 'Previous')"></a>
-                                                    </li>
-                                                    <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}" 
-                                                    	th:each="i : ${#numbers.sequence(1, totalPages)}">
-                                                    	<a th:replace="fragments/fragments :: page_link(${i}, ${i})"></a>
-                                                    </li>                                                   
-                                                    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                                                        <a th:replace="fragments/fragments :: page_link(${currentPage + 1}, 'Next')"></a>
-                                                    </li>
-                                                    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                                                    	<a th:replace="fragments/fragments :: page_link(${totalPages}, 'Last')">Last</a>
-                                                    </li>
-                                                </ul><!--end pagination-->
-                                            </nav><!--end nav-->       
-                                         </div> <!--end col-->   
-                                         <div th:unless="${totalItems > 0}" style="text-align: center;">
-                                         <strong>No users found</strong>
-                                         </div>                            
-                                    </div>                                 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Start Rightbar-->
+			<div th:replace="fragments/right-bar" id="right-bar"></div>
 
-                <!--Start Rightbar-->
-                <div th:replace="fragments/right-bar" id="right-bar"></div>
-                 
-                <!--Start Footer-->
-				<div th:replace="fragments/inc-footer" id="inc-footer"></div>          
+			<!--Start Footer-->
+			<div th:replace="fragments/inc-footer" id="inc-footer"></div>
+		</div>
+	</div>
 
-            </div>
-        </div>
+	<!-- Javascript  -->
+	<script title="text/javascript">
+		moduleURL = "[[@{/users}]]";
 
-        <!-- Javascript  --> 
-        <script title="text/javascript">
-            $(document).ready(function(){
-                $(".delete").on("click",function(e){
-                    e.preventDefault();
-                    link = $(this);
-                    userId = link.attr("userId");
-                    $("#comfirmText").text("Bạn có chắc chắn muốn xoá User id "+userId)
-                    $("#yes-btn").attr("href",link.attr("href"));
-                    $("#comfirmModal").modal("show");
-                });
-            });
-            
-            function clearFilter(){
-				window.location = "[[@{/users/list_users}]]"
-            }
-        </script>
+		$(document).ready(
+				function() {
+					$(".delete").on(
+							"click",
+							function(e) {
+								e.preventDefault();
+								link = $(this);
+								userId = link.attr("userId");
+								$("#comfirmText").text(
+										"Bạn có chắc chắn muốn xoá User id "
+												+ userId)
+								$("#yes-btn").attr("href", link.attr("href"));
+								$("#comfirmModal").modal("show");
+							});
+				});
 
-        <!-- App js -->
-        <script src="js/app.js"></script>
+		function clearFilter() {
+			window.location = "[[@{/users/list_users}]]"
+		}
+	</script>
 
-    </body>
-    <!--end body-->
+	<!-- App js -->
+	<script src="js/app.js"></script>
+	
+</body>
+<!--end body-->
 </html>

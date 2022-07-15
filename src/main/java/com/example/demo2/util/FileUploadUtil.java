@@ -9,6 +9,8 @@ import java.nio.file.StandardCopyOption;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import ch.qos.logback.classic.Logger;
+
 public class FileUploadUtil {
 	//lưu file ảnh user
 	public static void saveFile(String uploadDir, String fileName, MultipartFile multipartFile)	throws IOException {
@@ -41,6 +43,16 @@ public class FileUploadUtil {
 			});
 		} catch (IOException ex) {
 			System.out.println("Không tìm thấy thư mục: " + dirPath);
+		}
+	}
+	
+	public static void removeDir(String dir) {
+		clearDir(dir);
+		
+		try {
+			Files.delete(Paths.get(dir));
+		} catch (IOException e) {
+			System.out.println("Không tìm thấy thư mục: " + dir);
 		}
 	}
 }
