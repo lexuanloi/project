@@ -53,15 +53,30 @@
 					</div>
 				</div>
 				<div class="row" style="margin-bottom: 20px;">
-					<div class="col-3">
+					<div class="col-4">
 						<a class="btn btn-outline-blue btn-sm px-4 "
 							th:href="@{/categories/new-category}">Thêm Danh Mục</a>
 					</div>
-					<div class="col-3">
-						<div th:replace="fragments/fragments :: search_form('/categories/list_categories/page/1')"></div>
+					<div class="col-4">
+						<ul class="list-unstyled topbar-nav mb-0">
+							
+							<li class="hide-phone app-search">
+								<form role="search" th:action="@{/users/page/1}" method="get">
+									<input type="hidden" name="sortField" th:value="${sortField}" />
+									<input type="hidden" name="sortDir" th:value="${sortDir}" /> <input
+										type="search" name="keyword" th:value="${keyword}"
+										class="form-control top-search mb-0"
+										placeholder="Type text...">
+									<button type="submit">
+										<i class="ti ti-search"></i>
+									</button>
+								</form>
+							</li>
+							<button type="button" class="btn btn-secondary"
+								onclick="clearFilter()">Clear</button>
+						</ul>
 					</div>
-					<div class="col-3"></div>
-					<div class="col-3" style="text-align: right;">
+					<div class="col-4" style="text-align: right;">
 						<a th:href="@{/users/export/csv}" type="button"
 							class="btn btn-primary"><i class="fas fa-file-csv"></i></a> <a
 							th:href="@{/users/export/excel}" type="button"
@@ -93,7 +108,7 @@
 											<tr>
 												<th>ID</th>
 												<th>Hình ảnh</th>
-												<th><a th:href="@{'/categories/list_categories/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir}+${keyword != null ? '&keyword=' + keyword : ' '}}">Tên Danh Mục</a>
+												<th><a th:href="@{'/categories/list_categories/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir}}">Tên Danh Mục</a>
 													<span th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 												</th>
 												<th>Alias</th>
@@ -142,14 +157,7 @@
 									</div>
 								</div>
 								<!-- end notification -->
-								<div th:if="${keyword != null}" class="text-center">
-									<span>search result does not show categories in hierarchical form </span><br>
-									<span>kết quả tìm kiếm không hiển thị danh mục ở dạng phân cấp</span>
-									<div th:replace="fragments/fragments :: pagination('/categories/list_categories', 'Danh mục')"></div>
-								</div>
-								<th:block th:unless="${keyword != null}">
-									<div th:replace="fragments/fragments :: pagination('/categories/list_categories', 'Danh mục top-level')"></div>
-								</div>
+								<div th:replace="fragments/fragments :: pagination('/categories/list_categories', 'Danh mục')"></div>
 							</div>
 						</div>
 					</div>

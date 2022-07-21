@@ -53,15 +53,11 @@
 					</div>
 				</div>
 				<div class="row" style="margin-bottom: 20px;">
-					<div class="col-3">
+					<div class="col-4">
 						<a class="btn btn-outline-blue btn-sm px-4 "
 							th:href="@{/users/new-user}">Thêm User</a>
 					</div>
-					<div class="col-3">
-						<div th:replace="fragments/fragments :: search_form('/users/page/1')"></div>
-					</div>
-					<div class="col-3"></div>
-					<div class="col-3" style="text-align: right;">
+					<div class="col-4" style="text-align: right;">
 						<a th:href="@{/users/export/csv}" type="button" class="btn btn-primary"><i class="fas fa-file-csv"></i></a> 
 						<a th:href="@{/users/export/excel}" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i></a>
 						<a th:href="@{/users/export/pdf}" type="button" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
