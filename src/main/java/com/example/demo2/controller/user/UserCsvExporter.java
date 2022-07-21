@@ -16,12 +16,13 @@ import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
+import com.example.demo2.conf.AbstractExporter;
 import com.example.demo2.entity.User;
 
 public class UserCsvExporter extends AbstractExporter{
 	
 	public void export(List<User> listUsers, HttpServletResponse response) throws IOException {
-		super.setResponseHeader(response, "text/csv; charset=UTF-8", ".csv");
+		super.setResponseHeader(response, "text/csv; charset=UTF-8", ".csv", "users_");
 		
 		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
 

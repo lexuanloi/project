@@ -21,6 +21,7 @@ import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
+import com.example.demo2.conf.AbstractExporter;
 import com.example.demo2.entity.User;
 
 public class UserExcelExporter extends AbstractExporter {
@@ -65,7 +66,7 @@ public class UserExcelExporter extends AbstractExporter {
 
 
 	public void export(List<User> listUsers, HttpServletResponse response) throws IOException {
-		super.setResponseHeader(response, "aplication/octet-stream", ".xlsx");
+		super.setResponseHeader(response, "aplication/octet-stream", ".xlsx", "users_");
 		
 		writeHeaderLine();
 		writeDataLines(listUsers);

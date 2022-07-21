@@ -3,8 +3,8 @@
 <body>
 	
 	<!-- Phân trang -->
- 	<th th:fragment="column_link(fieldName, columnLabel)">
- 		<a th:href="@{'/users/page/' + ${currentPage} + '?sortField=' + ${fieldName} +'&sortDir=' + ${sortField != fieldName ? sortDir : reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ' '}}">
+ 	<th th:fragment="column_link(moduleURL,fieldName, columnLabel)">
+ 		<a th:href="@{${moduleURL}+'/page/' + ${currentPage} + '?sortField=' + ${fieldName} +'&sortDir=' + ${sortField != fieldName ? sortDir : reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ' '}}">
 			[[${columnLabel}]]
 		</a>
 		<span th:if="${sortField== fieldName}"
@@ -75,8 +75,7 @@
 					</button>
 				</form>
 			</li>
-			<button type="button" class="btn btn-secondary"
-				onclick="clearFilter()">Clear</button>
+			<button type="button" class="btn btn-secondary" onclick="clearFilter()">Clear</button>
 		</ul>
 	</div>
 	

@@ -62,11 +62,11 @@
 					</div>
 					<div class="col-3"></div>
 					<div class="col-3" style="text-align: right;">
-						<a th:href="@{/users/export/csv}" type="button"
+						<a th:href="@{/categories/export/csv}" type="button"
 							class="btn btn-primary"><i class="fas fa-file-csv"></i></a> <a
-							th:href="@{/users/export/excel}" type="button"
+							th:href="@{/categories/export/excel}" type="button"
 							class="btn btn-success"><i class="fas fa-file-excel"></i></a> <a
-							th:href="@{/users/export/pdf}" type="button"
+							th:href="@{/categories/export/pdf}" type="button"
 							class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
 					</div>
 				</div>
@@ -91,13 +91,13 @@
 									<table class="table table-striped">
 										<thead class="thead-light">
 											<tr>
-												<th>ID</th>
+												<th th:replace="fragments/fragments :: column_link('/categories/list_categories','id', 'ID')" />
 												<th>Hình ảnh</th>
 												<th><a th:href="@{'/categories/list_categories/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir}+${keyword != null ? '&keyword=' + keyword : ' '}}">Tên Danh Mục</a>
 													<span th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 												</th>
-												<th>Alias</th>
-												<th>Trạng thái</th>
+												<th th:replace="fragments/fragments :: column_link('/categories/list_categories','alias', 'alias')" />
+												<th th:replace="fragments/fragments :: column_link('/categories/list_categories','enable', 'Trạng thái')" />
 												<th>Chức năng</th>
 											</tr>
 										</thead>

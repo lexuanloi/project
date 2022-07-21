@@ -3,6 +3,8 @@ package com.example.demo2.controller.category;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo2.controller.user.UserCsvExporter;
+import com.example.demo2.controller.user.UserExcelExporter;
+import com.example.demo2.controller.user.UserPdfExporter;
 import com.example.demo2.entity.Category;
 import com.example.demo2.entity.CategoryPageInfo;
 import com.example.demo2.entity.Role;
@@ -147,7 +152,32 @@ public class CategoryController {
 		String status = enabled ? "enabled" : "disabled";
 		String message = "Danh mục id " + id + " đã được đổi sang trạng thái " + status;
 		redirectAttributes.addFlashAttribute("message", message);
+		
 		return "redirect:/categories/list_categories";
 	}
+	
+	@RequestMapping("/export/csv")
+	public void exportCSV(HttpServletResponse response) throws IOException {
+		List<Category> listCategories = service.listCategoriesUsedInForm();
+		
+		CategoryCsvExporter exporter = new CategoryCsvExporter();
+		exporter.export(listCategories, response);		
+	}
 
+	@RequestMapping("/export/excel")
+	public void exportExcel(HttpServletResponse response) throws IOException {
+		List<Category> listCategories = service.listCategoriesUsedInForm();
+		
+		
+		CategoryExcelExporter exporter = new CategoryExcelExporter();
+		exporter.export(listCategories, response);		
+	}
+	
+	@RequestMapping("/export/pdf")
+	public void exportPdf(HttpServletResponse response) throws IOException {
+		List<Category> listCategories = service.listCategoriesUsedInForm();
+		
+		CategoryPdfExporter exporter = new CategoryPdfExporter();
+		exporter.export(listCategories, response);		
+	}
 }
