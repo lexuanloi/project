@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
+	
+	<!-- Phân trang -->
  	<th th:fragment="column_link(fieldName, columnLabel)">
  		<a th:href="@{'/users/page/' + ${currentPage} + '?sortField=' + ${fieldName} +'&sortDir=' + ${sortField != fieldName ? sortDir : reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ' '}}">
 			[[${columnLabel}]]
@@ -11,8 +13,11 @@
 	</th>
 	<a th:fragment="page_link(moduleURL, pageNum, label)"
 		class="page-link"
-	 	th:href="@{${moduleURL} + '/page/' + ${pageNum} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ' '}}">[[${label}]]</a>
+		th:href="@{${moduleURL} + '/page/' + ${pageNum} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ' '}}">
+		[[${label}]]
+	</a>
 
+	<!-- Pagination -->
 	<div th:fragment="pagination(moduleURL, entityName)" th:remove="tag">
 		<div class="row">
 			<div class="col"></div>
@@ -51,9 +56,29 @@
 			</div>
 			<!--end col-->
 			<div th:unless="${totalItems > 0}" style="text-align: center;">
-				<strong>No [[${entityName}]] found</strong>
+				<strong>Không tìm thấy [[${entityName}]]</strong>
 			</div>
 		</div>
 	</div>
+	
+	<!-- search -->
+	<div th:fragment="search_form(moduleURL)">
+		<ul class="list-unstyled topbar-nav mb-0">
+			<li class="hide-phone app-search">
+				<form role="search" th:action="@{${moduleURL}}" method="get">
+					<input type="hidden" name="sortField" th:value="${sortField}" /> <input
+						type="hidden" name="sortDir" th:value="${sortDir}" /> <input
+						type="search" name="keyword" th:value="${keyword}"
+						class="form-control top-search mb-0" placeholder="Type text...">
+					<button type="submit">
+						<i class="ti ti-search"></i>
+					</button>
+				</form>
+			</li>
+			<button type="button" class="btn btn-secondary"
+				onclick="clearFilter()">Clear</button>
+		</ul>
+	</div>
+	
 </body>
 </html>
