@@ -146,9 +146,9 @@ public class CategoryController {
 
 
 	@RequestMapping("/{id}/enabled/{status}")
-	public String updateCategoryEnableStatus(@PathVariable("id") Integer id,
+	public String updateCategoryEnabledStatus(@PathVariable("id") Integer id,
 			@PathVariable("status") boolean enabled, RedirectAttributes redirectAttributes) {
-		service.updateCategoryEnableStatus(id, enabled);
+		service.updateCategoryEnabledStatus(id, enabled);
 		String status = enabled ? "enabled" : "disabled";
 		String message = "Danh mục id " + id + " đã được đổi sang trạng thái " + status;
 		redirectAttributes.addFlashAttribute("message", message);

@@ -20,7 +20,7 @@ public interface UserRepository extends PagingAndSortingRepository<User, Integer
 	@Query("Select u from User u where concat(u.id, ' ' , u.email, ' ' , u.firstName, ' ' ," + " u.lastName) like %?1%")
 	public Page<User> findAll(String ketword, Pageable pageable);
 	
-	@Query("Update User u set u.enable =?2 where u.id =?1")
+	@Query("Update User u set u.enabled =?2 where u.id =?1")
 	@Modifying
-	public void updateEnableStatus(Integer id, boolean enable);
+	public void updateEnabledStatus(Integer id, boolean enabled);
 }

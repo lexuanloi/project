@@ -70,7 +70,7 @@ public class UserRepositoryTest {
 	@Test
 	public void testUpdateUserDetails() {
 		User userLoi = repo.findById(1).get();
-		userLoi.setEnable(true);
+		userLoi.setEnabled(true);
 		userLoi.setEmail("loi11111@gmail.com");
 		repo.save(userLoi);
 		

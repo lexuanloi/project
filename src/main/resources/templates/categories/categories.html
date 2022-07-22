@@ -93,11 +93,10 @@
 											<tr>
 												<th th:replace="fragments/fragments :: column_link('/categories/list_categories','id', 'ID')" />
 												<th>Hình ảnh</th>
-												<th><a th:href="@{'/categories/list_categories/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir}+${keyword != null ? '&keyword=' + keyword : ' '}}">Tên Danh Mục</a>
-													<span th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-												</th>
+												<th th:replace="fragments/fragments :: column_link('/categories/list_categories','name', 'Category Name')" />
+												
 												<th th:replace="fragments/fragments :: column_link('/categories/list_categories','alias', 'alias')" />
-												<th th:replace="fragments/fragments :: column_link('/categories/list_categories','enable', 'Trạng thái')" />
+												<th th:replace="fragments/fragments :: column_link('/categories/list_categories','enabled', 'Trạng thái')" />
 												<th>Chức năng</th>
 											</tr>
 										</thead>
@@ -109,38 +108,14 @@
 													th:src="@{${cat.imagePath}}"></td>
 												<td>[[${cat.name}]]</td>
 												<td>[[${cat.alias}]]</td>
-												<td><a class="badge badge-soft-success fas fa-check-circle" title="Disable this category"
-													th:if="${cat.enabled == true}" th:href="@{'/categories/' + ${cat.id} + '/enabled/false'}">Active</a>
-													<a class="badge badge-soft-danger fas fa-check-circle" title="Enable this category"
-													th:if="${cat.enabled == false}" th:href="@{'/categories/' + ${cat.id} + '/enabled/true'}">Inactive</a>
-												</td>
-												<td><a th:href="@{'/categories/edit/'+${cat.id}}"><i class="las la-pen text-secondary font-16"></i></a>
-													<th:block th:if="${cat.hasChildren == false}">
-													<a th:href="@{'/categories/delete/'+${cat.id}}" th:entityId="${cat.id}" class="delete"><i class="las la-trash-alt text-secondary font-16"></i></a>
-												</td>
+												<td th:replace="fragments/fragments :: status(${cat.enabled}, 'category', '/categories/' + ${cat.id})"/>
+												<td th:replace="fragments/fragments :: actions('/categories/edit/'+${cat.id}, '/categories/delete/'+${cat.id}, ${!cat.hasChildren}, ${cat.id})"/>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 								<!-- notification -->
-								<div class="modal  text-center" id="comfirmModal">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h4 class="modal-title">Delete Comfirmtion</h4>
-												<button type="button" class="close" data-dismiss="modal">&times;</button>
-											</div>
-											<div class="modal-body">
-												<span id="comfirmText"></span>
-											</div>
-											<div class="modal-footer">
-												<a class="btn btn-success" href="" id="yes-btn">Yes</a>
-												<button type="button" class="btn btn-danger"
-													data-dismiss="modal">No</button>
-											</div>
-										</div>
-									</div>
-								</div>
+								<td th:replace="fragments/fragments :: modal_delete"/>
 								<!-- end notification -->
 								<div th:if="${keyword != null}" class="text-center">
 									<span>search result does not show categories in hierarchical form </span><br>

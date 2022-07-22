@@ -57,7 +57,7 @@ public class UserPdfExporter extends AbstractExporter{
 			table.addCell(user.getFirstName());
 			table.addCell(user.getLastName());
 			table.addCell(user.getRoles().toString());
-			table.addCell(String.valueOf(user.isEnable()));
+			table.addCell(String.valueOf(user.isEnabled()));
 		}
 		
 	}

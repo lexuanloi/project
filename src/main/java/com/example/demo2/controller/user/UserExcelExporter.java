@@ -95,7 +95,7 @@ public class UserExcelExporter extends AbstractExporter {
 			createCell(row, columnIndex++, user.getFirstName(), cellStyle);
 			createCell(row, columnIndex++, user.getLastName(), cellStyle);
 			createCell(row, columnIndex++, user.getRoles().toString(), cellStyle);
-			createCell(row, columnIndex++, user.isEnable(), cellStyle);
+			createCell(row, columnIndex++, user.isEnabled(), cellStyle);
 		}
 		
 	}

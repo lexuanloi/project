@@ -36,7 +36,7 @@ public class UserController {
 	
 	@RequestMapping("/list_users")
 	public String listFirstPage(Model model) {
-		return listByPage(1, model, "firstName", "asc", null);
+		return listByPage(1, model, "id", "asc", null);
 	}
 	
 	@RequestMapping("/page/{pageNum}")
@@ -77,7 +77,7 @@ public class UserController {
 		List<Role> listRoles = service.listRoles();
 		
 		User user = new User();
-		user.setEnable(true);
+		user.setEnabled(true);
 		model.addAttribute("user",user);
 		model.addAttribute("listRoles",listRoles);
 		model.addAttribute("pageTitle", "New User");
@@ -141,11 +141,11 @@ public class UserController {
 		return "redirect:/users/list_users";
 	}
 	
-	@RequestMapping("/{id}/enable/{status}")
-	public String updateUserEnableStatus(@PathVariable("id") Integer id,
-					@PathVariable("status") boolean enable, RedirectAttributes redirectAttributes) {
-		service.updateUserEnableStatus(id, enable);
-		String status = enable ? "enable" : "disable";
+	@RequestMapping("/{id}/enabled/{status}")
+	public String updateUserEnabledStatus(@PathVariable("id") Integer id,
+					@PathVariable("status") boolean enabled, RedirectAttributes redirectAttributes) {
+		service.updateUserEnabledStatus(id, enabled);
+		String status = enabled ? "enable" : "disable";
 		String message = "User id " + id +" đã được đổi sang trạng thái " + status;
 		redirectAttributes.addFlashAttribute("message", message);
 		return "redirect:/users/list_users";

@@ -61,7 +61,7 @@ public class ShopMeUserDetails implements org.springframework.security.core.user
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return user.isEnable();
+		return user.isEnabled();
 	}
 	
 

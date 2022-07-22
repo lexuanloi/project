@@ -159,8 +159,8 @@ public class CategoryService {
 	}
 	
 
-	public void updateCategoryEnableStatus(Integer id, boolean enabled) {
-		repo.updateEnableStatus(id, enabled);
+	public void updateCategoryEnabledStatus(Integer id, boolean enabled) {
+		repo.updateEnabledStatus(id, enabled);
 	}
 	
 	public String checkUnique(Integer id, String name, String alias) {
