@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="utf-8" />
+	<title>[[${pageTitle}]]</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+	<meta content="" name="author" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	
+	<!-- App favicon -->
+	<link rel="shortcut icon" href="images/favicon.ico">
+
+<script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+<!-- App css -->
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/css/icons.min.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/css/app.min.css}" rel="stylesheet" type="text/css" />
+
+</head>
+<body id="body" class="dark-sidebar">
+
+	<!-- leftbar-tab-menu -->
+	<div th:replace="fragments/left-sidebar" id="left-sidebar"></div>
+
+	<!-- Top Bar Start -->
+	<div th:replace="fragments/inc-header" id="inc-header"></div>
+
+	<div class="page-wrapper">
+		<div class="page-content-tab">
+
+			<div class="container-fluid">
+				<!-- Page-Title -->
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="page-title-box">
+							<div class="float-end">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="#">Unikit</a></li>
+									<!--end nav-item-->
+									<li class="breadcrumb-item"><a href="#">Projects</a></li>
+									<!--end nav-item-->
+									<li class="breadcrumb-item active">Categories</li>
+								</ol>
+							</div>
+							<h4 class="page-title">Thương hiệu</h4>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="margin-bottom: 20px;">
+					<div class="col-3">
+						<a class="btn btn-outline-blue btn-sm px-4 "
+							th:href="@{/brands/new-brand}">Thêm Thương hiệu</a>
+					</div>
+					<div class="col-3">
+						<div th:replace="fragments/fragments :: search_form('/categories/list_categories/page/1')"></div>
+					</div>
+					<div class="col-3"></div>
+					<div class="col-3" style="text-align: right;">
+						<a th:href="@{/categories/export/csv}" type="button"
+							class="btn btn-primary"><i class="fas fa-file-csv"></i></a> <a
+							th:href="@{/categories/export/excel}" type="button"
+							class="btn btn-success"><i class="fas fa-file-excel"></i></a> <a
+							th:href="@{/categories/export/pdf}" type="button"
+							class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
+					</div>
+				</div>
+				<!--end row-->
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-header">
+								<div class="row align-items-center">
+									<div class="col">
+										<h4 class="card-title">Tất cả danh mục</h4>
+									</div>
+									<!--end col-->
+									<div th:if="${message != null}"
+										class="alert alert-success text-center" align="center">[[${message}]]</div>
+								</div>
+								<!--end row-->
+							</div>
+							<!--end card-header-->
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<thead class="thead-light">
+											<tr>
+												<th th:replace="fragments/fragments :: column_link('/brands/list_brands','id', 'ID')" />
+												<th>Hình ảnh</th>
+												<th th:replace="fragments/fragments :: column_link('/brands/list_brands','name', 'Brand Name')" />
+												
+												<th th:replace="fragments/fragments :: column_link('/brands/list_brandss','alias', 'Categories')" />
+												<th>Chức năng</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="brand : ${listBrands}">
+												<td>[[${brand.id}]]</td>
+												<td></td>
+												<td>[[${brand.name}]]</td>
+												<td>
+													<th:block th:each="cat : ${brand.categories}">
+													<span class="badge badge-secondary" th:text="${cat.name}"></span>
+													</th:block>
+												</td>
+												<td th:replace="fragments/fragments :: actions('/brands/edit/'+${brand.id}, '/brands/delete/'+${brand.id}, true, ${brand.id})"/>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<!-- notification -->
+								<td th:replace="fragments/fragments :: modal_delete"/>
+								<!-- end notification -->
+								<div th:if="${keyword != null}" class="text-center">
+									<span>search result does not show categories in hierarchical form </span><br>
+									<span>kết quả tìm kiếm không hiển thị danh mục ở dạng phân cấp</span>
+									<div th:replace="fragments/fragments :: pagination('/categories/list_categories', 'Danh mục')"></div>
+								</div>
+								<th:block th:unless="${keyword != null}">
+									<div th:replace="fragments/fragments :: pagination('/categories/list_categories', 'Danh mục top-level')"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Start Rightbar-->
+			<div th:replace="fragments/right-bar" id="right-bar"></div>
+
+			<!--Start Footer-->
+			<div th:replace="fragments/inc-footer" id="inc-footer"></div>
+		</div>
+	</div>
+
+	<!-- Javascript  -->
+	<script title="text/javascript">
+	moduleURL = "[[@{/brands}]]";
+
+		$(document).ready(function() {
+				$(".delete").on("click",function(e) {
+					e.preventDefault();
+					link = $(this);
+					entityName = 'brand';
+					entityId = link.attr("entityId");
+					$("#comfirmText").text("Bạn có chắc chắn muốn xoá thương hiệu " + entityName + " id " + entityId)
+					$("#yes-btn").attr("href", link.attr("href"));
+					$("#comfirmModal").modal("show");
+				});
+		});
+
+		function clearFilter() {
+			window.location = "[[@{/brands/list_brands}]]"
+		}
+	</script>
+
+	<!-- App js -->
+	<script src="js/app.js"></script>
+
+</body>
+</html>

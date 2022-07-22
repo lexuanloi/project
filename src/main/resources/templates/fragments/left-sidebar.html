@@ -103,34 +103,13 @@
 					</a>
 						<div class="collapse " id="sidebarProjects">
 							<ul class="nav flex-column">
-								<li class="nav-item"><a class="nav-link"
-									href="projects-index.html">Dashboard</a></li>
-								<!--end nav-item-->
-								<li class="nav-item"><a class="nav-link"
-									href="projects-clients.html">Clients</a></li>
-								<!--end nav-item-->
-								<li class="nav-item"><a class="nav-link"
-									href="projects-team.html">Team</a></li>
-								<!--end nav-item-->
-								<li class="nav-item"><a class="nav-link"
-									href="projects-project.html">Project</a></li>
-								<!--end nav-item-->
-								<li class="nav-item"><a class="nav-link"
-									href="projects-task.html">Task</a></li>
-								<!--end nav-item-->
-								<li class="nav-item"><a class="nav-link"
-									href="projects-kanban-board.html">Kanban Board</a></li>
-								<!--end nav-item-->
-								<li class="nav-item"><a class="nav-link"
-									href="projects-chat.html">Chat</a></li>
-								<!--end nav-item-->
 								<li class="nav-item" sec:authorize="hasAuthority('Admin')"><a class="nav-link"
 									th:href="@{/users/list_users}">Users</a></li>
 								<li class="nav-item" sec:authorize="hasAuthority('Admin')"><a class="nav-link"
 									th:href="@{/categories/list_categories}">Categories</a></li>
 								<!--end nav-item-->
-								<li class="nav-item"><a class="nav-link"
-									href="projects-create.html">Project Create</a></li>
+								<li class="nav-item" sec:authorize="hasAuthority('Admin')"><a class="nav-link"
+									th:href="@{/brands/list_brands}">Brands</a></li>
 								<!--end nav-item-->
 							</ul>
 							<!--end nav-->

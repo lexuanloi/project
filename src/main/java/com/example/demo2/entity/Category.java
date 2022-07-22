@@ -158,11 +158,11 @@ public class Category {
 		this.children = children;
 	}
 	
-	@Override
-	public String toString() {
-		return "Category [id ="+id+"name=" +name+"alias="+alias+"image="+image+"]";
-	}
-	
+//	@Override
+//	public String toString() {
+//		return "Category [id ="+id+"name=" +name+"alias="+alias+"image="+image+"]";
+//	}
+
 	@Transient
 	public String getImagePath() {
 		if (id == null || image == null) return "/images/no_image.jpg";
@@ -179,5 +179,10 @@ public class Category {
 	
 	public void setHasChildren(boolean hasChildren) {
 		this.hasChildren = hasChildren;
+	}
+	
+	@Override
+	public String toString() {
+		return this.name;
 	}
 }
