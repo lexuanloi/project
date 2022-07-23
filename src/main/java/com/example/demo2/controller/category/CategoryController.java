@@ -88,7 +88,7 @@ public class CategoryController {
 
 	@PostMapping("/save")
 	public String saveCategory(Category category, RedirectAttributes redirectAttributes,
-			@RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
+			@RequestParam("imgupload") MultipartFile multipartFile) throws IOException {
 		if (!multipartFile.isEmpty()) {
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 			category.setImage(fileName);
@@ -128,17 +128,17 @@ public class CategoryController {
 	}
 
 	@RequestMapping("/delete/{id}")
-	public String deleteUser(@PathVariable(name = "id") Integer id, Model model,
+	public String deleteCategory(@PathVariable(name = "id") Integer id, Model model,
 			RedirectAttributes redirectAttributes) {
 		try {
 			service.delete(id);
 			String categoryDir = "category-images/" + id;
-			FileUploadUtil.clearDir(categoryDir);
+			FileUploadUtil.removeDir(categoryDir);
 			
 			redirectAttributes.addFlashAttribute("message", "Xoá danh mục id " + id + " thành công!");
 			return "redirect:/categories/list_categories";
 
-		} catch (UserNotFoundException ex) {
+		} catch (CategoryNotFoundException ex) {
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
 		}
 		return "redirect:/categories/list_categories";

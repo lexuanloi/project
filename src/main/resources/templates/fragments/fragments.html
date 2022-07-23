@@ -18,6 +18,7 @@
 		[[${label}]]
 	</a>
 
+	<!-- status -->
 	<td th:fragment="status(enabled, entityName, entityURL)">
 		<a class="badge badge-soft-success fas fa-check-circle" title="'Disable this '+${entityName}" th:if="${enabled == true}"
 		th:href="@{${entityURL} + '/enabled/false'}">Active</a> 
@@ -25,6 +26,7 @@
 		th:href="@{${entityURL} + '/enabled/true'}">Inactive</a>
 	</td>
 
+	<!-- actions -->
 	<td th:fragment="actions(editURL, deleteURL, visible, entityId)", >
 		<a th:href="@{${editURL}}">
 		<i class="las la-pen text-secondary font-16"></i></a>
@@ -95,6 +97,7 @@
 		</ul>
 	</div>
 
+	<!-- warning delete -->
 	<div th:fragment="modal_delete">
 		<div class="modal  text-center" id="comfirmModal">
 			<div class="modal-dialog">

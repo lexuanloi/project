@@ -132,7 +132,7 @@ public class UserController {
 	public String deleteUser(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {
 		try {
 			service.delete(id);
-				redirectAttributes.addFlashAttribute("message", "Xoá user id " +id+ " thành công!");
+			redirectAttributes.addFlashAttribute("message", "Xoá user id " +id+ " thành công!");
 			return "redirect:/users/list_users";
 
 		} catch (UserNotFoundException ex) {		

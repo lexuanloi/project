@@ -150,10 +150,10 @@ public class CategoryService {
 		
 	}
 	
-	public void delete(Integer id) throws UserNotFoundException{
+	public void delete(Integer id) throws CategoryNotFoundException{
 		Long countById = repo.countById(id);
 		if(countById == null || countById == 0) {
-			throw new UserNotFoundException("Không tìm thấy danh mục nào với id : "+id);
+			throw new CategoryNotFoundException("Không tìm thấy danh mục nào với id : "+id);
 		}
 		repo.deleteById(id);
 	}

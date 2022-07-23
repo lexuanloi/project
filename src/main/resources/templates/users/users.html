@@ -140,21 +140,16 @@
 	<script title="text/javascript">
 		moduleURL = "[[@{/users}]]";
 
-		$(document).ready(
-				function() {
-					$(".delete").on(
-							"click",
-							function(e) {
-								e.preventDefault();
-								link = $(this);
-								userId = link.attr("userId");
-								$("#comfirmText").text(
-										"Bạn có chắc chắn muốn xoá User id "
-												+ userId)
-								$("#yes-btn").attr("href", link.attr("href"));
-								$("#comfirmModal").modal("show");
-							});
-				});
+		$(document).ready(function() {
+			$(".delete").on("click", function(e) {
+				e.preventDefault();
+				link = $(this);
+				userId = link.attr("userId");
+				$("#comfirmText").text("Bạn có chắc chắn muốn xoá User id " + userId);
+				$("#yes-btn").attr("href", link.attr("href"));
+				$("#comfirmModal").modal("show");
+			});
+		});
 
 		function clearFilter() {
 			window.location = "[[@{/users/list_users}]]"
