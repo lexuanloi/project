@@ -62,7 +62,7 @@
 						<div class="card-body">
 							<form th:action="@{/brands/save}" method="post"
 								enctype="multipart/form-data"
-								th:object="${brand}">
+								onsubmit="return checkUnique(this)" th:object="${brand}">
 								<input type="hidden" th:field="*{id}" />
 								<h5 class="mb-3">[[${pageTitle}]]</h5>
 								<hr>
@@ -146,31 +146,24 @@
 		}
 
 		function checkUnique(form) {
-			catId = $("#id").val();
-			catName = $("#name").val();
-			catAlias = $("#alias").val();
+			brandId = $("#id").val();
+			brandName = $("#name").val();
 			csrfValue = $("input[name='_csrf']").val();
 
-			url = "[[@{/categories/check_unique}]]";
+			url = "[[@{/brands/check_unique}]]";
 
-			params = {
-				id : catId,
-				name : catName,
-				alias : catAlias,
-				_csrf : csrfValue
-			};
+			params = {id : brandId, name : brandName, _csrf : csrfValue};
+			
 			$.post(url, params, function(response) {
 				if (response == "OK") {
 					form.submit();
-				} else if (response == "DuplicateName") {
-					showWarningModal("Danh mục đã được đăng kí: " + catName)
-				} else if (response == "DuplicateAlias") {
-					showWarningModal("Alias đã được đăng kí: " + catAlias)
+				} else if (response == "Duplicate") {
+					showWarningModal("Danh mục đã được đăng kí: " + brandName)
 				} else {
-					showErrorModal("Không thể kết nối tới máy chủ");
+					showErrorModal("Unknown response from  server");
 				}
 			}).fail(function() {
-				alert('failed');
+				alert('could not connect to the server');
 			});
 			return false;
 		}
