@@ -108,8 +108,9 @@
 												<td>[[${product.brand.name}]]</td>
 												<td>[[${product.category.name}]]</td>
 												<td th:replace="fragments/fragments :: status(${product.enabled}, 'product', '/products/' + ${product.id})"/>
-												<td th:replace="fragments/fragments :: actions('/products/edit/'+${product.id}, '/products/delete/'+${product.id}, true, ${product.id})"/>
-												<td><a th:href="@{${editURL}}"><i class="far fa-file-alt font-16"></i></a>
+												<td>
+													<a th:href="@{${editURL}}"><i class="far fa-file-alt font-16"></i></a>
+													<span th:replace="fragments/fragments :: actions('/products/edit/'+${product.id}, '/products/delete/'+${product.id}, true, ${product.id})"/>
 												</td>
 											</tr>
 										</tbody>

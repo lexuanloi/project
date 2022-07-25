@@ -27,13 +27,13 @@
 	</td>
 
 	<!-- actions -->
-	<td th:fragment="actions(editURL, deleteURL, visible, entityId)", >
+	<span th:fragment="actions(editURL, deleteURL, visible, entityId)", >
 		<a th:href="@{${editURL}}">
 		<i class="las la-pen text-secondary font-16"></i></a>
 		<th:block th:if="${visible}">
 		<a th:href="@{${deleteURL}}" th:entityId="${entityId}" class="delete">
 		<i class="las la-trash-alt text-secondary font-16"></i></a>
-	</td>
+	</span>
 
 	<!-- Pagination -->
 	<div th:fragment="pagination(moduleURL, entityName)" th:remove="tag">

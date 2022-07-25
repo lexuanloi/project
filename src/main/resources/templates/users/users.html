@@ -112,7 +112,9 @@
 												<td>[[${user.roles}]]</td>
 												<td>+21 1234 56789</td>
 												<td th:replace="fragments/fragments :: status(${user.enabled}, 'user', '/users/' + ${user.id})"/>
-												<td th:replace="fragments/fragments :: actions('/users/edit/'+${user.id}, '/users/delete/'+${user.id}, true, ${user.id})"/>
+												<td>
+													<span th:replace="fragments/fragments :: actions('/users/edit/'+${user.id}, '/users/delete/'+${user.id}, true, ${user.id})"/>
+												</td>
 											</tr>
 										</tbody>
 									</table>

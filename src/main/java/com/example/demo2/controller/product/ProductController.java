@@ -35,6 +35,9 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	@Autowired
+	private BrandService brandService;
+	
 	@RequestMapping("/list_products")
 	public String listAll(Model model) {
 		List<Product> listProducts = productService.listAll();
@@ -72,15 +75,20 @@ public class ProductController {
 //		return "brands/brands";
 //	}
 //	
-//	@RequestMapping("/new-brand")
-//	public String newBrand(Model model) {
-//		List<Category> listCategories = categoryService.listCategoriesUsedInForm();
-//
-//		model.addAttribute("listCategories", listCategories);
-//		model.addAttribute("brand", new Brand());
-//		model.addAttribute("pageTitle", "New Brand");
-//		return "/brands/form_brand";
-//	}
+	@RequestMapping("/new-product")
+	public String newBrand(Model model) {
+		List<Brand> listBrands = brandService.listAll();
+
+		Product product = new Product();
+		product.setEnabled(true);
+		product.setInStock(true);
+
+		model.addAttribute("product", product);
+		model.addAttribute("listBrands", listBrands);
+		model.addAttribute("pageTitle", "New Product");
+		
+		return "products/form_product";
+	}
 //
 //	@PostMapping("/save")
 //	public String saveBrand(Brand brand, RedirectAttributes redirectAttributes,

@@ -109,7 +109,9 @@
 												<td>[[${cat.name}]]</td>
 												<td>[[${cat.alias}]]</td>
 												<td th:replace="fragments/fragments :: status(${cat.enabled}, 'category', '/categories/' + ${cat.id})"/>
-												<td th:replace="fragments/fragments :: actions('/categories/edit/'+${cat.id}, '/categories/delete/'+${cat.id}, ${!cat.hasChildren}, ${cat.id})"/>
+												<td>
+													<span th:replace="fragments/fragments :: actions('/categories/edit/'+${cat.id}, '/categories/delete/'+${cat.id}, ${!cat.hasChildren}, ${cat.id})"/>
+												</td>
 											</tr>
 										</tbody>
 									</table>

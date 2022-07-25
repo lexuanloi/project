@@ -108,7 +108,9 @@
 													<span class="badge badge-secondary" th:text="${cat.name}"></span>
 													</th:block>
 												</td>
-												<td th:replace="fragments/fragments :: actions('/brands/edit/'+${brand.id}, '/brands/delete/'+${brand.id}, true, ${brand.id})"/>
+												<td>
+													<span th:replace="fragments/fragments :: actions('/brands/edit/'+${brand.id}, '/brands/delete/'+${brand.id}, true, ${brand.id})"/>
+												</td>
 											</tr>
 										</tbody>
 									</table>

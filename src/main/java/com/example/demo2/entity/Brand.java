@@ -37,6 +37,14 @@ public class Brand {
 	public Brand() {
 		
 	}
+	
+
+	public Brand(Integer id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
 
 	public Brand(String name) {
 		this.name = name;

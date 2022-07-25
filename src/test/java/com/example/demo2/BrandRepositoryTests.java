@@ -49,4 +49,12 @@ public class BrandRepositoryTests {
 		
 
 	}
+	
+	@Test
+	public void testFindAll() {
+		Iterable<Brand> brands = repo.findAll();
+		brands.forEach(System.out::println);
+		
+		assertThat(brands).isNotEmpty();
+	}
 }
