@@ -47,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/users/**").hasAuthority("Admin")
 			.antMatchers("/categories/**","/brands/**").hasAnyAuthority("Admin","Editor")
+			.antMatchers("/products/**").hasAnyAuthority("Admin","Editor","Salesperson", "Shipper")
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()
@@ -58,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.rememberMe()
 					.key("AbcDefgHijKlmnOpqrs_1234567890")
 					.tokenValiditySeconds(7 * 24 *60 *60);
-		
+
 //		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 	}
 
