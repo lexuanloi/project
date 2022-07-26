@@ -14,6 +14,7 @@ import com.example.demo2.dao.BrandRepository;
 import com.example.demo2.entity.Brand;
 import com.example.demo2.entity.Category;
 import com.example.demo2.entity.User;
+import com.example.demo2.helper.brand.BrandNotFoundException;
 
 @Service
 public class BrandService {

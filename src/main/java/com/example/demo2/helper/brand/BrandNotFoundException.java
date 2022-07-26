@@ -1,4 +1,4 @@
-package com.example.demo2.service;
+package com.example.demo2.helper.brand;
 
 public class BrandNotFoundException extends Exception {
 	public BrandNotFoundException(String message) {

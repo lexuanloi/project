@@ -69,43 +69,19 @@
 								<input type="hidden" th:field="*{id}" />
 								<nav>
 									<div class="nav nav-tabs" id="nav-tab">
-										<a class="nav-link" id="step1-tab" data-bs-toggle="tab" href="#overview">Overview</a>
+										<a class="nav-link active" id="step1-tab" data-bs-toggle="tab" href="#overview">Overview</a>
 										<a class="nav-link" id="step2-tab" data-bs-toggle="tab" href="#description">Description</a>
-										<a class="nav-link active" id="step3-tab"data-bs-toggle="tab" href="#images">Images</a>
+										<a class="nav-link " id="step3-tab"data-bs-toggle="tab" href="#images">Images</a>
 										<a class="nav-link" id="step4-tab" data-bs-toggle="tab" href="#detail">Detail</a>
 									</div>
 								</nav>
 								<div class="tab-content" id="nav-tabContent">
-									<div class="tab-pane" id="overview">
+									<div class="tab-pane active" id="overview">
 										<h4 class="card-title mt-3 mb-1">Overview</h4>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group row mb-2">
-													<label class="col-lg-3 col-form-label text-end">Product name</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control" th:field="*{name}" required minlength="3" maxlength="256">
-													</div>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group row mb-2">
-													<label for="txtLastNameBilling"
-														class="col-lg-3 col-form-label text-end">Mobile
-														No.</label>
-													<div class="col-lg-9">
-														<input id="txtLastNameBilling" name="txtLastNameBilling"
-															type="text" class="form-control">
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="">
-											<button type="button" id="step1Next"
-												class="btn btn-primary float-end">Next</button>
-										</div>
+										<div th:replace="products/product_overview :: product_overview"></div>
 									</div>
 									<div class="tab-pane" id="description">
-										<h4 class="card-title mt-3 mb-1">Company Document</h4>
+										<h4 class="card-title mt-3 mb-1">Description</h4>
 										<div class="row">
 											<div class="col-md-6">
 												<div class="form-group row mb-2">
@@ -187,7 +163,7 @@
 												class="btn btn-primary float-end">Next</button>
 										</div>
 									</div>
-									<div class="tab-pane active" id="images">
+									<div class="tab-pane" id="images">
 										<h4 class="card-title mt-3 mb-1">Bank Details</h4>
 										<div class="row">
 											<div class="col-md-6">
@@ -280,6 +256,10 @@
 										</div>
 									</div>
 								</div>
+								<div class="mt-3" align="center">
+									<input type="submit" class="btn btn-dark px-4" value="Save" />
+									<a type="button" class="btn btn-blue px-4" th:href="@{/products/list_products}">Cancel</a>
+								</div>
 							</form>
 						</div>
 					</div>
@@ -301,35 +281,33 @@
 
 	<!-- Javascript  -->
 	<script type="text/javascript">
-		moduleURL = "[[@{/products}]]";
-
-		function checkUnique(form) {
-			brandId = $("#id").val();
-			brandName = $("#name").val();
-			csrfValue = $("input[name='_csrf']").val();
-
-			url = "[[@{/brands/check_unique}]]";
-
-			params = {id : brandId, name : brandName, _csrf : csrfValue};
-			
-			$.post(url, params, function(response) {
-				if (response == "OK") {
-					form.submit();
-				} else if (response == "Duplicate") {
-					showWarningModal("Danh mục đã được đăng kí: " + brandName)
-				} else {
-					showErrorModal("Unknown response from  server");
-				}
-			}).fail(function() {
-				alert('could not connect to the server');
+		moduleURL = "[[@{/products/list_products}]]";
+		brandModuleURL = "[[@{/brands/list_brands}]]";
+		
+		dropdownBrands = $("#brand");
+		dropdownCategories = $("#category");
+		
+		$(document).ready(function(){
+			dropdownBrands.change(function(){
+				getCategories();
 			});
-			return false;
+		});
+		
+		function getCategories(){
+			brandId = dropdownBrands.val();
+			url = brandModuleURL + "/" + brandId + "/categories";
+			
+			$.get(url, function(responseJson){
+				/* $.each(responseJson, function(index, category){
+					alert(category.name);
+				}); */
+				alert(responseJson);
+			});
 		}
 
 	</script>
 
 	<!-- App js -->
-	<script src="js/app.js"></script>
 </body>
 
 </html>

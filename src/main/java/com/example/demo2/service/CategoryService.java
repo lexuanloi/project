@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo2.dao.CategoryRepository;
 import com.example.demo2.entity.Category;
 import com.example.demo2.entity.CategoryPageInfo;
+import com.example.demo2.helper.category.CategoryNotFoundException;
 
 @Service
 @Transactional

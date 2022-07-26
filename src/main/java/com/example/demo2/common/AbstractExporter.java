@@ -1,4 +1,4 @@
-package com.example.demo2.conf;
+package com.example.demo2.common;
 
 import java.io.IOException;
 import java.text.DateFormat;

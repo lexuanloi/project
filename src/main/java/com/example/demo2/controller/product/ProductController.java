@@ -16,17 +16,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo2.common.FileUploadUtil;
 import com.example.demo2.entity.Brand;
 import com.example.demo2.entity.Category;
 import com.example.demo2.entity.Product;
 import com.example.demo2.entity.User;
-import com.example.demo2.service.BrandNotFoundException;
+import com.example.demo2.helper.brand.BrandNotFoundException;
+import com.example.demo2.helper.category.CategoryNotFoundException;
 import com.example.demo2.service.BrandService;
-import com.example.demo2.service.CategoryNotFoundException;
 import com.example.demo2.service.CategoryService;
 import com.example.demo2.service.ProductService;
 import com.example.demo2.service.UserService;
-import com.example.demo2.util.FileUploadUtil;
 
 @Controller
 @RequestMapping("/products")

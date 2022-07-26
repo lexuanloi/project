@@ -19,6 +19,7 @@ import com.example.demo2.dao.RoleReponsitory;
 import com.example.demo2.dao.UserRepository;
 import com.example.demo2.entity.Role;
 import com.example.demo2.entity.User;
+import com.example.demo2.helper.user.UserNotFoundException;
 
 @Service
 @Transactional

@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo2.common.FileUploadUtil;
 import com.example.demo2.entity.ShopMeUserDetails;
 import com.example.demo2.entity.User;
 import com.example.demo2.service.UserDetailService;
 import com.example.demo2.service.UserService;
-import com.example.demo2.util.FileUploadUtil;
 
 @Controller
 public class AccountController extends UserDetailService{
