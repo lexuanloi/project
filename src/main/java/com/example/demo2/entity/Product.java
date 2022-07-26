@@ -35,7 +35,7 @@ public class Product {
 	private Date createdTime;
 	
 	@Column(name = "updated_time")
-	private Date updateTdime;
+	private Date updateTime;
 	
 	private boolean enabled;
 	
@@ -110,12 +110,12 @@ public class Product {
 		this.createdTime = createdTime;
 	}
 
-	public Date getUpdateTdime() {
-		return updateTdime;
+	public Date getUpdateTime() {
+		return updateTime;
 	}
 
-	public void setUpdateTdime(Date updateTdime) {
-		this.updateTdime = updateTdime;
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public boolean isEnabled() {

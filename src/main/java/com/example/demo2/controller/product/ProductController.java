@@ -23,6 +23,7 @@ import com.example.demo2.entity.Product;
 import com.example.demo2.entity.User;
 import com.example.demo2.helper.brand.BrandNotFoundException;
 import com.example.demo2.helper.category.CategoryNotFoundException;
+import com.example.demo2.helper.product.ProductNotFoundException;
 import com.example.demo2.service.BrandService;
 import com.example.demo2.service.CategoryService;
 import com.example.demo2.service.ProductService;
@@ -45,36 +46,6 @@ public class ProductController {
 		return "products/products";
 	}
 	
-//	@RequestMapping("/list_brands/page/{pageNum}")
-//	public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model,
-//			@Param("sortField") String sortField, @Param("sortDir") String sortDir,
-//			@Param("keyword") String keyword) {
-//
-//		Page<Brand> page = brandService.listByPage(pageNum, sortField, sortDir, keyword);
-//		List<Brand> listBrands = page.getContent();
-//
-//		long startCount = (pageNum -1) * BrandService.BRANDS_PER_PAGE + 1;
-//		long endCount = startCount + BrandService.BRANDS_PER_PAGE - 1;
-//		if(endCount > page.getTotalElements()) {
-//			endCount = page.getTotalElements();
-//		}
-//		
-//		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
-//		
-//		model.addAttribute("currentPage",pageNum);
-//		model.addAttribute("totalPages",page.getTotalPages());	
-//		model.addAttribute("startCount",startCount);
-//		model.addAttribute("endCount", endCount);
-//		model.addAttribute("totalItems", page.getTotalElements());
-//		model.addAttribute("sortField",sortField);
-//		model.addAttribute("sortDir",sortDir);
-//		model.addAttribute("reverseSortDir",reverseSortDir);
-//		model.addAttribute("keyword",keyword);
-//		model.addAttribute("listBrands",listBrands);
-//
-//		return "brands/brands";
-//	}
-//	
 	@RequestMapping("/new-product")
 	public String newBrand(Model model) {
 		List<Brand> listBrands = brandService.listAll();
@@ -89,27 +60,15 @@ public class ProductController {
 		
 		return "products/form_product";
 	}
-//
-//	@PostMapping("/save")
-//	public String saveBrand(Brand brand, RedirectAttributes redirectAttributes,
-//			@RequestParam("imgupload") MultipartFile multipartFile) throws IOException {
-//		if (!multipartFile.isEmpty()) {
-//			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-//			brand.setLogo(fileName);
-//			
-//			Brand saveBrand = brandService.save(brand);
-//			String uploadDir = "brands-logos/"+ saveBrand.getId();
-//			
-//			FileUploadUtil.clearDir(uploadDir);
-//			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-//		}else {
-//			brandService.save(brand);
-//		}
-//		
-//		redirectAttributes.addFlashAttribute("message", "Lưu thương hiệu thành công");
-//
-//		return "redirect:/brands/list_brands";
-//	}
+
+	@PostMapping("/save")
+	public String saveProduct(Product product, RedirectAttributes redirectAttributes) {
+		
+		productService.save(product);
+		redirectAttributes.addFlashAttribute("message", "Lưu sản phẩm thành công");
+
+		return "redirect:/products/list_products";
+	}
 //
 //	@RequestMapping("/edit/{id}")
 //	public String editBrand(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {
@@ -129,20 +88,29 @@ public class ProductController {
 //			return "redirect:/brands/list_brands";
 //		}
 //	}
-//
-//	@RequestMapping("/delete/{id}")
-//	public String deleteBrand(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {
-//		try {
-//			brandService.delete(id);
-//			String brandDir = "brands-logos/" + id;
-//			FileUploadUtil.removeDir(brandDir);
-//			
-//			redirectAttributes.addFlashAttribute("message", "Xoá thương hiệu id " + id + " thành công!");
-//			return "redirect:/brands/list_brands";
-//
-//		} catch (BrandNotFoundException ex) {
-//			redirectAttributes.addFlashAttribute("message", ex.getMessage());
-//		}
-//		return "redirect:/brands/list_brands";
-//	}
+
+	@RequestMapping("/delete/{id}")
+	public String deleteProduct(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+		try {
+			productService.delete(id);
+			
+			redirectAttributes.addFlashAttribute("message", "Delete product id " + id + " successful!");
+			return "redirect:/products/list_products";
+
+		} catch (ProductNotFoundException ex) {
+			redirectAttributes.addFlashAttribute("message", ex.getMessage());
+		}
+		return "redirect:/products/list_products";
+	}
+	
+	@RequestMapping("/{id}/enabled/{status}")
+	public String updateProductEnabledStatus(@PathVariable("id") Integer id,
+			@PathVariable("status") boolean enabled, RedirectAttributes redirectAttributes) {
+		productService.updateProductEnabledStatus(id, enabled);
+		String status = enabled ? "enabled" : "disabled";
+		String message = "Product id " + id + " đã được đổi sang trạng thái " + status;
+		redirectAttributes.addFlashAttribute("message", message);
+		
+		return "redirect:/products/list_products";
+	}
 }

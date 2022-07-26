@@ -47,7 +47,7 @@ public class ProductRepositoryTests {
 		product.setEnabled(true);
 		product.setInStock(true);
 		product.setCreatedTime(new Date());
-		product.setUpdateTdime(new Date());;
+		product.setUpdateTime(new Date());;
 		
 		Product savedProduct = repo.save(product);
 		

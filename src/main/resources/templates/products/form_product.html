@@ -17,11 +17,13 @@
 	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/common_form.js}" type="text/javascript"></script>
+	<script th:src="@{/richtext/jquery.richtext.min.js}" type="text/javascript"></script>
 	
 	<!-- App css -->
 	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
 	<link th:href="@{/css/icons.min.css}" rel="stylesheet" type="text/css" />
 	<link th:href="@{/css/app.min.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/richtext/richtext.min.css}" rel="stylesheet" type="text/css" />
 
 </head>
 <body id="body" class="dark-sidebar">
@@ -65,7 +67,7 @@
 						</div>
 						<div class="card-body">
 							<form th:action="@{/products/save}" method="post"
-								th:object="${product}">
+								onsubmit="return checkUnique(this)" th:object="${product}">
 								<input type="hidden" th:field="*{id}" />
 								<nav>
 									<div class="nav nav-tabs" id="nav-tab">
@@ -73,6 +75,7 @@
 										<a class="nav-link" id="step2-tab" data-bs-toggle="tab" href="#description">Description</a>
 										<a class="nav-link " id="step3-tab"data-bs-toggle="tab" href="#images">Images</a>
 										<a class="nav-link" id="step4-tab" data-bs-toggle="tab" href="#detail">Detail</a>
+										<a class="nav-link" id="step4-tab" data-bs-toggle="tab" href="#shipping">Shipping</a>
 									</div>
 								</nav>
 								<div class="tab-content" id="nav-tabContent">
@@ -82,178 +85,17 @@
 									</div>
 									<div class="tab-pane" id="description">
 										<h4 class="card-title mt-3 mb-1">Description</h4>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group row mb-2">
-													<label for="txtFirstNameShipping"
-														class="col-lg-3 col-form-label text-end">PAN Card</label>
-													<div class="col-lg-9">
-														<input id="txtFirstNameShipping"
-															name="txtFirstNameShipping" type="text"
-															class="form-control">
-													</div>
-												</div>
-											</div>
-											<!--end col-->
-											<div class="col-md-6">
-												<div class="form-group row mb-2">
-													<label for="txtLastNameShipping"
-														class="col-lg-3 col-form-label text-end">VAT/TIN
-														No.</label>
-													<div class="col-lg-9">
-														<input id="txtLastNameShipping" name="txtLastNameShipping"
-															type="text" class="form-control">
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group row mb-2">
-													<label for="txtCompanyShipping"
-														class="col-lg-3 col-form-label text-end">CST No.</label>
-													<div class="col-lg-9">
-														<input id="txtCompanyShipping" name="txtCompanyShipping"
-															type="text" class="form-control">
-													</div>
-												</div>
-											</div>
-											<!--end col-->
-											<div class="col-md-6">
-												<div class="form-group row mb-2">
-													<label for="txtEmailAddressShipping"
-														class="col-lg-3 col-form-label text-end">Service
-														Tax No.</label>
-													<div class="col-lg-9">
-														<input id="txtEmailAddressShipping"
-															name="txtEmailAddressShipping" type="text"
-															class="form-control">
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group row mb-2">
-													<label for="txtCityShipping"
-														class="col-lg-3 col-form-label text-end">Company
-														UIN</label>
-													<div class="col-lg-9">
-														<input id="txtCityShipping" name="txtCityShipping"
-															type="text" class="form-control">
-													</div>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group row mb-2">
-													<label for="txtStateProvinceShipping"
-														class="col-lg-3 col-form-label text-end">Declaration</label>
-													<div class="col-lg-9">
-														<input id="txtStateProvinceShipping"
-															name="txtStateProvinceShipping" type="text"
-															class="form-control">
-													</div>
-												</div>
-											</div>
-										</div>
-										<div>
-											<button type="button" id="step2Prev"
-												class="btn btn-secondary float-start">Previous</button>
-											<button type="button" id="step2Next"
-												class="btn btn-primary float-end">Next</button>
-										</div>
+										<div th:replace="products/product_description :: description"></div>
 									</div>
 									<div class="tab-pane" id="images">
-										<h4 class="card-title mt-3 mb-1">Bank Details</h4>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group row mb-2">
-													<label for="txtNameCard"
-														class="col-lg-3 col-form-label text-end">Name on
-														Card</label>
-													<div class="col-lg-9">
-														<input id="txtNameCard" name="txtNameCard" type="text"
-															class="form-control">
-													</div>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group row mb-2">
-													<label for="ddlCreditCardType"
-														class="col-lg-3 col-form-label text-end">Credit
-														Card Type</label>
-													<div class="col-lg-9">
-														<select id="ddlCreditCardType" name="ddlCreditCardType"
-															class="form-select">
-															<option value="">--Please Select--</option>
-															<option value="AE">American Express</option>
-															<option value="VI">Visa</option>
-															<option value="MC">MasterCard</option>
-															<option value="DI">Discover</option>
-														</select>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group row mb-2">
-													<label for="txtCreditCardNumber"
-														class="col-lg-3 col-form-label text-end">Credit
-														Card Number</label>
-													<div class="col-lg-9">
-														<input id="txtCreditCardNumber" name="txtCreditCardNumber"
-															type="text" class="form-control">
-													</div>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group row mb-2">
-													<label for="txtCardVerificationNumber"
-														class="col-lg-3 col-form-label text-end">Card
-														Verification Number</label>
-													<div class="col-lg-9">
-														<input id="txtCardVerificationNumber"
-															name="txtCardVerificationNumber" type="text"
-															class="form-control">
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group row mb-2">
-													<label for="txtExpirationDate"
-														class="col-lg-3 col-form-label text-end">Expiration
-														Date</label>
-													<div class="col-lg-9">
-														<input id="txtExpirationDate" name="txtExpirationDate"
-															type="text" class="form-control">
-													</div>
-												</div>
-											</div>
-										</div>
-										<div>
-											<button type="button" id="step3Prev"
-												class="btn btn-secondary float-start">Previous</button>
-											<button type="button" id="step3Next"
-												class="btn btn-primary float-end">Next</button>
-										</div>
+										<h4 class="card-title mt-3 mb-1">Images</h4>
 									</div>
 									<div class="tab-pane" id="detail">
 										<h4 class="card-title mt-3">Confirm Detail</h4>
-										<div class="form-check my-2">
-											<input class="form-check-input" type="checkbox" value=""
-												id="flexCheckDefault"> <label
-												class="form-check-label" for="flexCheckDefault"> I
-												agree with the Terms and Conditions. </label>
-										</div>
-										<div>
-											<button type="button" id="step4Prev"
-												class="btn btn-secondary float-start">Previous</button>
-											<button type="button" id="step4Finish"
-												class="btn btn-danger float-end">Finish</button>
-										</div>
+									</div>
+									<div class="tab-pane" id="shipping">
+										<h4 class="card-title mt-3 mb-1">Shipping</h4>
+										<div th:replace="products/product_shipping :: shipping"></div>
 									</div>
 								</div>
 								<div class="mt-3" align="center">
@@ -282,27 +124,55 @@
 	<!-- Javascript  -->
 	<script type="text/javascript">
 		moduleURL = "[[@{/products/list_products}]]";
-		brandModuleURL = "[[@{/brands/list_brands}]]";
+		brandModuleURL = "[[@{/brands}]]";
 		
 		dropdownBrands = $("#brand");
 		dropdownCategories = $("#category");
 		
 		$(document).ready(function(){
+			
+			$("#shortDescription").richText();
+			$("#fullDescription").richText();
+			
 			dropdownBrands.change(function(){
+				dropdownCategories.empty();
 				getCategories();
 			});
+			getCategories();
 		});
 		
 		function getCategories(){
 			brandId = dropdownBrands.val();
-			url = brandModuleURL + "/" + brandId + "/categories";
-			
-			$.get(url, function(responseJson){
-				/* $.each(responseJson, function(index, category){
-					alert(category.name);
-				}); */
-				alert(responseJson);
+			url = brandModuleURL + "/" + brandId + "/categoties";
+
+			$.get(url, function(responseJson) {
+				$.each(responseJson, function(index, category){
+					$("<option>").val(category.id).text(category.name).appendTo(dropdownCategories);
+				});
 			});
+		}
+		
+		function checkUnique(form) {
+			productId = $("#id").val();
+			productName = $("#name").val();
+			csrfValue = $("input[name='_csrf']").val();
+
+			url = "[[@{/products/check_unique}]]";
+
+			params = {id : productId, name : productName, _csrf : csrfValue};
+			
+			$.post(url, params, function(response) {
+				if (response == "OK") {
+					form.submit();
+				} else if (response == "Duplicate") {
+					showWarningModal("Product đã được đăng kí: " + productName)
+				} else {
+					showErrorModal("Unknown response from  server");
+				}
+			}).fail(function() {
+				alert('could not connect to the server');
+			});
+			return false;
 		}
 
 	</script>

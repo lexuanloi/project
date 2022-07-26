@@ -141,7 +141,7 @@
 				$(".delete").on("click",function(e) {
 					e.preventDefault();
 					link = $(this);
-					entityName = 'brand';
+					entityName = 'product';
 					entityId = link.attr("entityId");
 					$("#comfirmText").text("Bạn có chắc chắn muốn xoá sản phẩm " + entityName + " id " + entityId)
 					$("#yes-btn").attr("href", link.attr("href"));
