@@ -103,7 +103,7 @@
 										<tbody>
 											<tr th:each="product : ${listProducts}">
 												<td>[[${product.id}]]</td>
-												<td></td>
+												<td><img th:src="@{${product.mainImagePath}}" style="width: 100px; height: 100px;"></td>
 												<td>[[${product.name}]]</td>
 												<td>[[${product.brand.name}]]</td>
 												<td>[[${product.category.name}]]</td>
@@ -153,9 +153,5 @@
 			window.location = "[[@{/products/list_products}]]"
 		}
 	</script>
-
-	<!-- App js -->
-	<script src="js/app.js"></script>
-
 </body>
 </html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="images" class = "row" id="divProductImage">
+		<div class="col boder m-3 p-2"style="border: 1px solid gray;">
+			<div >
+				<img class="img-fluid" id="thumbnail" alt="Main image preview" th:src="@{${product.mainImagePath}}" style="width: 200px; height: 200px">
+				<input type="file" id="imgupload" name="imgupload" style="display: none;" accept="image.png, image.jpg" required multiple/> 
+			</div>
+			<button type="button" onClick="fn_saveimg()" class="btn-upload btn btn-primary mt-4">
+				<i class="fas fa-image"></i>Main image product
+			</button>
+		</div>
+		<div class="col boder m-3 p-2"style="border: 1px solid gray;" id="divExtraImage0">
+		<div id="extraImageHeader0"><label>Extra image #1</label></div>
+			<div >
+				<img class="img-fluid" id="extraThumbnail0" alt="Extra image #1 preview" th:src="@{/images/no_image.jpg}" style="width: 200px; height: 200px">
+				<input type="file" name="extraImage"  accept="image.png, image.jpg"/> 
+			</div>
+			<button type="button" onClick="fn_saveExtraImg()" class="btn-upload btn btn-primary mt-4">
+				<i class="fas fa-image"></i>Extra image #1
+			</button>
+		</div>
+	</div>
+</body>
+</html>

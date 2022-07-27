@@ -3,16 +3,10 @@
 function fn_saveimg() {
 	$("#imgupload").trigger("click");
 	$("#imgupload").change(function() {
-		fileSize = this.files[0].size;
-		//alert("File size: "+fileSize);
-		if (fileSize > 500768) {
-			alert("Bạn phải chọn ảnh ít hơn 500MB !");
-			this.setCustomValidity("Bạn phải chọn ảnh ít hơn 500MB !");
-			this.reportValidity();
-		} else {
-			this.setCustomValidity("");
-			showImgThumbnail(this);
+		if(!checkFileSize(this)) {
+			return;
 		}
+			showImgThumbnail(this);
 	});
 }
 
@@ -22,6 +16,20 @@ function showImgThumbnail(input) {
 		$("#thumbnail").attr("src", e.target.result);
 	};
 	reader.readAsDataURL(input.files[0]);
+}
+
+function checkFileSize(fileInput) {
+	fileSize = fileInput.files[0].size;
+	//alert("File size: "+fileSize);
+	if (fileSize > MAX_FILE_SIZE) {
+		alert("Bạn phải chọn ảnh ít hơn " + MAX_FILE_SIZE + " byte !");
+		fileInput.setCustomValidity("Bạn phải chọn ảnh ít hơn " + MAX_FILE_SIZE + " byte !");
+		fileInput.reportValidity();
+		return false;
+	} else {
+		fileInput.setCustomValidity("");
+		return true;
+	}
 }
 
 // message
