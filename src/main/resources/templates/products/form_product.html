@@ -62,14 +62,14 @@
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header">
-							<h4 class="card-title">Custom Steps Wizard</h4>
-							<p class="text-muted mb-0">You can use Steps Wizard with Bootstrap 5.</p>
+							<h4 class="card-title">[[${pageTitle}]]</h4>
 						</div>
 						<div class="card-body">
 							<form th:action="@{/products/save}" method="post"
 								enctype="multipart/form-data"
 								onsubmit="return checkUnique(this)" th:object="${product}">
 								<input type="hidden" th:field="*{id}" />
+								<input th:if="${product.category != null}" type="hidden" id="categoryId" th:value="${product.category.id}">
 								<nav>
 									<div class="nav nav-tabs" id="nav-tab">
 										<a class="nav-link active" id="step1-tab" data-bs-toggle="tab" href="#overview">Overview</a>
@@ -94,6 +94,8 @@
 									</div>
 									<div class="tab-pane" id="detail">
 										<h4 class="card-title mt-3">Confirm Detail</h4>
+										<div th:replace="products/product_details :: details"></div>
+										<div><input type="button" class="btn btn-secondary" value="Add more detail" onclick="addNextDetailSection()"/></div>
 									</div>
 									<div class="tab-pane" id="shipping">
 										<h4 class="card-title mt-3 mb-1">Shipping</h4>
@@ -143,29 +145,45 @@
 				dropdownCategories.empty();
 				getCategories();
 			});
-			getCategories();
+			getCategoriesForNewForm();
 			
 			$("input[name='extraImage']").each(function(index) {
 				extraImageCount++;
 				$(this).change(function() {
+					if(!checkFileSize(this)) {
+						return;
+					}
 					showExtraImgThumbnail(this, index);
 				});
 			});
+			
+			$("a[name='linkRemoveExtraImage']").each(function(index) {
+				$(this).click(function() {
+					removeExtraImage(index);
+				});
+			});
 		});
+		
+		function getCategoriesForNewForm() {
+			catIdField = $("#categoryId");
+			editMode = false;
+			
+			if(catIdField.length) {
+				editMode = true;
+			}
+			if(!editMode) getCategories();
+		}
 		
 		function fn_saveExtraImg() {
 			$("input[name='extraImage']").trigger("click");
 			$("input[name='extraImage']").each(function(index) {
 				$(this).change(function() {
+					if(!checkFileSize(this)) {
+						return;
+					}
 					showExtraImgThumbnail(this, index);
 				});
 			});
-			/* $("#extraImage1").change(function() {
-				if(!checkFileSize(this)) {
-					return;
-				}
-				showExtraImgThumbnail(this);
-			}); */
 		}
 
 		function showExtraImgThumbnail(input, index) {
@@ -182,7 +200,7 @@
 		
 		function addNextExtraImageSection(index) {
 			html =` 
-					<div class="col boder m-3 p-2"style="border: 1px solid gray;" id="divExtraImage${index}">
+					<div class="col-2 boder m-3 p-2"style="border: 1px solid gray;" id="divExtraImage${index}">
 						<div id="extraImageHeader${index}"><label>Extra image #${index+1}</label></div>
 						<div >
 							<img class="img-fluid" id="extraThumbnail${index}" alt="Extra image #${index} preview" src="${defaultImageThumbnailSrc}" style="width: 200px; height: 200px">
@@ -191,10 +209,9 @@
 						<button type="button" onClick="fn_saveExtraImg()" class="btn-upload btn btn-primary mt-4">
 							<i class="fas fa-image"></i>Extra image #${index+1}
 						</button>
-					</div>
 				`;
 			htmlclear = `
-				<a class="btn fas fa-window-close" href="javascript:removeExtraImage(${index-1})"></a>
+				<a class="btn mdi mdi-close-circle-outline font-18" href="javascript:removeExtraImage(${index-1})"></a>
 			`;
 			$("#divProductImage").append(html);
 			$("#extraImageHeader"+(index-1)).append(htmlclear);
@@ -238,6 +255,44 @@
 				alert('could not connect to the server');
 			});
 			return false;
+		}
+		
+		function addNextDetailSection() {
+			allDivDetails = $("[id^='divDetail']");
+			clearDetail = $("[id^='clearDetail']");
+			divDetailsCount = allDivDetails.length;
+			
+			htmlDetailSection = `
+				<div class="form-inline" id ="divDetail${divDetailsCount}">
+					<div class="input-group" style="padding: 5px 15%" id="clearDetail">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Name</span>
+						</div>
+						<input type="text" class="form-control" name="detailNames" placeholder="Text">
+						<div class="input-group-prepend" style="padding-left: 10px">
+							<span class="input-group-text">Value</span>
+						</div>
+						<input type="text" class="form-control" name="detailValues" placeholder="Text">
+					</div>
+				</div>
+			`;
+			
+			$("#divProductDetails").append(htmlDetailSection);
+			
+			previewDivDetailSection = clearDetail.last();
+			previewDivDetailid = previewDivDetailSection.attr("id");
+			
+			htmlclear = `
+				<a class="btn mdi mdi-close-circle-outline font-14" href="javascript:removeDetailSection('${previewDivDetailid}')"></a>
+			`;
+			
+			previewDivDetailSection.append(htmlclear);
+			
+			$("input[name='detailNames']").last().focus();
+		}
+		
+		function removeDetailSection(id) {
+			$("#"+id).remove();
 		}
 	</script>
 </body>

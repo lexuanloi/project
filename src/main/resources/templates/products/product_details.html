@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="details" remove="tag" class="row" id="divProductDetails">
+		<th:block th:each="detail, status : ${product.details}">
+			<div class="form-inline" th:id="'divDetail' + ${status.index}">
+				<div class="input-group" style="padding: 5px 15%" th:id="'clearDetail' + ${status.index}">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Name</span>
+					</div>
+					<input type="text" class="form-control" name="detailNames" th:value="${detail.name}">
+					<div class="input-group-prepend" style="padding-left: 10px">
+						<span class="input-group-text">Value</span>
+					</div>
+					<input type="text" class="form-control" name="detailValues" th:value="${detail.value}">
+				</div>
+			</div>
+		</th:block>
+		<div class="form-inline" th:id="'divDetail' + ${lists.size(product.details)}">
+			<div class="input-group" style="padding: 5px 15%" th:id="'clearDetail' + ${lists.size(product.details)}">
+				<div class="input-group-prepend">
+					<span class="input-group-text">Name</span>
+				</div>
+				<input type="text" class="form-control" name="detailNames">
+				<div class="input-group-prepend" style="padding-left: 10px">
+					<span class="input-group-text">Value</span>
+				</div>
+				<input type="text" class="form-control" name="detailValues">
+			</div>
+		</div>
+		
+	</div>
+</body>
+</html>

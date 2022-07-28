@@ -1,6 +1,7 @@
 package com.example.demo2.controller.product;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,20 +46,26 @@ public class ProductController {
 		Product product = new Product();
 		product.setEnabled(true);
 		product.setInStock(true);
+		Integer numberOfExistingExtraImages = product.getImages().size();
 
 		model.addAttribute("product", product);
 		model.addAttribute("listBrands", listBrands);
 		model.addAttribute("pageTitle", "New Product");
+		model.addAttribute("numberOfExistingExtraImages", numberOfExistingExtraImages);
 		
 		return "products/form_product";
 	}
 
 
 	@PostMapping("/save")
-	public String saveProduct(Product product, RedirectAttributes redirectAttributes, @RequestParam("imgupload") MultipartFile mainImageMultipart,
-							@RequestParam("extraImage") MultipartFile[] extraImageMultiparts) throws IOException {
+	public String saveProduct(Product product, RedirectAttributes redirectAttributes,
+							@RequestParam("imgupload") MultipartFile mainImageMultipart,
+							@RequestParam("extraImage") MultipartFile[] extraImageMultiparts,
+							@RequestParam(name = "detailNames", required = false) String[] detailNames,
+							@RequestParam(name = "detailValues", required = false) String[] detailValues) throws IOException {
 		setMainImageName(mainImageMultipart, product);
 		setExtraImageName(extraImageMultiparts, product);
+		setProductDetails(detailNames, detailValues, product);
 		
 		Product saveProduct = productService.save(product);
 		saveUploadedImages(mainImageMultipart, extraImageMultiparts, saveProduct);
@@ -68,6 +75,21 @@ public class ProductController {
 		return "redirect:/products/list_products";
 	}
 	
+	private void setProductDetails(String[] detailNames, String[] detailValues, Product product) {
+		if (detailNames == null || detailNames.length ==0) {
+			return;
+		}
+		for (int count = 0; count < detailNames.length; count++) {
+			String name = detailNames[count];
+			String value = detailValues[count];
+			
+			if (!name.isEmpty() && !value.isEmpty()) {
+				product.addDetail(name, value);
+			}
+		}
+		
+	}
+
 	private void saveUploadedImages(MultipartFile mainImageMultipart, MultipartFile[] extraImageMultiparts,
 			Product saveProduct) throws IOException {
 		
@@ -108,25 +130,27 @@ public class ProductController {
 			product.setMainImage(fileName);
 		}
 	}
-//
-//	@RequestMapping("/edit/{id}")
-//	public String editBrand(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {
-//		try {
-//			Brand brand = brandService.get(id);
-//			List<Category> listCategories = categoryService.listCategoriesUsedInForm();
-//
-//			model.addAttribute("brand", brand);
-//			model.addAttribute("listCategories", listCategories);			
-//			model.addAttribute("pageTitle", "Edit Brand ( ID: " + id + " )");
-//
-//			return "/brands/form_brand";
-//
-//		} catch (BrandNotFoundException ex) {
-//
-//			redirectAttributes.addFlashAttribute("message", ex.getMessage());
-//			return "redirect:/brands/list_brands";
-//		}
-//	}
+
+	@RequestMapping("/edit/{id}")
+	public String editProduct(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+		try {
+			Product product = productService.get(id);
+			List<Brand> listBrands = brandService.listAll();
+			Integer numberOfExistingExtraImages = product.getImages().size();
+
+			model.addAttribute("product", product);
+			model.addAttribute("listBrands", listBrands);
+			model.addAttribute("pageTitle", "Edit Product ( ID: " + id + " )");
+			model.addAttribute("numberOfExistingExtraImages", numberOfExistingExtraImages);
+
+			return "products/form_product";
+
+		} catch (ProductNotFoundException ex) {
+
+			redirectAttributes.addFlashAttribute("message", ex.getMessage());
+			return "redirect:/products/list_products";
+		}
+	}
 
 	@RequestMapping("/delete/{id}")
 	public String deleteProduct(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {

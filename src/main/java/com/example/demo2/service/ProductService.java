@@ -99,4 +99,12 @@ public class ProductService {
 	public void updateProductEnabledStatus(Integer id, boolean enabled) {
 		repo.updateEnabledStatus(id, enabled);
 	}
+	
+	public Product get(Integer id) throws ProductNotFoundException {
+		try {
+			return repo.findById(id).get();
+		} catch (NoSuchElementException ex) {
+			throw new ProductNotFoundException("could not find nay product with id " + id);
+		}
+	}
 }

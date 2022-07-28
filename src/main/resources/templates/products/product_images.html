@@ -2,23 +2,42 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 	<div th:fragment="images" class = "row" id="divProductImage">
-		<div class="col boder m-3 p-2"style="border: 1px solid gray;">
+		<div class="col-2 boder m-3 p-2"style="border: 1px solid gray;">
+		<div><label>Main image : [[${product.mainImage}]]</label></div>
 			<div >
 				<img class="img-fluid" id="thumbnail" alt="Main image preview" th:src="@{${product.mainImagePath}}" style="width: 200px; height: 200px">
-				<input type="file" id="imgupload" name="imgupload" style="display: none;" accept="image.png, image.jpg" required multiple/> 
+				<input type="file" id="imgupload" name="imgupload" style="display: none;" accept="image.png, image.jpg" th:required="${product.mainImage == null}"/> 
+				<input type="hidden" th:field="*{mainImage}"/>
 			</div>
 			<button type="button" onClick="fn_saveimg()" class="btn-upload btn btn-primary mt-4">
 				<i class="fas fa-image"></i>Main image product
 			</button>
 		</div>
-		<div class="col boder m-3 p-2"style="border: 1px solid gray;" id="divExtraImage0">
-		<div id="extraImageHeader0"><label>Extra image #1</label></div>
+		<th:block th:each="productImage, status : ${product.images}">
+			<div class="col-2 boder m-3 p-2"style="border: 1px solid gray;">
+				<div>
+					<label>Extra image #[[${status.index + 1}]] : [[${productImage.name}]]</label>
+					<a class="btn mdi mdi-close-circle-outline font-18" name="linkRemoveExtraImage"></a>
+				</div>
+				<div >
+					<img class="img-fluid" th:id="'extraThumbnail' + ${status.index}" th:alt="'Extra image #' + ${status.index + 1} + 'preview'" th:src="@{${productImage.imagePath}}" style="width: 200px; height: 200px">
+					<input type="file" name="extraImage"  accept="image.png, image.jpg"/> 
+					<input type="hidden" name="imageIds" th:id="'imageId'+ ${status.index}"/>
+					<input type="hidden" name="imageNames" th:id="'imageName'+ ${status.index}"/>
+				</div>
+				<button type="button" onClick="fn_saveaExtraImg()" class="btn-upload btn btn-primary mt-4">
+					<i class="fas fa-image"></i>Extra image #[[${status.index + 1}]]
+				</button>
+			</div>
+		</th:block>
+		<div class="col-2 boder m-3 p-2"style="border: 1px solid gray;" th:id="'divExtraImage'+${numberOfExistingExtraImages}">
+			<div th:id="'extraImageHeader'+${numberOfExistingExtraImages}"><label>Extra image #[[${numberOfExistingExtraImages+1}]]</label></div>
 			<div >
-				<img class="img-fluid" id="extraThumbnail0" alt="Extra image #1 preview" th:src="@{/images/no_image.jpg}" style="width: 200px; height: 200px">
+				<img class="img-fluid" th:id="'extraThumbnail'+${numberOfExistingExtraImages}" th:alt="'Extra image #' + ${numberOfExistingExtraImages} + ' preview'" th:src="@{/images/no_image.jpg}" style="width: 200px; height: 200px">
 				<input type="file" name="extraImage"  accept="image.png, image.jpg"/> 
 			</div>
 			<button type="button" onClick="fn_saveExtraImg()" class="btn-upload btn btn-primary mt-4">
-				<i class="fas fa-image"></i>Extra image #1
+				<i class="fas fa-image"></i>Extra image #[[${numberOfExistingExtraImages +1 }]]
 			</button>
 		</div>
 	</div>
