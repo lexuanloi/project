@@ -13,9 +13,10 @@
 	<!-- App favicon -->
 	<link rel="shortcut icon" href="images/favicon.ico">
 
-<script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/common_form.js}" type="text/javascript"></script>
 
 <!-- App css -->
 	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
@@ -53,21 +54,20 @@
 					</div>
 				</div>
 				<div class="row" style="margin-bottom: 20px;">
-					<div class="col-3">
+					<div class="col-6">
 						<a class="btn btn-outline-blue btn-sm px-4 "
 							th:href="@{/products/new-product}">Thêm sản phẩm</a>
 					</div>
-					<div class="col-3">
-						<div th:replace="fragments/fragments :: search_form('/products/list_products/page/1')"></div>
-					</div>
-					<div class="col-3"></div>
-					<div class="col-3" style="text-align: right;">
+					<div class="col-6" style="text-align: right;">
 						<a th:href="@{/products/export/csv}" type="button"
 							class="btn btn-primary"><i class="fas fa-file-csv"></i></a> <a
 							th:href="@{/products/export/excel}" type="button"
 							class="btn btn-success"><i class="fas fa-file-excel"></i></a> <a
 							th:href="@{/products/export/pdf}" type="button"
 							class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
+					</div>
+					<div class="">
+						<div th:replace="fragments/fragments :: search_form('/products/list_products/page/1')"></div>
 					</div>
 				</div>
 				<!--end row-->
@@ -94,8 +94,8 @@
 												<th th:replace="fragments/fragments :: column_link('/products/list_products','id', 'ID')" />
 												<th>Image</th>
 												<th th:replace="fragments/fragments :: column_link('/products/list_products','name', 'Product Name')" />
-												<th>Brand</th>
-												<th>Categories</th>
+												<th th:replace="fragments/fragments :: column_link('/products/list_products','brand', 'Brand Name')" />
+												<th th:replace="fragments/fragments :: column_link('/products/list_products','category', 'Category Name')" />
 												<th th:replace="fragments/fragments :: column_link('/products','enabled', 'Status')" />
 												<th>Actions</th>
 											</tr>
@@ -104,12 +104,14 @@
 											<tr th:each="product : ${listProducts}">
 												<td>[[${product.id}]]</td>
 												<td><img th:src="@{${product.mainImagePath}}" style="width: 100px; height: 100px;"></td>
-												<td>[[${product.name}]]</td>
+												<td>
+													<a th:href="@{'/products/detail/'+${product.id}}" class="link-detail">[[${product.shortName}]]</a>
+												</td>
 												<td>[[${product.brand.name}]]</td>
 												<td>[[${product.category.name}]]</td>
 												<td th:replace="fragments/fragments :: status(${product.enabled}, 'product', '/products/' + ${product.id})"/>
 												<td>
-													<a th:href="@{${editURL}}"><i class="far fa-file-alt font-16"></i></a>
+													<a th:src="@{'/products/detail/'+${product.id}}" class="far fa-file-alt font-16 link-detail"></a>
 													<span th:replace="fragments/fragments :: actions('/products/edit/'+${product.id}, '/products/delete/'+${product.id}, true, ${product.id})"/>
 												</td>
 											</tr>
@@ -130,6 +132,14 @@
 
 			<!--Start Footer-->
 			<div th:replace="fragments/inc-footer" id="inc-footer"></div>
+			
+			<div class="modal fade" id="detailModal">
+				<div class="modal-dialog modal-xl">
+					<div class="modal-content">
+						
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -140,15 +150,17 @@
 		$(document).ready(function() {
 				$(".delete").on("click",function(e) {
 					e.preventDefault();
-					link = $(this);
-					entityName = 'product';
-					entityId = link.attr("entityId");
-					$("#comfirmText").text("Bạn có chắc chắn muốn xoá sản phẩm " + entityName + " id " + entityId)
-					$("#yes-btn").attr("href", link.attr("href"));
-					$("#comfirmModal").modal("show");
+					showDeleteConfirmModal($(this), 'product');
 				});
+				
+				$(".link-detail").on("click",function(e) {
+					e.preventDefault();
+					linkDetailUrl = $(this).attr("href");
+					$("#detailModal").modal("show").find(".modal-content").load(linkDetailUrl);
+				});
+				
 		});
-
+		
 		function clearFilter() {
 			window.location = "[[@{/products/list_products}]]"
 		}

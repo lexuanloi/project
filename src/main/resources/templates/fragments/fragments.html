@@ -87,12 +87,15 @@
 					<input type="hidden" name="sortField" th:value="${sortField}" /> <input
 						type="hidden" name="sortDir" th:value="${sortDir}" /> <input
 						type="search" name="keyword" th:value="${keyword}"
-						class="form-control top-search mb-0" placeholder="Type text...">
+						class="form-control top-search mb-0"
+						style="border: 1px solid #e8ebf3;" placeholder="Type text...">
 					<button type="submit">
 						<i class="ti ti-search"></i>
 					</button>
+					<a type="button" class="btn btn-secondary"
+						style="position: absolute; left: 305px; top: 50%; transform: translateY(-50%);"
+						onclick="clearFilter()">Clear</a>
 				</form>
-			<button type="button" class="btn btn-secondary" onclick="clearFilter()">Clear</button>
 			</li>
 		</ul>
 	</div>
@@ -111,7 +114,7 @@
 					</div>
 					<div class="modal-footer">
 						<a class="btn btn-success" href="" id="yes-btn">Yes</a>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+						<button type="button" class="btn btn-danger close" data-dismiss="modal">No</button>
 					</div>
 				</div>
 			</div>

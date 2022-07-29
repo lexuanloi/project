@@ -14,7 +14,7 @@
 			</button>
 		</div>
 		<th:block th:each="productImage, status : ${product.images}">
-			<div class="col-2 boder m-3 p-2"style="border: 1px solid gray;">
+			<div class="col-2 boder m-3 p-2"style="border: 1px solid gray;" th:id="'divExtraImage' + ${status.index}">
 				<div>
 					<label>Extra image #[[${status.index + 1}]] : [[${productImage.name}]]</label>
 					<a class="btn mdi mdi-close-circle-outline font-18" name="linkRemoveExtraImage"></a>
@@ -22,8 +22,8 @@
 				<div >
 					<img class="img-fluid" th:id="'extraThumbnail' + ${status.index}" th:alt="'Extra image #' + ${status.index + 1} + 'preview'" th:src="@{${productImage.imagePath}}" style="width: 200px; height: 200px">
 					<input type="file" name="extraImage"  accept="image.png, image.jpg"/> 
-					<input type="hidden" name="imageIds" th:id="'imageId'+ ${status.index}"/>
-					<input type="hidden" name="imageNames" th:id="'imageName'+ ${status.index}"/>
+					<input type="hidden" name="imageIds" th:id="'imageId'+ ${status.index}" th:value="${productImage.id}"/>
+					<input type="hidden" name="imageNames" th:id="'imageName'+ ${status.index}" th:value="${productImage.name}"/>
 				</div>
 				<button type="button" onClick="fn_saveaExtraImg()" class="btn-upload btn btn-primary mt-4">
 					<i class="fas fa-image"></i>Extra image #[[${status.index + 1}]]

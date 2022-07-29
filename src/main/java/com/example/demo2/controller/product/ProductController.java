@@ -1,10 +1,18 @@
 package com.example.demo2.controller.product;
 
 import java.io.IOException;
-import java.util.Iterator;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -18,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo2.common.FileUploadUtil;
 import com.example.demo2.entity.Brand;
 import com.example.demo2.entity.Product;
+import com.example.demo2.entity.ProductImage;
 import com.example.demo2.helper.product.ProductNotFoundException;
 import com.example.demo2.service.BrandService;
 import com.example.demo2.service.ProductService;
@@ -25,7 +34,8 @@ import com.example.demo2.service.ProductService;
 @Controller
 @RequestMapping("/products")
 public class ProductController {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+	
 	@Autowired
 	private ProductService productService;
 	
@@ -33,9 +43,37 @@ public class ProductController {
 	private BrandService brandService;
 	
 	@RequestMapping("/list_products")
-	public String listAll(Model model) {
-		List<Product> listProducts = productService.listAll();
-		model.addAttribute("listProducts", listProducts);
+	public String listFirstPage(Model model) {
+		return listByPage(1, model, "name", "asc", null);
+	}
+	
+	@RequestMapping("/list_products/page/{pageNum}")
+	public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model,
+			@Param("sortField") String sortField, @Param("sortDir") String sortDir,
+			@Param("keyword") String keyword) {
+
+		Page<Product> page = productService.listByPage(pageNum, sortField, sortDir, keyword);
+		List<Product> listProducts = page.getContent();
+
+		long startCount = (pageNum -1) * ProductService.PRODUCTS_PER_PAGE + 1;
+		long endCount = startCount + ProductService.PRODUCTS_PER_PAGE - 1;
+		if(endCount > page.getTotalElements()) {
+			endCount = page.getTotalElements();
+		}
+		
+		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+		
+		model.addAttribute("currentPage",pageNum);
+		model.addAttribute("totalPages",page.getTotalPages());	
+		model.addAttribute("startCount",startCount);
+		model.addAttribute("endCount", endCount);
+		model.addAttribute("totalItems", page.getTotalElements());
+		model.addAttribute("sortField",sortField);
+		model.addAttribute("sortDir",sortDir);
+		model.addAttribute("reverseSortDir",reverseSortDir);
+		model.addAttribute("keyword",keyword);
+		model.addAttribute("listProducts",listProducts);
+
 		return "products/products";
 	}
 	
@@ -61,29 +99,76 @@ public class ProductController {
 	public String saveProduct(Product product, RedirectAttributes redirectAttributes,
 							@RequestParam("imgupload") MultipartFile mainImageMultipart,
 							@RequestParam("extraImage") MultipartFile[] extraImageMultiparts,
+							@RequestParam(name = "detailIds", required = false) String[] detailIds,
 							@RequestParam(name = "detailNames", required = false) String[] detailNames,
-							@RequestParam(name = "detailValues", required = false) String[] detailValues) throws IOException {
+							@RequestParam(name = "detailValues", required = false) String[] detailValues,
+							@RequestParam(name = "imageIds", required = false) String[] imageIds,
+							@RequestParam(name = "imageNames", required = false) String[] imageNames
+							) throws IOException {
 		setMainImageName(mainImageMultipart, product);
-		setExtraImageName(extraImageMultiparts, product);
-		setProductDetails(detailNames, detailValues, product);
+		setExistingExtraImageNames(imageIds, imageNames, product);
+		setNewExtraImageName(extraImageMultiparts, product);
+		setProductDetails(detailIds, detailNames, detailValues, product);
 		
 		Product saveProduct = productService.save(product);
 		saveUploadedImages(mainImageMultipart, extraImageMultiparts, saveProduct);
+		
+		deleteExtraImagesWereRemoveOnForm(product);
 		
 		redirectAttributes.addFlashAttribute("message", "Lưu sản phẩm thành công");
 
 		return "redirect:/products/list_products";
 	}
 	
-	private void setProductDetails(String[] detailNames, String[] detailValues, Product product) {
+	private void deleteExtraImagesWereRemoveOnForm(Product product) {
+		String extraImageDir = "product-images/" + product.getId() + "/extras";
+		Path dirPath = Paths.get(extraImageDir);
+		
+		try {
+			Files.list(dirPath).forEach(file -> {
+				String fileName = file.toFile().getName();
+				
+				if (!product.containsImageName(fileName)) {
+					try {
+						Files.delete(file);
+						LOGGER.info("Delete extra image : " + fileName);
+					} catch (IOException e) {
+						LOGGER.error("Could not delete extra image: " + fileName);
+					}
+				}
+			});
+		} catch (IOException e) {
+			LOGGER.error("Could not list directory: " + dirPath);
+		}
+	}
+
+	private void setExistingExtraImageNames(String[] imageIds, String[] imageNames, Product product) {
+		if (imageIds == null || imageIds.length ==0) {
+			return;
+		}
+		Set<ProductImage> images = new HashSet<>();
+		
+		for (int count = 0; count < imageIds.length; count++) {
+			Integer id = Integer.parseInt(imageIds[count]);
+			String name = imageNames[count];
+			
+			images.add(new ProductImage(id, name, product));
+		}
+		product.setImages(images);
+	}
+
+	private void setProductDetails(String[] detailIds, String[] detailNames, String[] detailValues, Product product) {
 		if (detailNames == null || detailNames.length ==0) {
 			return;
 		}
 		for (int count = 0; count < detailNames.length; count++) {
 			String name = detailNames[count];
 			String value = detailValues[count];
+			Integer id = Integer.parseInt(detailIds[count]);
 			
-			if (!name.isEmpty() && !value.isEmpty()) {
+			if(id !=0) {
+				product.addDetail(id, name, value);
+			}else if (!name.isEmpty() && !value.isEmpty()) {
 				product.addDetail(name, value);
 			}
 		}
@@ -106,16 +191,18 @@ public class ProductController {
 				
 				String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 				FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-
 			}
 		}
 	}
 
-	private void setExtraImageName(MultipartFile[] extraMultipartFiles, Product product) {
+	private void setNewExtraImageName(MultipartFile[] extraMultipartFiles, Product product) {
 		if (extraMultipartFiles.length > 0) {
 			for (MultipartFile multipartFile : extraMultipartFiles) {
 				if (!multipartFile.isEmpty()) {
 					String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+					if (product.containsImageName(fileName)) {
+						product.addExtraImage(fileName);
+					}
 					product.addExtraImage(fileName);
 				}
 			}
@@ -146,7 +233,21 @@ public class ProductController {
 			return "products/form_product";
 
 		} catch (ProductNotFoundException ex) {
-
+			redirectAttributes.addFlashAttribute("message", ex.getMessage());
+			return "redirect:/products/list_products";
+		}
+	}
+	
+	@RequestMapping("/detail/{id}")
+	public String viewProduct(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+		try {
+			Product product = productService.get(id);
+			
+			model.addAttribute("product", product);
+			
+			return "products/product_detail_modal";
+			
+		} catch (ProductNotFoundException ex) {
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
 			return "redirect:/products/list_products";
 		}

@@ -5,6 +5,7 @@
 		<th:block th:each="detail, status : ${product.details}">
 			<div class="form-inline" th:id="'divDetail' + ${status.index}">
 				<div class="input-group" style="padding: 5px 15%" th:id="'clearDetail' + ${status.index}">
+					<input type="hidden" name="detailIds" th:value="${detail.id}">
 					<div class="input-group-prepend">
 						<span class="input-group-text">Name</span>
 					</div>
@@ -13,11 +14,13 @@
 						<span class="input-group-text">Value</span>
 					</div>
 					<input type="text" class="form-control" name="detailValues" th:value="${detail.value}">
+					<a class="btn mdi mdi-close-circle-outline font-14" name="linkRemoveDetail"></a>
 				</div>
 			</div>
 		</th:block>
-		<div class="form-inline" th:id="'divDetail' + ${lists.size(product.details)}">
-			<div class="input-group" style="padding: 5px 15%" th:id="'clearDetail' + ${lists.size(product.details)}">
+		<div class="form-inline" th:id="'divDetail' + ${#lists.size(product.details)}">
+			<div class="input-group" style="padding: 5px 15%" th:id="'clearDetail' + ${#lists.size(product.details)}">
+				<input type="hidden" name="detailIds"value="0">
 				<div class="input-group-prepend">
 					<span class="input-group-text">Name</span>
 				</div>

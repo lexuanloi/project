@@ -111,17 +111,14 @@
 					</div>
 				</div>
 			</div>
-
 			<!-- warning -->
 			<div th:replace="fragments/modal-fragments" id="modal-fragment"></div>
-			<!-- end warning -->
 
 			<!--Start Rightbar-->
 			<div th:replace="fragments/right-bar" id="right-bar"></div>
 
 			<!--Start Footer-->
 			<div th:replace="fragments/inc-footer" id="inc-footer"></div>
-
 		</div>
 	</div>
 
@@ -162,18 +159,16 @@
 					removeExtraImage(index);
 				});
 			});
+			
+			$("a[name='linkRemoveDetail']").each(function(index) {
+				$(this).click(function() {
+					removeDetailSectionByIndex(index);
+				});
+			});
+			
 		});
 		
-		function getCategoriesForNewForm() {
-			catIdField = $("#categoryId");
-			editMode = false;
-			
-			if(catIdField.length) {
-				editMode = true;
-			}
-			if(!editMode) getCategories();
-		}
-		
+		// Image
 		function fn_saveExtraImg() {
 			$("input[name='extraImage']").trigger("click");
 			$("input[name='extraImage']").each(function(index) {
@@ -187,11 +182,19 @@
 		}
 
 		function showExtraImgThumbnail(input, index) {
+			var file = input.files[0];
+			fileName = file.name;
+			imageNameHiddenField = $("#imageName"+index);
+			
+			if(imageNameHiddenField.length) {
+				imageNameHiddenField.val(fileName);
+			};
+			
 			var reader = new FileReader();
 			reader.onload = function(e) {
 				$("#extraThumbnail" + index).attr("src", e.target.result);
 			};
-			reader.readAsDataURL(input.files[0]);
+			reader.readAsDataURL(file);
 			
 			if(index >= extraImageCount-1){
 				addNextExtraImageSection(index + 1);
@@ -221,6 +224,17 @@
 		function removeExtraImage(index) {
 			$("#divExtraImage"+index).remove();
 			extraImageCount--;
+		}
+		//end Image
+		
+		function getCategoriesForNewForm() {
+			catIdField = $("#categoryId");
+			editMode = false;
+			
+			if(catIdField.length) {
+				editMode = true;
+			}
+			if(!editMode) getCategories();
 		}
 		
 		function getCategories() {
@@ -257,6 +271,7 @@
 			return false;
 		}
 		
+		// Detail
 		function addNextDetailSection() {
 			allDivDetails = $("[id^='divDetail']");
 			clearDetail = $("[id^='clearDetail']");
@@ -265,6 +280,7 @@
 			htmlDetailSection = `
 				<div class="form-inline" id ="divDetail${divDetailsCount}">
 					<div class="input-group" style="padding: 5px 15%" id="clearDetail">
+						<input type="hidden" name="detailIds" th:value="0">
 						<div class="input-group-prepend">
 							<span class="input-group-text">Name</span>
 						</div>
@@ -294,6 +310,11 @@
 		function removeDetailSection(id) {
 			$("#"+id).remove();
 		}
+		
+		function removeDetailSectionByIndex(index) {
+			$("#divDetail"+index).remove();
+		}
+		//end Detail
 	</script>
 </body>
 

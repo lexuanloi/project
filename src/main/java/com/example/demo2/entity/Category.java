@@ -33,6 +33,9 @@ public class Category {
 	
 	private boolean enabled;
 	
+	@Column(name = "all_parent_ids", length = 256, nullable = true)
+	private String allParentIds;
+	
 	@OneToOne
 	@JoinColumn(name = "parent_id")
 	private Category parent;
@@ -157,11 +160,6 @@ public class Category {
 	public void setChildren(Set<Category> children) {
 		this.children = children;
 	}
-	
-//	@Override
-//	public String toString() {
-//		return "Category [id ="+id+"name=" +name+"alias="+alias+"image="+image+"]";
-//	}
 
 	@Transient
 	public String getImagePath() {
@@ -185,4 +183,13 @@ public class Category {
 	public String toString() {
 		return this.name;
 	}
+
+	public String getAllParentIds() {
+		return allParentIds;
+	}
+
+	public void setAllParentIds(String allParentIds) {
+		this.allParentIds = allParentIds;
+	}
+	
 }
