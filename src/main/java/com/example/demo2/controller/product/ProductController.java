@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -25,10 +26,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo2.common.FileUploadUtil;
 import com.example.demo2.entity.Brand;
+import com.example.demo2.entity.Category;
 import com.example.demo2.entity.Product;
 import com.example.demo2.entity.ProductImage;
+import com.example.demo2.entity.ShopMeUserDetails;
 import com.example.demo2.helper.product.ProductNotFoundException;
 import com.example.demo2.service.BrandService;
+import com.example.demo2.service.CategoryService;
 import com.example.demo2.service.ProductService;
 
 @Controller
@@ -42,18 +46,24 @@ public class ProductController {
 	@Autowired
 	private BrandService brandService;
 	
+	@Autowired
+	private CategoryService categoryService;
+	
 	@RequestMapping("/list_products")
 	public String listFirstPage(Model model) {
-		return listByPage(1, model, "name", "asc", null);
+		return listByPage(1, model, "name", "asc", null, 0);
 	}
 	
 	@RequestMapping("/list_products/page/{pageNum}")
 	public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model,
-			@Param("sortField") String sortField, @Param("sortDir") String sortDir,
-			@Param("keyword") String keyword) {
+			@Param("sortField") String sortField,
+			@Param("sortDir") String sortDir,
+			@Param("keyword") String keyword,
+			@Param("categoryId") Integer categoryId) {
 
-		Page<Product> page = productService.listByPage(pageNum, sortField, sortDir, keyword);
+		Page<Product> page = productService.listByPage(pageNum, sortField, sortDir, keyword, categoryId);
 		List<Product> listProducts = page.getContent();
+		List<Category> listCategories = categoryService.listCategoriesUsedInForm();
 
 		long startCount = (pageNum -1) * ProductService.PRODUCTS_PER_PAGE + 1;
 		long endCount = startCount + ProductService.PRODUCTS_PER_PAGE - 1;
@@ -63,6 +73,9 @@ public class ProductController {
 		
 		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 		
+		if (categoryId != null ) {
+			model.addAttribute("categoryId", categoryId);
+		}
 		model.addAttribute("currentPage",pageNum);
 		model.addAttribute("totalPages",page.getTotalPages());	
 		model.addAttribute("startCount",startCount);
@@ -73,6 +86,7 @@ public class ProductController {
 		model.addAttribute("reverseSortDir",reverseSortDir);
 		model.addAttribute("keyword",keyword);
 		model.addAttribute("listProducts",listProducts);
+		model.addAttribute("listCategories",listCategories);
 
 		return "products/products";
 	}
@@ -97,14 +111,23 @@ public class ProductController {
 
 	@PostMapping("/save")
 	public String saveProduct(Product product, RedirectAttributes redirectAttributes,
-							@RequestParam("imgupload") MultipartFile mainImageMultipart,
-							@RequestParam("extraImage") MultipartFile[] extraImageMultiparts,
+							@RequestParam(value = "imgupload", required = false) MultipartFile mainImageMultipart,
+							@RequestParam(value = "extraImage", required = false) MultipartFile[] extraImageMultiparts,
 							@RequestParam(name = "detailIds", required = false) String[] detailIds,
 							@RequestParam(name = "detailNames", required = false) String[] detailNames,
 							@RequestParam(name = "detailValues", required = false) String[] detailValues,
 							@RequestParam(name = "imageIds", required = false) String[] imageIds,
-							@RequestParam(name = "imageNames", required = false) String[] imageNames
+							@RequestParam(name = "imageNames", required = false) String[] imageNames,
+							@AuthenticationPrincipal ShopMeUserDetails loggedUser
 							) throws IOException {
+		if (loggedUser.hasRole("Salesperson")) {
+			productService.saveProductPrice(product);
+			
+			redirectAttributes.addFlashAttribute("message", "Lưu sản phẩm thành công");
+
+			return "redirect:/products/list_products";
+		}
+		
 		setMainImageName(mainImageMultipart, product);
 		setExistingExtraImageNames(imageIds, imageNames, product);
 		setNewExtraImageName(extraImageMultiparts, product);

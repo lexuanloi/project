@@ -2,37 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 	
-	<!-- Phân trang -->
+	<!-- Link column -->
  	<th th:fragment="column_link(moduleURL,fieldName, columnLabel)">
- 		<a th:href="@{${moduleURL}+'/page/' + ${currentPage} + '?sortField=' + ${fieldName} +'&sortDir=' + ${sortField != fieldName ? sortDir : reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ' '}}">
+ 		<a th:href="@{${moduleURL}+'/page/' + ${currentPage} + '?sortField=' + ${fieldName} +'&sortDir=' + ${sortField != fieldName ? sortDir : reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''} + ${categoryId != null ? '&categoryId=' + categoryId : ''}}">
 			[[${columnLabel}]]
 		</a>
-		<span th:if="${sortField== fieldName}"
-			th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}">
+		<span th:if="${sortField== fieldName}" th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}">
 		</span>
 	</th>
 	
-	<a th:fragment="page_link(moduleURL, pageNum, label)"
-		class="page-link"
-		th:href="@{${moduleURL} + '/page/' + ${pageNum} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ' '}}">
+	<!-- Link pagination -->
+	<a th:fragment="page_link(moduleURL, pageNum, label)" class="page-link"
+		th:href="@{${moduleURL} + '/page/' + ${pageNum} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ''} + ${categoryId != null ? '&categoryId=' + categoryId : ''}}">
 		[[${label}]]
 	</a>
 
 	<!-- status -->
 	<td th:fragment="status(enabled, entityName, entityURL)">
-		<a class="badge badge-soft-success fas fa-check-circle" title="'Disable this '+${entityName}" th:if="${enabled == true}"
-		th:href="@{${entityURL} + '/enabled/false'}">Active</a> 
-		<a class="badge badge-soft-danger fas fa-check-circle" title="'Enable this '+${entityName}" th:if="${enabled == false}"
-		th:href="@{${entityURL} + '/enabled/true'}">Inactive</a>
+		<a class="badge badge-soft-success fas fa-check-circle" title="'Disable this '+${entityName}"
+			th:if="${enabled == true}" th:href="@{${entityURL} + '/enabled/false'}">Active</a> 
+		<a class="badge badge-soft-danger fas fa-check-circle" title="'Enable this '+${entityName}" 
+			th:if="${enabled == false}" th:href="@{${entityURL} + '/enabled/true'}">Inactive</a>
 	</td>
 
 	<!-- actions -->
 	<span th:fragment="actions(editURL, deleteURL, visible, entityId)", >
 		<a th:href="@{${editURL}}">
-		<i class="las la-pen text-secondary font-16"></i></a>
+			<i class="las la-pen text-secondary font-16"></i>
+		</a>
 		<th:block th:if="${visible}">
 		<a th:href="@{${deleteURL}}" th:entityId="${entityId}" class="delete">
-		<i class="las la-trash-alt text-secondary font-16"></i></a>
+			<i class="las la-trash-alt text-secondary font-16"></i>
+		</a>
 	</span>
 
 	<!-- Pagination -->
@@ -44,35 +45,24 @@
 					<span>Trang [[${entityName}]] từ [[${startCount}]] đến
 						[[${endCount}]] của [[${totalItems}]]</span>
 					<ul class="pagination pagination-sm mb-0">
-						<li
-							th:class="${currentPage>1 ? 'page-item' : 'page-item disabled'}">
+						<li th:class="${currentPage>1 ? 'page-item' : 'page-item disabled'}">
 							<a th:replace="fragments/fragments :: page_link(${moduleURL},'1', 'First')"></a>
 						</li>
-						<li
-							th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-							<a
-							th:replace="fragments/fragments :: page_link(${moduleURL}, ${currentPage - 1}, 'Previous')"></a>
+						<li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+							<a th:replace="fragments/fragments :: page_link(${moduleURL}, ${currentPage - 1}, 'Previous')"></a>
 						</li>
-						<li
-							th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
-							th:each="i : ${#numbers.sequence(1, totalPages)}"><a
-							th:replace="fragments/fragments :: page_link(${moduleURL}, ${i}, ${i})"></a></li>
-						<li
-							th:class="${currentPage< totalPages ? 'page-item' : 'page-item disabled'}">
-							<a
-							th:replace="fragments/fragments :: page_link(${moduleURL}, ${currentPage + 1}, 'Next')"></a>
+						<li th:class="${currentPage != i ? 'page-item' : 'page-item active'}" th:each="i : ${#numbers.sequence(1, totalPages)}">
+							<a th:replace="fragments/fragments :: page_link(${moduleURL}, ${i}, ${i})"></a>
 						</li>
-						<li
-							th:class="${currentPage< totalPages ? 'page-item' : 'page-item disabled'}">
-							<a
-							th:replace="fragments/fragments :: page_link(${moduleURL}, ${totalPages}, 'Last')">Last</a>
+						<li th:class="${currentPage< totalPages ? 'page-item' : 'page-item disabled'}">
+							<a th:replace="fragments/fragments :: page_link(${moduleURL}, ${currentPage + 1}, 'Next')"></a>
+						</li>
+						<li th:class="${currentPage< totalPages ? 'page-item' : 'page-item disabled'}">
+							<a th:replace="fragments/fragments :: page_link(${moduleURL}, ${totalPages}, 'Last')"></a>
 						</li>
 					</ul>
-					<!--end pagination-->
 				</nav>
-				<!--end nav-->
 			</div>
-			<!--end col-->
 			<div th:unless="${totalItems > 0}" style="text-align: center;">
 				<strong>Không tìm thấy [[${entityName}]]</strong>
 			</div>
@@ -81,23 +71,17 @@
 	
 	<!-- search -->
 	<div th:fragment="search_form(moduleURL)">
-		<ul class="list-unstyled topbar-nav mb-0">
-			<li class="hide-phone app-search">
-				<form role="search" th:action="@{${moduleURL}}" method="get">
-					<input type="hidden" name="sortField" th:value="${sortField}" /> <input
-						type="hidden" name="sortDir" th:value="${sortDir}" /> <input
-						type="search" name="keyword" th:value="${keyword}"
-						class="form-control top-search mb-0"
-						style="border: 1px solid #e8ebf3;" placeholder="Type text...">
-					<button type="submit">
-						<i class="ti ti-search"></i>
+		<form th:action="@{${moduleURL}}" method="get">
+			<div class="input-group mb-3">
+					<button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
+					<input type="hidden" name="sortField" th:value="${sortField}" />
+					<input type="hidden" name="sortDir" th:value="${sortDir}" />
+					<input type="search" name="keyword" th:value="${keyword}" class="form-control top-search mb-0" style="border: 1px solid #e8ebf3;" placeholder="Type text...">
+					<button class="btn btn-secondary" type="button"onclick="clearFilter()">
+						<i class="fas fa-eraser"></i>
 					</button>
-					<a type="button" class="btn btn-secondary"
-						style="position: absolute; left: 305px; top: 50%; transform: translateY(-50%);"
-						onclick="clearFilter()">Clear</a>
-				</form>
-			</li>
-		</ul>
+			</div>
+		</form>
 	</div>
 
 	<!-- warning delete -->

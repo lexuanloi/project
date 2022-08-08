@@ -41,5 +41,21 @@
 			</button>
 		</div>
 	</div>
+	
+	
+	<div th:fragment="content">
+		<div class="row mt-4">
+			<div class="col-2 boder m-3 p-2" style="border: 1px solid gray;">
+				<img class="img-fluid" id="thumbnail" alt="Main image preview" th:src="@{${product.mainImagePath}}" style="width: 200px; height: 200px">
+				<label class="mt-4">Main image</label>
+			</div>
+			<th:block th:each="productImage, status : ${product.images}">
+				<div class="col-2 boder m-3 p-2" style="border: 1px solid gray;">
+					<img class="img-fluid" th:alt="'Extra image #' + ${status.index + 1} + 'preview'"th:src="@{${productImage.imagePath}}" style="width: 200px; height: 200px">
+					<label class="mt-4">Extra image [[${status.index + 1}]]</label>
+				</div>
+			</th:block>
+		</div>
+	</div>
 </body>
 </html>

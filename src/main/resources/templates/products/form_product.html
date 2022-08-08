@@ -86,20 +86,40 @@
 									</div>
 									<div class="tab-pane" id="description">
 										<h4 class="card-title mt-3 mb-1">Description</h4>
-										<div th:replace="products/product_description :: description"></div>
+										<th:block sec:authorize="hasAnyAuthority('Salesperson')">
+											<div th:replace="products/product_description ::content"></div>
+										</th:block>
+										<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+											<div th:replace="products/product_description :: description"></div>
+										</th:block>
 									</div>
 									<div class="tab-pane" id="images">
 										<h4 class="card-title mt-3 mb-1">Images</h4>
-										<div th:replace="products/product_images :: images"></div>
+										<th:block sec:authorize="hasAnyAuthority('Salesperson')">
+											<div th:replace="products/product_images :: content"></div>
+										</th:block>
+										<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+											<div th:replace="products/product_images :: images"></div>
+										</th:block>
 									</div>
 									<div class="tab-pane" id="detail">
 										<h4 class="card-title mt-3">Confirm Detail</h4>
-										<div th:replace="products/product_details :: details"></div>
-										<div><input type="button" class="btn btn-secondary" value="Add more detail" onclick="addNextDetailSection()"/></div>
+										<th:block sec:authorize="hasAnyAuthority('Salesperson')">
+											<div th:replace="products/product_details :: content"></div>
+										</th:block>
+										<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+											<div th:replace="products/product_details :: details"></div>
+											<div><input type="button" class="btn btn-secondary" value="Add more detail" onclick="addNextDetailSection()"/></div>
+										</th:block>
 									</div>
 									<div class="tab-pane" id="shipping">
 										<h4 class="card-title mt-3 mb-1">Shipping</h4>
-										<div th:replace="products/product_shipping :: shipping"></div>
+										<th:block sec:authorize="hasAnyAuthority('Salesperson')">
+											<div th:replace="products/product_shipping :: content"></div>
+										</th:block>
+										<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+											<div th:replace="products/product_shipping :: shipping"></div>
+										</th:block>
 									</div>
 								</div>
 								<div class="mt-3" align="center">

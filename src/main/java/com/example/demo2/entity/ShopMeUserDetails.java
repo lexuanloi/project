@@ -77,4 +77,7 @@ public class ShopMeUserDetails implements org.springframework.security.core.user
 		this.user.setLastName(lastName);
 	}
 
+	public boolean hasRole(String roleName) {
+		return user.hasRole(roleName);
+	}
 }

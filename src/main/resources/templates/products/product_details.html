@@ -33,5 +33,25 @@
 		</div>
 		
 	</div>
+	
+	
+	<div th:fragment="content" class="card-body">
+		<div >
+			<table class="table table-striped table-bodered table-hover">
+				<thead class="thead-dark" align="center">
+					<tr>
+						<th>Name</th>
+						<th>Value</th>
+					</tr>
+				</thead>
+				<tbody align="center">
+					<tr th:each="detail: ${product.details}">
+						<td>[[${detail.name}]]</td>
+						<td>[[${detail.value}]]</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </body>
 </html>

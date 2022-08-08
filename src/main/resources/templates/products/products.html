@@ -54,11 +54,12 @@
 					</div>
 				</div>
 				<div class="row" style="margin-bottom: 20px;">
+				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
 					<div class="col-6">
 						<a class="btn btn-outline-blue btn-sm px-4 "
 							th:href="@{/products/new-product}">Thêm sản phẩm</a>
 					</div>
-					<div class="col-6" style="text-align: right;">
+					<div class="col-6 mb-2" style="text-align: right;">
 						<a th:href="@{/products/export/csv}" type="button"
 							class="btn btn-primary"><i class="fas fa-file-csv"></i></a> <a
 							th:href="@{/products/export/excel}" type="button"
@@ -66,9 +67,34 @@
 							th:href="@{/products/export/pdf}" type="button"
 							class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
 					</div>
-					<div class="">
-						<div th:replace="fragments/fragments :: search_form('/products/list_products/page/1')"></div>
-					</div>
+				</th:block>
+					<form  th:action="@{/products/list_products/page/1}" id="searchForm">
+						<input type="hidden" name="sortField" th:value="${sortField}" />
+						<input type="hidden" name="sortDir" th:value="${sortDir}" />
+						<div class="row">
+							<div class="col-md-4">
+								<div class="input-group mb-3">
+									<button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
+									<input type="search" name="keyword" th:value="${keyword}" class="form-control top-search mb-0"  placeholder="Search text...">
+									<button class="btn btn-secondary" type="button"onclick="clearFilter()"><i class="fas fa-eraser"></i></button>
+								</div>
+							</div>
+							<div class="col-md-4"></div>
+							<div class="col-md-4">
+								<div class="form-group row mb-2">
+									<strong class="col col-form-label text-end">Category :</strong>
+									<div class="col-lg-6">
+										<select class="form-select" name="categoryId" id="dropdownCategory">
+											<option value="0">All Categories</option>
+											<th:block th:each="cat : ${listCategories}">
+												<option th:value="${cat.id}" th:selected="(${categoryId} == ${cat.id})">[[${cat.name}]]</option>
+											</th:block>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
 				</div>
 				<!--end row-->
 				<div class="row">
@@ -96,7 +122,9 @@
 												<th th:replace="fragments/fragments :: column_link('/products/list_products','name', 'Product Name')" />
 												<th th:replace="fragments/fragments :: column_link('/products/list_products','brand', 'Brand Name')" />
 												<th th:replace="fragments/fragments :: column_link('/products/list_products','category', 'Category Name')" />
+												<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
 												<th th:replace="fragments/fragments :: column_link('/products','enabled', 'Status')" />
+												</th:block>
 												<th>Actions</th>
 											</tr>
 										</thead>
@@ -109,10 +137,19 @@
 												</td>
 												<td>[[${product.brand.name}]]</td>
 												<td>[[${product.category.name}]]</td>
+												<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
 												<td th:replace="fragments/fragments :: status(${product.enabled}, 'product', '/products/' + ${product.id})"/>
+												</th:block>
 												<td>
+												
 													<a th:href="@{'/products/detail/'+${product.id}}" class="far fa-file-alt font-16 link-detail"></a>
-													<span th:replace="fragments/fragments :: actions('/products/edit/'+${product.id}, '/products/delete/'+${product.id}, true, ${product.id})"/>
+													<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Salesperson')">
+													<a th:href="@{'/products/edit/'+${product.id}}"><i class="las la-pen text-secondary font-16"></i></a>
+													</th:block>
+													<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+													<th:block th:if="true">
+													<a th:href="@{'/products/delete/'+${product.id}}" th:entityId="${product.id}" class="delete"><i class="las la-trash-alt text-secondary font-16"></i></a>
+													</th:block>
 												</td>
 											</tr>
 										</tbody>
@@ -145,7 +182,7 @@
 
 	<!-- Javascript  -->
 	<script title="text/javascript">
-	moduleURL = "[[@{/products}]]";
+	moduleURL = "[[@{/products/list_products}]]";
 
 		$(document).ready(function() {
 				$(".delete").on("click",function(e) {
@@ -159,6 +196,9 @@
 					$("#detailModal").modal("show").find(".modal-content").load(linkDetailUrl);
 				});
 				
+				$("#dropdownCategory").on("change", function() {
+					$("#searchForm").submit();
+				})
 		});
 		
 		function clearFilter() {

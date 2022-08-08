@@ -34,7 +34,7 @@ public class ProductService {
 		return (List<Product>) repo.findAll();
 	}
 	
-	public Page<Product> listByPage(int pageNum, String sortField, String sortDir, String keyword) {
+	public Page<Product> listByPage(int pageNum, String sortField, String sortDir, String keyword, Integer categoryId) {
 		Sort sort = Sort.by(sortField);
 		
 		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
@@ -42,7 +42,16 @@ public class ProductService {
 		Pageable pageable = PageRequest.of(pageNum - 1, PRODUCTS_PER_PAGE ,sort);
 		
 		if (keyword != null) {
+			if (categoryId != null && categoryId > 0) {
+				String categoryIdMatch = "-" + String.valueOf(categoryId) + "-";
+				return repo.searchInCategory(categoryId, categoryIdMatch, keyword, pageable);
+			}
 			return repo.findAll(keyword, pageable);
+		}
+		
+		if (categoryId != null && categoryId > 0) {
+			String categoryIdMatch = "-" + String.valueOf(categoryId) + "-";
+			return repo.findAllInCategory(categoryId, categoryIdMatch, pageable);
 		}
 		
 		return repo.findAll(pageable);
@@ -64,14 +73,14 @@ public class ProductService {
 		return repo.save(product);
 	}
 	
-//	public Brand get(Integer id) throws BrandNotFoundException {
-//		try {
-//			return repo.findById(id).get();
-//		} catch (NoSuchElementException ex) {
-//			throw new BrandNotFoundException("Không tìm thấy thương hiệu nào với id : "+id);
-//		}
-//		
-//	}
+	public void saveProductPrice(Product productInForm) {
+		Product productInDB = repo.findById(productInForm.getId()).get();
+		productInDB.setCost(productInForm.getCost());
+		productInDB.setPrice(productInForm.getPrice());
+		productInDB.setDiscountPercent(productInForm.getDiscountPercent());
+		
+		repo.save(productInDB);
+	}
 	
 	public void delete(Integer id) throws ProductNotFoundException{
 		Long countById = repo.countById(id);

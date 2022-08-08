@@ -2,6 +2,7 @@ package com.example.demo2.entity;
 
 import java.beans.Transient;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -139,6 +140,19 @@ public class User {
 		if (id == null || photo == null) return "/images/user.jpg";
 		
 		return "/users/" + this.id + "/" + this.photo;
+	}
+	
+	public boolean hasRole(String roleName) {
+		Iterator<Role> iterator = roles.iterator();
+		
+		while (iterator.hasNext()) {
+			Role role = iterator.next();
+			if (role.getName().equals(roleName)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 }

@@ -35,5 +35,41 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	<div th:fragment="content" class="row mt-4">
+		<div class="col-md-6">
+			<div class="form-group row mb-2">
+				<label class="col-lg-2 col-form-label text-end">Length (inch) :</label>
+				<div class="col-lg-9">
+					<input type="text" class="form-control" th:value="${product.length}" readonly/>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group row mb-2">
+				<label class="col-lg-2 col-form-label text-end">Width (inch) :</label>
+				<div class="col-lg-9">
+					<input type="text" class="form-control" th:value="${product.width}" readonly/>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group row mb-2">
+				<label class="col-lg-2 col-form-label text-end">Weight (pounds) :</label>
+				<div class="col-lg-9">
+					<input type="text" class="form-control" th:value="${product.weight}" readonly/>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group row mb-2">
+				<label class="col-lg-2 col-form-label text-end">Height (inch) :</label>
+				<div class="col-lg-9">
+					<input type="text" class="form-control" th:value="${product.height}" readonly/>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
