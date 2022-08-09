@@ -82,4 +82,10 @@ public class ShopMeUserDetails implements UserDetails {
 	public boolean hasRole(String roleName) {
 		return user.hasRole(roleName);
 	}
+	
+	public String getPhotoImagePath() {
+		if (this.user.getId() == null || this.user.getPhoto() == null) return "/Admin/images/user.jpg";
+		
+		return "/Admin/users/" + this.user.getId() + "/" + this.user.getPhoto();
+	}
 }

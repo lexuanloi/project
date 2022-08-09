@@ -11,18 +11,18 @@
 				<a class="nav-link dropdown-toggle arrow-none nav-icon"
 					data-bs-toggle="dropdown" href="#" role="button"
 					aria-haspopup="false" aria-expanded="false"> <img
-						src="/images/flags/us_flag.jpg" alt=""
+						src="/Admin/images/flags/us_flag.jpg" alt=""
 						class="thumb-xxs rounded">
 				</a>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="#"><img
-							src="/images/flags/us_flag.jpg" alt="" height="15"
+							src="/Admin/images/flags/us_flag.jpg" alt="" height="15"
 							class="me-2">English</a> <a class="dropdown-item" href="#"><img
-							src="/images/flags/spain_flag.jpg" alt="" height="15"
+							src="/Admin/images/flags/spain_flag.jpg" alt="" height="15"
 							class="me-2">Spanish</a> <a class="dropdown-item" href="#"><img
-							src="/images/flags/germany_flag.jpg" alt="" height="15"
+							src="/Admin/images/flags/germany_flag.jpg" alt="" height="15"
 							class="me-2">German</a> <a class="dropdown-item" href="#"><img
-							src="/images/flags/french_flag.jpg" alt="" height="15"
+							src="/Admin/images/flags/french_flag.jpg" alt="" height="15"
 							class="me-2">French</a>
 					</div></li>
 				<!--end topbar-language-->
@@ -240,7 +240,7 @@
 					<a class="nav-link dropdown-toggle nav-user" data-bs-toggle="dropdown"
 						href="#" role="button" aria-haspopup="false" aria-expanded="false">
 						<div class="d-flex align-items-center">
-							<img src="/images/users/user-4.jpg" alt="profile-user"
+							<img th:src="${#authentication.principal.photoImagePath}" alt="profile-user"
 								class="rounded-circle me-2 thumb-sm" />
 							<div>
 								<small class="d-none d-md-block font-11" sec:authentication="principal.authorities">Admin</small> 
