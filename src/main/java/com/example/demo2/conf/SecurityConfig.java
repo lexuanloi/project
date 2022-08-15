@@ -55,14 +55,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()
+				.loginProcessingUrl("/login")
 				.loginPage("/login")
+				.failureUrl("/login?error=true")
 				.usernameParameter("email")
 				.permitAll()
 			.and().logout().permitAll()
 			.and()
 				.rememberMe()
 					.key("AbcDefgHijKlmnOpqrs_1234567890")
-					.tokenValiditySeconds(7 * 24 *60 *60);
+					.tokenValiditySeconds(1 * 24 *60 *60); // 24h
 
 //		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 	}

@@ -84,8 +84,8 @@ public class ShopMeUserDetails implements UserDetails {
 	}
 	
 	public String getPhotoImagePath() {
-		if (this.user.getId() == null || this.user.getPhoto() == null) return "/Admin/images/user.jpg";
+		if (this.user.getId() == null || this.user.getPhoto() == null) return "/admin/images/user.jpg";
 		
-		return "/Admin/users/" + this.user.getId() + "/" + this.user.getPhoto();
+		return "/admin/users/" + this.user.getId() + "/" + this.user.getPhoto();
 	}
 }
