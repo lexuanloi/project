@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="utf-8" />
+	<title>[[${pageTitle}]]</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+	<meta content="" name="author" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	
+	<!-- App favicon -->
+	<link rel="shortcut icon" href="images/favicon.ico">
+	
+	<script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/common_form.js}" type="text/javascript"></script>
+	<script th:src="@{/richtext/jquery.richtext.min.js}" type="text/javascript"></script>
+	
+	<!-- App css -->
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/css/icons.min.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/css/app.min.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/richtext/richtext.min.css}" rel="stylesheet" type="text/css" />
+
+</head>
+<body id="body" class="dark-sidebar">
+
+	<!-- leftbar-tab-menu -->
+	<div th:replace="fragments/left-sidebar" id="left-sidebar"></div>
+
+	<!-- Top Bar Start -->
+	<div th:replace="fragments/inc-header" id="inc-header"></div>
+
+	<div class="page-wrapper">
+		<div class="page-content-tab">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="page-title-box">
+							<div class="float-end">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="#">Admin</a></li>
+									<li class="breadcrumb-item"><a href="#">Project</a></li>
+									<li class="breadcrumb-item active">Settings</li>
+								</ol>
+							</div>
+							<h4 class="page-title">Settings</h4>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="d-flex justify-content-between mb-3">
+							<div class="align-self-center">
+								<button type="button" class="btn btn-de-danger btn-sm"
+									data-bs-toggle="modal" data-bs-target="#exampleModalSend">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+										viewBox="0 0 24 24" fill="none" stroke="currentColor"
+										stroke-width="2" stroke-linecap="round"
+										stroke-linejoin="round"
+										class="feather feather-navigation align-self-center icon-xs me-2">
+										<polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+									Send
+								</button>
+								<!-- Modal -->
+								<div class="modal fade" id="exampleModalSend" tabindex="-1"
+									aria-labelledby="exampleModalSendLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h6 class="modal-title m-0" id="exampleModalDefaultSend">Send
+													Coin</h6>
+												<button type="button" class="btn-close"
+													data-bs-dismiss="modal" aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												<div class="mb-2">
+													<label for="cryptocurrency">Crypto Currency</label> <select
+														class="form-select" aria-label="Default select example">
+														<option selected="">-- Currency --</option>
+														<option value="BTC">BTC</option>
+														<option value="ETH">ETH</option>
+													</select>
+												</div>
+												<div class="mb-2">
+													<label for="cryptocurrency">Currency From</label> <select
+														class="form-select" aria-label="Default select example">
+														<option selected="">-- My wallet --</option>
+														<option value="BTC">BTC</option>
+														<option value="ETH">ETH</option>
+													</select>
+												</div>
+												<div class=" mb-2">
+													<label for="toaddress">To</label>
+													<div class="input-group">
+														<span class="input-group-text" id="QUcode"><i
+															class="fas fa-qrcode"></i></span> <input type="text"
+															class="form-control" placeholder="Can you scan"
+															aria-label="Scancode">
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="mb-2">
+															<label for="toaddress">USD</label>
+															<div class="input-group">
+																<span class="input-group-text" id="US-dollor"><i
+																	class="fas fa-dollar-sign"></i></span> <input type="text"
+																	class="form-control" placeholder="USD"
+																	aria-label="US-dollor">
+															</div>
+														</div>
+													</div>
+													<!--end col-->
+													<div class="col-md-6">
+														<div class="mb-2">
+															<label for="BTC">BTC</label>
+															<div class="input-group">
+																<span class="input-group-text" id="BTC-coin"><i
+																	class="fab fa-btc"></i></span> <input type="text"
+																	class="form-control" placeholder="BTC"
+																	aria-label="BTC-coin">
+															</div>
+														</div>
+													</div>
+													<!--end col-->
+												</div>
+												<!--end row-->
+												<div class="mb-2">
+													<label for="Description">Description</label>
+													<textarea class="form-control" rows="3"
+														aria-label="With textarea"></textarea>
+												</div>
+												<div class="mt-2 mb-1">
+													<label for="NetworkFree">Network Free</label>
+												</div>
+												<div class="form-check form-check-inline mb-0">
+													<input class="form-check-input" type="radio"
+														name="inlineRadioOptions" id="Regular" value="option1">
+													<label class="form-check-label" for="Regular">Regular</label>
+												</div>
+												<div class="form-check form-check-inline mb-0">
+													<input class="form-check-input" type="radio"
+														name="inlineRadioOptions" id="Priority" value="option2">
+													<label class="form-check-label" for="Priority">Priority</label>
+												</div>
+											</div>
+											<!--end modal-body-->
+											<div class="modal-footer">
+												<button type="button" class="btn btn-de-danger btn-sm"
+													data-bs-dismiss="modal">Close</button>
+												<button class="btn btn-de-primary btn-sm" type="button">Continue</button>
+											</div>
+											<!--end modal-footer-->
+										</div>
+										<!--end modal-content-->
+									</div>
+									<!--end modal-dialog-->
+								</div>
+								<!--end modal-->
+
+								<button type="button" class="btn btn-de-success btn-sm"
+									data-bs-toggle="modal" data-bs-target="#exampleModalRequest">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+										viewBox="0 0 24 24" fill="none" stroke="currentColor"
+										stroke-width="2" stroke-linecap="round"
+										stroke-linejoin="round"
+										class="feather feather-download align-self-center icon-xs me-2">
+										<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+										<polyline points="7 10 12 15 17 10"></polyline>
+										<line x1="12" y1="15" x2="12" y2="3"></line></svg>
+									Request
+								</button>
+								<div class="modal fade" id="exampleModalRequest" tabindex="-1"
+									aria-labelledby="exampleModalRequestLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h6 class="modal-title m-0" id="exampleModalRequestLabel">Request
+													Coin</h6>
+												<button type="button" class="btn-close"
+													data-bs-dismiss="modal" aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												<div class="mb-2">
+													<label for="cryptocurrency">Crypto Currency</label> <select
+														class="form-select" aria-label="Default select example">
+														<option selected="">-- Currency --</option>
+														<option value="BTC">BTC</option>
+														<option value="ETH">ETH</option>
+													</select>
+												</div>
+												<div class="mb-2">
+													<label for="cryptocurrency">Receive To</label> <select
+														class="form-select" aria-label="Default select example">
+														<option selected="">-- My wallet --</option>
+														<option value="BTC">BTC</option>
+														<option value="ETH">ETH</option>
+													</select>
+												</div>
+												<div class=" mb-2">
+													<label for="toaddress">Address</label>
+													<div class="input-group">
+														<input type="text" class="form-control" id="W-Address"
+															value="c12b001a15f9bd46ef1c6551386c">
+														<button class="btn btn-outline-light" type="button"
+															id="Copy_link">
+															<i class="fas fa-copy"></i>
+														</button>
+													</div>
+												</div>
+											</div>
+											<!--end modal-body-->
+											<div class="modal-footer">
+												<button class="btn btn-de-success btn-sm" type="button">Done</button>
+											</div>
+											<!--end modal-footer-->
+										</div>
+										<!--end modal-content-->
+									</div>
+									<!--end modal-dialog-->
+								</div>
+								<!--end modal-->
+							</div>
+							<!--end /div-->
+							<div class="media">
+								<img src="assets/images/logos/btc.png"
+									class="me-2 thumb-sm align-self-center rounded-circle"
+									alt="...">
+								<div class="media-body align-self-center">
+									<p class="mb-1 text-muted">Total Balance</p>
+									<h5 class="mt-0 text-dark mb-1">122.00125503 BTC</h5>
+								</div>
+								<!--end media-body-->
+							</div>
+							<!--end media-->
+						</div>
+						<!--end /div-->
+					</div>
+					<!--end col-->
+				</div>
+				<!--end row-->
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="met-profile">
+									<div class="row">
+										<div class="col-lg-4 align-self-center mb-3 mb-lg-0">
+											<div class="met-profile-main">
+												<div class="met-profile-main-pic">
+													<img src="assets/images/users/user-4.jpg" alt=""
+														height="110" class="rounded-circle"> <span
+														class="met-profile_main-pic-change"> <i
+														class="fas fa-camera"></i>
+													</span>
+												</div>
+												<div class="met-profile_user-detail">
+													<h5 class="met-user-name">Rosa Dodson</h5>
+													<p class="mb-0 met-user-name-post">UI/UX Designer,
+														India</p>
+												</div>
+											</div>
+										</div>
+										<!--end col-->
+
+										<div class="col-lg-4 ms-auto align-self-center">
+											<ul class="list-unstyled personal-detail mb-0">
+												<li class=""><i
+													class="las la-phone mr-2 text-secondary font-22 align-middle"></i>
+													<b> phone </b> : +91 23456 78910</li>
+												<li class="mt-2"><i
+													class="las la-envelope text-secondary font-22 align-middle mr-2"></i>
+													<b> Email </b> : mannat.theme@gmail.com</li>
+												<li class="mt-2"><i
+													class="las la-globe text-secondary font-22 align-middle mr-2"></i>
+													<b> Website </b> : <a href="https://mannatthemes.com/"
+													class="font-14 text-primary">https://mannatthemes.com/</a>
+												</li>
+											</ul>
+
+										</div>
+										<!--end col-->
+										<div class="col-lg-4 align-self-center">
+											<div class="row">
+												<div class="col-auto text-end border-end">
+													<button type="button"
+														class="btn btn-soft-primary btn-icon-circle btn-icon-circle-sm mb-2">
+														<i class="fab fa-facebook-f"></i>
+													</button>
+													<p class="mb-0 font-weight-semibold">Facebook</p>
+													<h4 class="m-0 font-weight-bold">
+														25k <span class="text-muted font-12 font-weight-normal">Followers</span>
+													</h4>
+												</div>
+												<!--end col-->
+												<div class="col-auto">
+													<button type="button"
+														class="btn btn-soft-info btn-icon-circle btn-icon-circle-sm mb-2">
+														<i class="fab fa-twitter"></i>
+													</button>
+													<p class="mb-0 font-weight-semibold">Twitter</p>
+													<h4 class="m-0 font-weight-bold">
+														58k <span class="text-muted font-12 font-weight-normal">Followers</span>
+													</h4>
+												</div>
+												<!--end col-->
+											</div>
+											<!--end row-->
+										</div>
+										<!--end col-->
+									</div>
+									<!--end row-->
+								</div>
+								<!--end f_profile-->
+							</div>
+							<!--end card-body-->
+						</div>
+						<!--end card-->
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-4">
+						<div class="card">
+							<div class="card-body">
+								<form action="@{/settings/save_general" method="post" enctype="multipart/form-data">
+									<div class="form-group row mb-2">
+										<div class="row">
+											<label class="col-lg-3 mt-3 form-label" for="setFullName">Site name</label>
+											<div class="col-lg-9 mt-2">
+												<input type="text" class="form-control" name="SITE_NAME" th:value="${SITE_NAME}" required>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-lg-3 mt-3 form-label" for="setEmail">Copyright</label>
+											<div class="col-lg-9 mt-2">
+												<input type="text" class="form-control" id="COPYRIGHT" th:value="${COPYRIGHT}" required>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-lg-3 mt-3 form-label" for="setEmail">Site logo</label>
+											<div class="col-lg-9 mt-2">
+												<img th:src="@{${SITE_LOGO}}" id="thumbnail" alt="" class="thumb-sm me-1">
+												<input type="file" id="imgupload" name="imgupload" style="display: none" accept="image.png, image.jpg"/> 
+												<button type="button" onClick="fn_saveimg()" class="btn btn-secondary btn-round btn-sm">
+													<i class="fas fa-image"></i>Brand logo
+												</button>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-lg-3 mt-3 form-label" for="">Current Type</label>
+											<div class="col-lg-9 mt-2">
+												<select class="form-select" name="CURRENCY_ID" id="">
+													<th:block th:each="currency : ${listCurrencies}">
+														<option th:value="${currency.id}" th:selected="(${currency.id} == ${CURRENCY_ID})">[[${currency}]]</option>
+													</th:block>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-lg-3 mt-3 form-label" for="">Currency Symbol Position</label>
+											<div class="col-lg-9 mt-2">
+												<select class="form-select" name="CURRENCY_SYMBOL_POSITION" id="">
+													<option value="Before price" th:selected="(${CURRENCY_SYMBOL_POSITION} == 'before')">Before Price</option>
+													<option value="After price" th:selected="(${CURRENCY_SYMBOL_POSITION} == 'after')">After price</option>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-lg-3 mt-3 form-label" for="">Decimal Point Type</label>
+											<div class="col-lg-9 mt-2">
+												<select class="form-select" name="DECIMAL_POINT_TYPE" id="">
+													<option value="POINT" th:selected="(${DECIMAL_POINT_TYPE} == 'POINT')">Point (.)</option>
+													<option value="COMMA" th:selected="(${DECIMAL_POINT_TYPE} == 'POMMA')">Comma (,)</option>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-lg-3 mt-3 form-label" for="">Decimal Digits</label>
+											<div class="col-lg-9 mt-2">
+												<select class="form-select" name="DECIMAL_DIGITS" id="">
+													<option value="1" th:selected="(${DECIMAL_DIGITS} == '1')">1</option>
+													<option value="2" th:selected="(${DECIMAL_DIGITS} == '2')">2</option>
+													<option value="3" th:selected="(${DECIMAL_DIGITS} == '3')">3</option>
+													<option value="4" th:selected="(${DECIMAL_DIGITS} == '4')">4</option>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-lg-3 mt-3 form-label" for="">Thousand Point Type</label>
+											<div class="col-lg-9 mt-2">
+												<select class="form-select" name="THOUSANDS_POINT_TYPE" id="">
+													<option value="POINT" th:selected="(${THOUSANDS_POINT_TYPE} == 'POINT')">Point (.)</option>
+													<option value="COMMA" th:selected="(${THOUSANDS_POINT_TYPE} == 'POMMA')">Comma (,)</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<button type="submit" class="btn btn-primary btn-sm mt-3">Save Change</button>
+								</form>
+							</div>
+						</div>
+					</div>
+					<!--end col-->
+					<div class="col-lg-4">
+						<div class="card">
+							<div class="card-body">
+								<form>
+									<label class="form-label" for="setLinkAc">Linked
+										Account</label> <select class="form-select" id="setLinkAc">
+										<option>PayPal</option>
+										<option>VISA</option>
+										<option>ICICI</option>
+										<option>HDFC</option>
+									</select> <label class="form-label mt-2" for="setCurrency">Collect
+										Currency</label> <select class="form-select" id="setCurrency">
+										<option>US Dollar</option>
+										<option>Pounds</option>
+										<option>Euro</option>
+										<option>Yen</option>
+									</select> <label class="form-label mt-2" for="setChangePassword">Change
+										Wallet Password</label> <input type="password" class="form-control"
+										id="setChangePassword" placeholder="Password">
+									<button type="submit" class="btn btn-primary btn-sm mt-3">Save
+										Change</button>
+								</form>
+								<!--end form-->
+							</div>
+							<!--end card-body-->
+						</div>
+						<!--end card-->
+					</div>
+					<!--end col-->
+					<div class="col-lg-4">
+						<div class="card">
+							<div class="card-header">
+								<div class="row align-items-center">
+									<div class="col">
+										<h4 class="card-title">Notification Setting</h4>
+									</div>
+									<!--end col-->
+								</div>
+								<!--end row-->
+							</div>
+							<!--end card-header-->
+							<div class="card-body">
+								<form>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="ICOnotify">
+										<label class="form-check-label" for="ICOnotify">Get
+											notification, New coin ICO in crypto market</label>
+									</div>
+									<div class="form-check form-switch mt-2">
+										<input class="form-check-input" type="checkbox"
+											id="notyfySound"> <label class="form-check-label"
+											for="notyfySound">Notification with sound</label>
+									</div>
+									<div class="form-check form-switch mt-2">
+										<input class="form-check-input" type="checkbox"
+											id="notifyF_friends"> <label class="form-check-label"
+											for="notifyF_friends">Get notification, Only my
+											facebook's friends</label>
+									</div>
+									<div class="form-check form-switch mt-2">
+										<input class="form-check-input" type="checkbox"
+											id="autoLockWallet" checked=""> <label
+											class="form-check-label" for="autoLockWallet">Auto
+											lock my wallet</label>
+									</div>
+								</form>
+								<!--end form-->
+							</div>
+							<!--end card-body-->
+						</div>
+						<!--end card-->
+					</div>
+					<!--end col-->
+				</div>
+				<!--end row-->
+
+
+				<div class="row">
+					<div class="col-lg-4">
+						<div class="card">
+							<div class="card-body">
+								<div class="media">
+									<div
+										class="d-flex justify-content-center align-items-center align-self-center thumb-md bg-soft-primary rounded-circle not-hover">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+											viewBox="0 0 24 24" fill="none" stroke="currentColor"
+											stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round"
+											class="feather feather-smartphone align-self-center">
+											<rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+											<line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+									</div>
+									<div class="media-body align-self-center ms-2">
+										<h5 class="mt-0 mb-1">SMS Auth</h5>
+										<p class="text-muted mb-2">Used for withdrawals and
+											security modifications</p>
+										<div class="btn-group" role="group"
+											aria-label="Basic radio toggle button group">
+											<input type="radio" class="btn-check" name="btnradio1"
+												id="Enable1" autocomplete="off" checked=""> <label
+												class="btn btn-outline-secondary btn-sm" for="Enable1">Enable</label>
+											<input type="radio" class="btn-check" name="btnradio1"
+												id="Enable2" autocomplete="off"> <label
+												class="btn btn-outline-secondary btn-sm" for="Enable2">Disable</label>
+										</div>
+									</div>
+									<!--end media body-->
+								</div>
+								<!--end media-->
+							</div>
+							<!--end card-body-->
+						</div>
+						<!--end card-->
+					</div>
+					<!--end col-->
+					<div class="col-lg-4">
+						<div class="card">
+							<div class="card-body">
+								<div class="media">
+									<div
+										class="d-flex justify-content-center align-items-center align-self-center thumb-md bg-soft-success rounded-circle not-hover">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+											viewBox="0 0 24 24" fill="none" stroke="currentColor"
+											stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round"
+											class="feather feather-chrome align-self-center">
+											<circle cx="12" cy="12" r="10"></circle>
+											<circle cx="12" cy="12" r="4"></circle>
+											<line x1="21.17" y1="8" x2="12" y2="8"></line>
+											<line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
+											<line x1="10.88" y1="21.94" x2="15.46" y2="14"></line></svg>
+									</div>
+									<div class="media-body align-self-center ms-2">
+										<h5 class="mt-0 mb-1">Google Auth</h5>
+										<p class="text-muted mb-2">Used for withdrawals and
+											security modifications</p>
+										<div class="btn-group" role="group"
+											aria-label="Basic radio toggle button group">
+											<input type="radio" class="btn-check" name="btnradio1"
+												id="Enable1" autocomplete="off" checked=""> <label
+												class="btn btn-outline-secondary btn-sm" for="Enable1">Enable</label>
+											<input type="radio" class="btn-check" name="btnradio1"
+												id="Enable2" autocomplete="off"> <label
+												class="btn btn-outline-secondary btn-sm" for="Enable2">Disable</label>
+										</div>
+									</div>
+									<!--end media body-->
+								</div>
+								<!--end media-->
+							</div>
+							<!--end card-body-->
+						</div>
+						<!--end card-->
+					</div>
+					<!--end col-->
+					<div class="col-lg-4">
+						<div class="card">
+							<div class="card-body">
+								<div class="media">
+									<div
+										class="d-flex justify-content-center align-items-center align-self-center thumb-md bg-soft-danger rounded-circle not-hover">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+											viewBox="0 0 24 24" fill="none" stroke="currentColor"
+											stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round"
+											class="feather feather-database align-self-center">
+											<ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+											<path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+											<path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+									</div>
+									<div class="media-body align-self-center ms-2">
+										<h5 class="mt-0 mb-1">API</h5>
+										<p class="text-muted mb-2">Used for withdrawals and
+											security modifications</p>
+										<div class="btn-group" role="group"
+											aria-label="Basic radio toggle button group">
+											<input type="radio" class="btn-check" name="btnradio1"
+												id="Enable1" autocomplete="off" checked=""> <label
+												class="btn btn-outline-secondary btn-sm" for="Enable1">Enable</label>
+											<input type="radio" class="btn-check" name="btnradio1"
+												id="Enable2" autocomplete="off"> <label
+												class="btn btn-outline-secondary btn-sm" for="Enable2">Disable</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Start Rightbar-->
+			<div th:replace="fragments/right-bar" id="right-bar"></div>
+
+			<!--Start Footer-->
+			<div th:replace="fragments/inc-footer" id="inc-footer"></div>
+		</div>
+	</div>
+
+	<!-- Javascript  -->
+	<script type="text/javascript">
+		MAX_FILE_SIZE = 500768;
+		moduleURL = "[[@{/products/list_products}]]";
+		brandModuleURL = "[[@{/brands}]]";
+		dropdownBrands = $("#brand");
+		dropdownCategories = $("#category");
+		defaultImageThumbnailSrc = "[[@{/images/no_image.jpg}]]";
+		
+		var extraImageCount = 0;
+
+		$(document).ready(function() {
+
+			$("#shortDescription").richText();
+			$("#fullDescription").richText();
+
+			dropdownBrands.change(function() {
+				dropdownCategories.empty();
+				getCategories();
+			});
+			getCategoriesForNewForm();
+			
+			$("input[name='extraImage']").each(function(index) {
+				extraImageCount++;
+				$(this).change(function() {
+					if(!checkFileSize(this)) {
+						return;
+					}
+					showExtraImgThumbnail(this, index);
+				});
+			});
+			
+			$("a[name='linkRemoveExtraImage']").each(function(index) {
+				$(this).click(function() {
+					removeExtraImage(index);
+				});
+			});
+			
+			$("a[name='linkRemoveDetail']").each(function(index) {
+				$(this).click(function() {
+					removeDetailSectionByIndex(index);
+				});
+			});
+			
+		});
+		
+		// Image
+		function fn_saveExtraImg() {
+			$("input[name='extraImage']").trigger("click");
+			$("input[name='extraImage']").each(function(index) {
+				$(this).change(function() {
+					if(!checkFileSize(this)) {
+						return;
+					}
+					showExtraImgThumbnail(this, index);
+				});
+			});
+		}
+
+		function showExtraImgThumbnail(input, index) {
+			var file = input.files[0];
+			fileName = file.name;
+			imageNameHiddenField = $("#imageName"+index);
+			
+			if(imageNameHiddenField.length) {
+				imageNameHiddenField.val(fileName);
+			};
+			
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$("#extraThumbnail" + index).attr("src", e.target.result);
+			};
+			reader.readAsDataURL(file);
+			
+			if(index >= extraImageCount-1){
+				addNextExtraImageSection(index + 1);
+			}
+		}
+		
+		function addNextExtraImageSection(index) {
+			html =` 
+					<div class="col-2 boder m-3 p-2"style="border: 1px solid gray;" id="divExtraImage${index}">
+						<div id="extraImageHeader${index}"><label>Extra image #${index+1}</label></div>
+						<div >
+							<img class="img-fluid" id="extraThumbnail${index}" alt="Extra image #${index} preview" src="${defaultImageThumbnailSrc}" style="width: 200px; height: 200px">
+							<input type="file" name="extraImage" onchange="showExtraImgThumbnail(this, ${index})" accept="image.png, image.jpg"/> 
+						</div>
+						<button type="button" onClick="fn_saveExtraImg()" class="btn-upload btn btn-primary mt-4">
+							<i class="fas fa-image"></i>Extra image #${index+1}
+						</button>
+				`;
+			htmlclear = `
+				<a class="btn mdi mdi-close-circle-outline font-18" href="javascript:removeExtraImage(${index-1})"></a>
+			`;
+			$("#divProductImage").append(html);
+			$("#extraImageHeader"+(index-1)).append(htmlclear);
+			extraImageCount++;
+		}
+		
+		function removeExtraImage(index) {
+			$("#divExtraImage"+index).remove();
+			extraImageCount--;
+		}
+		//end Image
+		
+		function getCategoriesForNewForm() {
+			catIdField = $("#categoryId");
+			editMode = false;
+			
+			if(catIdField.length) {
+				editMode = true;
+			}
+			if(!editMode) getCategories();
+		}
+		
+		function getCategories() {
+			brandId = dropdownBrands.val();
+			url = brandModuleURL + "/" + brandId + "/categoties";
+
+			$.get(url, function(responseJson) {
+				$.each(responseJson, function(index, category) {
+					$("<option>").val(category.id).text(category.name).appendTo(dropdownCategories);
+				});
+			});
+		}
+
+		function checkUnique(form) {
+			productId = $("#id").val();
+			productName = $("#name").val();
+			csrfValue = $("input[name='_csrf']").val();
+
+			url = "[[@{/products/check_unique}]]";
+
+			params = { id: productId, name: productName, _csrf: csrfValue };
+
+			$.post(url, params, function(response) {
+				if (response == "OK") {
+					form.submit();
+				} else if (response == "Duplicate") {
+					showWarningModal("Product đã được đăng kí: " + productName)
+				} else {
+					showErrorModal("Unknown response from  server");
+				}
+			}).fail(function() {
+				alert('could not connect to the server');
+			});
+			return false;
+		}
+		
+		// Detail
+		function addNextDetailSection() {
+			allDivDetails = $("[id^='divDetail']");
+			clearDetail = $("[id^='clearDetail']");
+			divDetailsCount = allDivDetails.length;
+			
+			htmlDetailSection = `
+				<div class="form-inline" id ="divDetail${divDetailsCount}">
+					<div class="input-group" style="padding: 5px 15%" id="clearDetail">
+						<input type="hidden" name="detailIds" th:value="0">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Name</span>
+						</div>
+						<input type="text" class="form-control" name="detailNames" placeholder="Text">
+						<div class="input-group-prepend" style="padding-left: 10px">
+							<span class="input-group-text">Value</span>
+						</div>
+						<input type="text" class="form-control" name="detailValues" placeholder="Text">
+					</div>
+				</div>
+			`;
+			
+			$("#divProductDetails").append(htmlDetailSection);
+			
+			previewDivDetailSection = clearDetail.last();
+			previewDivDetailid = previewDivDetailSection.attr("id");
+			
+			htmlclear = `
+				<a class="btn mdi mdi-close-circle-outline font-14" href="javascript:removeDetailSection('${previewDivDetailid}')"></a>
+			`;
+			
+			previewDivDetailSection.append(htmlclear);
+			
+			$("input[name='detailNames']").last().focus();
+		}
+		
+		function removeDetailSection(id) {
+			$("#"+id).remove();
+		}
+		
+		function removeDetailSectionByIndex(index) {
+			$("#divDetail"+index).remove();
+		}
+		//end Detail
+	</script>
+</body>
+
+</html>
