@@ -169,6 +169,14 @@ public class Customer {
 		this.enabled = enabled;
 	}
 
+	public String getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(String createdTime) {
+		this.createdTime = createdTime;
+	}
+
 	public Country getCountry() {
 		return country;
 	}
