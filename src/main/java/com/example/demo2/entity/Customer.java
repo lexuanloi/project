@@ -54,6 +54,9 @@ public class Customer {
 	
 	private boolean enabled;
 
+	@Column(name = "created_time")
+	private String createdTime;
+	
 	@ManyToOne
 	@JoinColumn(name = "country_id")
 	private Country country;
