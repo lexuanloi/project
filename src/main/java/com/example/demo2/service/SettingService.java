@@ -25,7 +25,7 @@ public class SettingService {
 		List<Setting> generalSettings = dao.findByCategory(SettingCategory.GENERAL);
 		List<Setting> currencySettings = dao.findByCategory(SettingCategory.CURRENCY);
 		
-		settings.addAll(settings);
+		settings.addAll(generalSettings);
 		settings.addAll(currencySettings);
 		
 		return new GeneralSettingBag(settings);

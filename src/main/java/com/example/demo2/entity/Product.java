@@ -285,10 +285,19 @@ public class Product {
 		this.details.add(new ProductDetail(id, name, value, this));
 	}
 	
+	@Transient
 	public String shortName() {
 		if (name.length() > 100) {
 			return name.substring(0, 100).concat("..");
 		}
 		return name;
+	}
+	
+	@Transient
+	public float getDiscountPrice() {
+		if (discountPercent > 0) {
+			return price*((100 - discountPercent)/100);
+		}
+		return this.price;
 	}
 }

@@ -87,7 +87,7 @@
 			<div class="form-group row mb-2">
 				<label class="col-lg-2 col-form-label text-end">Cost :</label>
 				<div class="col-lg-9">
-					<input type="number" class="form-control" th:field="*{cost}">
+					<input type="number" step="0.01" class="form-control" th:field="*{cost}">
 				</div>
 			</div>
 		</div>
@@ -95,7 +95,7 @@
 			<div class="form-group row mb-2">
 				<label class="col-lg-2 col-form-label text-end">Price :</label>
 				<div class="col-lg-9">
-					<input type="number" class="form-control" th:field="*{price}">
+					<input type="number" step="0.01" class="form-control" th:field="*{price}">
 				</div>
 			</div>
 		</div>
@@ -103,7 +103,7 @@
 			<div class="form-group row mb-2">
 				<label class="col-lg-2 col-form-label text-end">Discount Percent :</label>
 				<div class="col-lg-9">
-					<input type="number" class="form-control" th:field="*{discountPercent}">
+					<input type="number" step="0.01" class="form-control" th:field="*{discountPercent}">
 				</div>
 			</div>
 		</div>
