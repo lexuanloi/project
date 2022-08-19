@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.example.demo2.entity.Customer;
 
-public interface CustommerDao extends CrudRepository<Customer, Integer> {
+public interface CustomerDao extends CrudRepository<Customer, Integer> {
 	
 	@Query("SELECT c FROM Customer c WHERE c.email = ?1")
 	public Customer findByEmail(String email);

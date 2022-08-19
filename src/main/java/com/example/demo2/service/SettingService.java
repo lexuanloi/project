@@ -34,4 +34,12 @@ public class SettingService {
 	public void saveAll(Iterable<Setting> settings) {
 		dao.saveAll(settings);
 	}
+	
+	public List<Setting> getMailServerSettings(){
+		return dao.findByCategory(SettingCategory.MAIL_SERVER);
+	}
+	
+	public List<Setting> getMailTemplateSettings(){
+		return dao.findByCategory(SettingCategory.MAIL_TEMPLATES);
+	}
 }

@@ -63,9 +63,15 @@
 				<div class="row">
 					<div class="col-lg-4">
 						<div class="card">
+							<div class="card-header">
+								<div class="row align-items-center">
+									<div class="col">
+										<h4 class="card-title">General</h4>
+									</div>
+								</div>
+							</div>
 							<div class="card-body">
 								<form th:action="@{/settings/save_general}" method="post" enctype="multipart/form-data">
-									<h4 class="text-center">General</h4>
 									<div class="form-group row mb-2">
 										<div class="row">
 											<label class="col-lg-3 mt-3 form-label" for="setFullName">Site name</label>
@@ -146,10 +152,131 @@
 					</div>
 					<div class="col-lg-4">
 						<div class="card">
+							<div class="card-header">
+								<div class="row align-items-center">
+									<div class="col">
+										<h4 class="card-title">Mail Server</h4>
+									</div>
+								</div>
+							</div>
 							<div class="card-body">
-								<h4 class="text-center">Country</h4>
+								<form th:action="@{/settings/save_mail_server}" method="post" enctype="multipart/form-data">
+									<div class="form-group row mb-2">
+										<div class="row">
+											<label class="col-lg-5 mt-3 form-label">SMYP Server Host Name</label>
+											<div class="col-lg-7 mt-2">
+												<input type="text" class="form-control" name="MAIL_HOST" th:value="${MAIL_HOST}" required>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-lg-5 mt-3 form-label">Post Number</label>
+											<div class="col-lg-7 mt-2">
+												<input type="text" class="form-control" name="MAIL_POST" th:value="${MAIL_POST}" required>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-lg-5 mt-3 form-label">Username</label>
+											<div class="col-lg-7 mt-2">
+												<input type="text" class="form-control" name="MAIL_USER" th:value="${MAIL_USER}" required>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-lg-5 mt-3 form-label">Password</label>
+											<div class="col-lg-7 mt-2">
+												<input type="text" class="form-control" name="MAIL_PASSWORD" th:value="${MAIL_PASSWORD}" required>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-lg-7 mt-3 form-label" for="">Server Authentication Required</label>
+											<div class="col-lg-3 mt-2">
+												<select class="form-select" name="SMTP_AUTH" id="">
+													<option value="true" th:selected="(${SMTP_AUTH} == 'true')">True</option>
+													<option value="false" th:selected="(${SMTP_AUTH} == 'false')">False</option>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-lg-7 mt-3 form-label" for="">Server Requires Secured Connection (TLS)</label>
+											<div class="col-lg-3 mt-2">
+												<select class="form-select" name="SMTP_SECURED" id="">
+													<option value="true" th:selected="(${SMTP_SECURED} == 'true')">True</option>
+													<option value="false" th:selected="(${SMTP_SECURED} == 'false')">False</option>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-lg-5 mt-3 form-label">From E-mail Address</label>
+											<div class="col-lg-7 mt-2">
+												<input type="text" class="form-control" name="MAIL_FROM" th:value="${MAIL_FROM}" required>
+											</div>
+										</div>
+										<div class="row">
+											<label class="col-lg-5 mt-3 form-label">SenderName</label>
+											<div class="col-lg-7 mt-2">
+												<input type="text" class="form-control" name="MAIL_SENDER_NAME" th:value="${MAIL_SENDER_NAME}" required>
+											</div>
+										</div>
+									</div>
+									<button type="submit" class="btn btn-primary btn-sm mt-3">Save Change</button>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="card">
+							<div class="card-header">
+								<div class="row align-items-center">
+									<div class="col">
+										<h4 class="card-title">Mail Templates</h4>
+									</div>
+								</div>
+							</div>
+							<div class="card-body">
+								<nav>
+									<div class="nav nav-tabs" id="nav-tab">
+										<a class="nav-link active" id="step1-tab" data-bs-toggle="tab" href="#customerVerification">Customer Verification</a>
+										<a class="nav-link" id="step2-tab" data-bs-toggle="tab" href="#orderComfirmation">Order ComfirMation</a>
+									</div>
+								</nav>
+								<div class="tab-content" id="nav-tabContent">
+									<div class="tab-pane active" id="customerVerification">
+										<form th:action="@{/settings/save_mail_templates}" method="post" enctype="multipart/form-data">
+											<div class="form-group row mb-2 mt-3">
+												<div class="row">
+													<label class="col-lg-3 mt-3 form-label">E-Mail Subject</label>
+													<div class="col-lg-9 mt-2">
+														<input type="text" class="form-control" name="CUSTOMER_VERIFY_SUBJECT" th:value="${CUSTOMER_VERIFY_SUBJECT}" required>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row mb-2 mt-3">
+												<label class="mt-3 form-label">E-Mail Content</label>
+												<div class=" mt-2">
+													<textarea rows="5" name="CUSTOMER_VERIFY_CONTENT" id="customerVerificationContent">[[${CUSTOMER_VERIFY_CONTENT}]]</textarea>
+												</div>
+											</div>
+											<button type="submit" class="btn btn-primary btn-sm mt-3">Save Change</button>
+										</form>
+									</div>
+									<div class="tab-pane" id="orderComfirmation">
+										<h4 class="card-title mt-3 mb-1">Order ComfirMation</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="card">
+							<div class="card-header">
+								<div class="row align-items-center">
+									<div class="col">
+										<h4 class="card-title">Country</h4>
+									</div>
+								</div>
+							</div>
+							<div class="card-body">
 								<div>
-									<input type="button " value="load country list" id="buttonLoadCountries" class="btn btn-primary btn-sm mt-3"/>
+									<input type="button " value="load country list" id="buttonLoadCountries" class="btn btn-primary btn-sm"/>
 								</div>
 									<label class="mt-3 form-label" >Country</label>
 									<select class="form-control" style="height: 100px;" size="3" id="dropDownCountries">
@@ -176,10 +303,16 @@
 					</div>
 					<div class="col-lg-4">
 						<div class="card">
+							<div class="card-header">
+								<div class="row align-items-center">
+									<div class="col">
+										<h4 class="card-title">State</h4>
+									</div>
+								</div>
+							</div>
 							<div class="card-body">
-								<h4 class="text-center">State</h4>
 								<div>
-									<input type="button " value="load country list" id="buttonLoadCountriesForStates" class="btn btn-primary btn-sm mt-3"/>
+									<input type="button " value="load country list" id="buttonLoadCountriesForStates" class="btn btn-primary btn-sm"/>
 								</div>
 								<div>
 									<label class="mt-3 form-label" >Selected Country</label>
@@ -203,54 +336,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4">
-						<div class="card">
-							<div class="card-header">
-								<div class="row align-items-center">
-									<div class="col">
-										<h4 class="card-title">Notification Setting</h4>
-									</div>
-									<!--end col-->
-								</div>
-								<!--end row-->
-							</div>
-							<!--end card-header-->
-							<div class="card-body">
-								<form>
-									<div class="form-check form-switch">
-										<input class="form-check-input" type="checkbox" id="ICOnotify">
-										<label class="form-check-label" for="ICOnotify">Get
-											notification, New coin ICO in crypto market</label>
-									</div>
-									<div class="form-check form-switch mt-2">
-										<input class="form-check-input" type="checkbox"
-											id="notyfySound"> <label class="form-check-label"
-											for="notyfySound">Notification with sound</label>
-									</div>
-									<div class="form-check form-switch mt-2">
-										<input class="form-check-input" type="checkbox"
-											id="notifyF_friends"> <label class="form-check-label"
-											for="notifyF_friends">Get notification, Only my
-											facebook's friends</label>
-									</div>
-									<div class="form-check form-switch mt-2">
-										<input class="form-check-input" type="checkbox"
-											id="autoLockWallet" checked=""> <label
-											class="form-check-label" for="autoLockWallet">Auto
-											lock my wallet</label>
-									</div>
-								</form>
-								<!--end form-->
-							</div>
-							<!--end card-body-->
-						</div>
-						<!--end card-->
-					</div>
-					<!--end col-->
 				</div>
-				<!--end row-->
-
-
 				<div class="row">
 					<div class="col-lg-4">
 						<div class="card">
@@ -379,6 +465,9 @@
 		var csrfHeaderName = "[[${_csrf.headerName}]]";
 		var csrfValue = "[[${_csrf.token}]]";
 		
+		$(document).ready(function(){
+			$("#customerVerificationContent").richText();
+		});
 	</script>
 	<script src="js/countries_setting.js"></script>
 </body>
