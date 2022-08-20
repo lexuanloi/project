@@ -85,6 +85,10 @@ $(document).ready(function(){
 		changeFormStateToSelectedState();
 	});
 	
+	dropDownStates.on("change", function() {
+		changeFormStateToSelectedState();
+	});
+	
 	buttonAddState.click(function(){
 		if(buttonAddState.val() == "Add"){
 			addState();
@@ -125,6 +129,8 @@ function deleteCountry() {
 }
 
 function updateCountry() {
+	if(!validateFormCountry()) return;
+	
 	url = contextPath + "countries/save";
 	countryName = fieldCountryName.val();
 	countryCode = fieldCountryCode.val();
@@ -151,7 +157,18 @@ function updateCountry() {
 	});
 }
 
+function validateFormCountry(){
+	formCountry = document.getElementById("formCountry");
+	if(!formCountry.checkValidity()){
+		formCountry.reportValidity();
+		return false;
+	}
+	return true;
+}
+
 function addCountry() {
+	if(!validateFormCountry()) return;
+	
 	url = contextPath + "countries/save";
 	countryName = fieldCountryName.val();
 	countryCode = fieldCountryCode.val();
@@ -235,7 +252,6 @@ function showToastMessage(message) {
 
 function deleteState() {
 	stateId = dropDownStates.val();
-	
 	url = contextPath + "states/delete/" + stateId;
 	
 	$.ajax({
@@ -246,7 +262,8 @@ function deleteState() {
 		}
 	}).done(function() {
 		$("#dropDownState option[value='" + stateId + "']").remove();
-		changeFormStateToSelectedState();
+		loadStatesForCountry();
+		changeFormStateToNew();
 		showToastMessage("The state has been deleted");
 	}).fail(function(){
 		showToastMessage("Error: Could not connect to server or server encountered an error")
@@ -254,6 +271,8 @@ function deleteState() {
 }
 
 function updateState() {
+	if(!validateFormState()) return;
+	
 	url = contextPath + "states/save";
 	stateName = fieldStateName.val();
 	stateId = dropDownStates.val();
@@ -282,7 +301,18 @@ function updateState() {
 	});
 }
 
+function validateFormState(){
+	formCountry = document.getElementById("formState");
+	if(!formCountry.checkValidity()){
+		formCountry.reportValidity();
+		return false;
+	}
+	return true;
+}
+
 function addState() {
+	if(!validateFormState()) return;
+	
 	url = contextPath + "states/save";
 	stateName = fieldStateName.val();
 	

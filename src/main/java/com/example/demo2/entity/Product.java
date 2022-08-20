@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.springframework.data.annotation.CreatedDate;
+
 import com.lowagie.text.Image;
 
 @Entity
@@ -39,7 +41,8 @@ public class Product {
 	@Column(name = "full_description", length = 512, nullable = false)
 	private String fullDescription;
 	
-	@Column(name = "created_time")
+	@CreatedDate
+	@Column(name = "created_time" ,updatable = false, nullable = false)
 	private Date createdTime;
 	
 	@Column(name = "updated_time")

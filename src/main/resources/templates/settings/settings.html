@@ -169,15 +169,15 @@
 											</div>
 										</div>
 										<div class="row">
-											<label class="col-lg-5 mt-3 form-label">Post Number</label>
+											<label class="col-lg-5 mt-3 form-label">Port Number</label>
 											<div class="col-lg-7 mt-2">
-												<input type="text" class="form-control" name="MAIL_POST" th:value="${MAIL_POST}" required>
+												<input type="text" class="form-control" name="MAIL_PORT" th:value="${MAIL_PORT}" required>
 											</div>
 										</div>
 										<div class="row">
 											<label class="col-lg-5 mt-3 form-label">Username</label>
 											<div class="col-lg-7 mt-2">
-												<input type="text" class="form-control" name="MAIL_USER" th:value="${MAIL_USER}" required>
+												<input type="text" class="form-control" name="MAIL_USERNAME" th:value="${MAIL_USERNAME}" required>
 											</div>
 										</div>
 										<div class="row">
@@ -281,23 +281,25 @@
 									<label class="mt-3 form-label" >Country</label>
 									<select class="form-control" style="height: 100px;" size="3" id="dropDownCountries">
 									</select>
-									<div class="row">
-										<div class="col-lg-6">
-											<label class="mt-3 form-label" id="labelCountryName">Country Name</label>
-											<div class="mt-2">
-												<input type="text" class="form-control" id="fieldCountryName">
+									<form id="formCountry">
+										<div class="row">
+											<div class="col-lg-6">
+												<label class="mt-3 form-label" id="labelCountryName">Country Name</label>
+												<div class="mt-2">
+													<input type="text" class="form-control" id="fieldCountryName" required minlength="3" maxlength="45">
+												</div>
+											</div>
+											<div class="col-lg-6">
+												<label class="mt-3 form-label" id="labelCountryCode">Code</label>
+												<div class="mt-2">
+													<input type="text" class="form-control" name="" id="fieldCountryCode" required minlength="3" maxlength="3">
+												</div>
 											</div>
 										</div>
-										<div class="col-lg-6">
-											<label class="mt-3 form-label" id="labelCountryCode">Code</label>
-											<div class="mt-2">
-												<input type="text" class="form-control" name="" id="fieldCountryCode">
-											</div>
-										</div>
-									</div>
-									<input type="button" value="New" id="buttonAddCountry" class="btn btn-primary btn-sm mt-3"/>
-									<input type="button" value="Update" id="buttonUpdateCountry" class="btn btn-primary btn-sm mt-3"/>
-									<input type="button" value="Delete" id="buttonDeleteCountry" class="btn btn-primary btn-sm mt-3"/>
+										<input type="button" value="New" id="buttonAddCountry" class="btn btn-primary btn-sm mt-3"/>
+										<input type="button" value="Update" id="buttonUpdateCountry" class="btn btn-primary btn-sm mt-3"/>
+										<input type="button" value="Delete" id="buttonDeleteCountry" class="btn btn-primary btn-sm mt-3"/>
+									</form>
 							</div>
 						</div>
 					</div>
@@ -322,17 +324,19 @@
 									<label class="mt-3 form-label" >All States/Provinces</label>
 									<select class="form-control" style="height: 100px;" size="3" id="dropDownStates">
 									</select>
-									<div class="row">
-										<div class="col-lg-6">
-											<label class="mt-3 form-label" id="labelStateName">States/Provinces Name</label>
-											<div class="mt-2">
-												<input type="text" class="form-control" id="fieldStateName">
+									<form id="formState">
+										<div class="row">
+											<div class="col-lg-6">
+												<label class="mt-3 form-label" id="labelStateName">States/Provinces Name</label>
+												<div class="mt-2">
+													<input type="text" class="form-control" id="fieldStateName"  required minlength="3" maxlength="45">
+												</div>
 											</div>
 										</div>
-									</div>
-									<input type="button" value="New" id="buttonAddState" class="btn btn-primary btn-sm mt-3"/>
-									<input type="button" value="Update" id="buttonUpdateState" class="btn btn-primary btn-sm mt-3"/>
-									<input type="button" value="Delete" id="buttonDeleteState" class="btn btn-primary btn-sm mt-3"/>
+										<input type="button" value="New" id="buttonAddState" class="btn btn-primary btn-sm mt-3"/>
+										<input type="button" value="Update" id="buttonUpdateState" class="btn btn-primary btn-sm mt-3"/>
+										<input type="button" value="Delete" id="buttonDeleteState" class="btn btn-primary btn-sm mt-3"/>
+									</form>
 							</div>
 						</div>
 					</div>
@@ -469,6 +473,6 @@
 			$("#customerVerificationContent").richText();
 		});
 	</script>
-	<script src="js/countries_setting.js"></script>
+	<script src="js/settings.js"></script>
 </body>
 </html>
