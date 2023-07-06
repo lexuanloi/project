@@ -2,10 +2,15 @@ package com.example.demo2.conf;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.example.demo2.paging.PagingAndSortingArgumentResolver;
+import com.example.demo2.paging.PagingAndSortingHelper;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
@@ -28,5 +33,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 		registry.addResourceHandler(logicalPath).addResourceLocations("file:/" + absolutePath + "/");
 
+	}
+
+	@Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+		// TODO Auto-generated method stub
+		resolvers.add(new PagingAndSortingArgumentResolver());
 	}
 }

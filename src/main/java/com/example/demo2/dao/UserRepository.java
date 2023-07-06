@@ -9,8 +9,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.example.demo2.entity.User;
+import com.example.demo2.paging.SearchRepository;
 
-public interface UserRepository extends PagingAndSortingRepository<User, Integer> {
+public interface UserRepository extends SearchRepository<User, Integer> {
 	@Query("Select u from User u where u.email = :email")
 	public User getUserByEmail(@Param("email") String email);
 

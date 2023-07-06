@@ -7,8 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.example.demo2.entity.Product;
+import com.example.demo2.paging.SearchRepository;
 
-public interface ProductRepository extends PagingAndSortingRepository<Product, Integer> {
+public interface ProductRepository extends SearchRepository<Product, Integer> {
 
 	public Product findByName(String name);
 	

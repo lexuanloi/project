@@ -92,7 +92,7 @@
 											<col width="*" />
 										</colgroup>
 											<tr>
-												<th>no</th>
+												<th>Num</th>
 												<th th:replace="fragments/fragments :: column_link('/users','id', 'ID')" />
 												<th th:replace="fragments/fragments :: column_link('/users','firstName', 'Name')" />
 												<th th:replace="fragments/fragments :: column_link('/users','email', 'Email')" />
@@ -103,8 +103,8 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="user : ${listUsers}">
-												<td></td>
+											<tr th:each="user, index : ${listUsers}">
+												<td th:text="${index.index+startCount}"></td>
 												<td>[[${user.id}]]</td>
 												<td><img th:src="@{${user.photoImagePath}}" alt="" class="rounded-circle thumb-sm me-1">
 													[[${user.firstName}]]</td>
@@ -115,6 +115,7 @@
 												<td>
 													<span th:replace="fragments/fragments :: actions('/users/edit/'+${user.id}, '/users/delete/'+${user.id}, true, ${user.id})"/>
 												</td>
+												
 											</tr>
 										</tbody>
 									</table>
