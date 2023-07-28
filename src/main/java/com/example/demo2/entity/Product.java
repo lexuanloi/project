@@ -257,7 +257,7 @@ public class Product {
 			return "/images/no_image.jpg";
 		}
 		
-		return "/product-images/" + this.id + "/" + this.mainImage;
+		return "/fileupload/product-images/" + this.id + "/" + this.mainImage;
 	}
 
 	public Set<ProductDetail> getDetails() {

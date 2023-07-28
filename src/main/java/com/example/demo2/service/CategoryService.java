@@ -26,7 +26,7 @@ import com.example.demo2.helper.category.CategoryNotFoundException;
 @Service
 @Transactional
 public class CategoryService {
-	public static final int ROOT_CATEGORIES_PER_PAGE = 2;
+	public static final int ROOT_CATEGORIES_PER_PAGE = 5;
 
 	@Autowired
 	private CategoryRepository repo;

@@ -3,9 +3,11 @@ package com.example.demo2.controller.category;
 import java.io.IOException;
 import java.util.List;
 
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,18 +22,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo2.common.FileUploadUtil;
 import com.example.demo2.entity.Category;
 import com.example.demo2.entity.CategoryPageInfo;
-import com.example.demo2.entity.Role;
-import com.example.demo2.entity.User;
 import com.example.demo2.helper.category.CategoryCsvExporter;
 import com.example.demo2.helper.category.CategoryExcelExporter;
 import com.example.demo2.helper.category.CategoryNotFoundException;
 import com.example.demo2.helper.category.CategoryPdfExporter;
-import com.example.demo2.helper.user.UserCsvExporter;
-import com.example.demo2.helper.user.UserExcelExporter;
-import com.example.demo2.helper.user.UserNotFoundException;
-import com.example.demo2.helper.user.UserPdfExporter;
 import com.example.demo2.service.CategoryService;
-import com.example.demo2.service.UserService;
 
 @Controller
 @RequestMapping("/categories")
@@ -88,7 +83,7 @@ public class CategoryController {
 		model.addAttribute("pageTitle", "New Category");
 		return "/categories/form_category";
 	}
-
+	
 	@PostMapping("/save")
 	public String saveCategory(Category category, RedirectAttributes redirectAttributes,
 			@RequestParam("imgupload") MultipartFile multipartFile) throws IOException {
@@ -97,7 +92,7 @@ public class CategoryController {
 			category.setImage(fileName);
 			
 			Category saveCategory = service.save(category);
-			String uploadDir = "category-images/"+ saveCategory.getId();
+			String uploadDir = "fileupload/category-images/"+ saveCategory.getId();
 			
 			FileUploadUtil.clearDir(uploadDir);
 			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
@@ -135,7 +130,7 @@ public class CategoryController {
 			RedirectAttributes redirectAttributes) {
 		try {
 			service.delete(id);
-			String categoryDir = "category-images/" + id;
+			String categoryDir = "fileupload/category-images/" + id;
 			FileUploadUtil.removeDir(categoryDir);
 			
 			redirectAttributes.addFlashAttribute("message", "Xoá danh mục id " + id + " thành công!");

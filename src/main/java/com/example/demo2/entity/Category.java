@@ -167,7 +167,7 @@ public class Category {
 	public String getImagePath() {
 		if (id == null || image == null) return "/images/no_image.jpg";
 
-		return "/category-images/" + this.id + "/" + this.image;
+		return "/fileupload/category-images/" + this.id + "/" + this.image;
 	}
 
 	@Transient

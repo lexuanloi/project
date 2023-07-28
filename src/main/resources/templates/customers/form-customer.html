@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="utf-8" />
+	<title>[[${pageTitle}]]</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+	<meta content="" name="author" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	
+	<!-- App favicon -->
+	<link rel="shortcut icon" href="images/favicon.ico">
+	
+	<script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/common_form.js}" type="text/javascript"></script>
+	
+	<!-- App css -->
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/css/icons.min.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/css/app.min.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/js/common_form.js}" rel="stylesheet" type="text/css" />
+ 
+</head>
+<body id="body" class="dark-sidebar">
+
+	<!-- leftbar-tab-menu -->
+	<div th:replace="fragments/left-sidebar" id="left-sidebar"></div>
+
+	<!-- Top Bar Start -->
+	<div th:replace="fragments/inc-header" id="inc-header"></div>
+
+	<div class="page-wrapper">
+		<div class="page-content-tab">
+			<div class="container-fluid">
+				<!-- Page-Title -->
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="page-title-box">
+							<div class="float-end">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="#">Unikit</a></li>
+									<!--end nav-item-->
+									<li class="breadcrumb-item"><a href="#">Projects</a></li>
+									<!--end nav-item-->
+									<li class="breadcrumb-item active">Users</li>
+								</ol>
+							</div>
+							<h4 class="page-title">Users</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-8 mx-auto">
+					<div class="card radius-10">
+						<div class="card-body">
+							<form th:action="@{/users/save}" method="post"
+								enctype="multipart/form-data" th:object="${user}"
+								onsubmit="return checkEmailUnique(this);">
+								<input type="hidden" th:field="*{id}" />
+								<h5 class="mb-3">[[${pageTitle}]]</h5>
+								<div
+									class="mb-4 d-flex flex-column gap-3 align-items-center justify-content-center">
+									<div class="user-change-photo shadow">
+										<img id="thumbnail" alt="photos preview"
+											th:src="@{${user.photoImagePath}}"> <input type="file"
+											id="imgupload" name="image" style="display: none;"
+											accept="image.png, image.jpg" multiple /> <input
+											type="hidden" th:field="*{photo}" />
+									</div>
+
+									<button type="button" onClick="fn_saveimg()"
+										class="btn btn-outline-dark btn-sm radius-30 px-4">
+										<i class="fas fa-image"></i> Change Photo
+									</button>
+								</div>
+								<h5 class="mb-0 mt-4">User Information</h5>
+								<hr>
+								<div class="row g-3">
+									<div class="col-6">
+										<label class="form-label">Email address</label> <input
+											type="email" class="form-control" th:field="*{email}"
+											required minlength="8" maxlength="128"
+											placeholder="xyz@example.com">
+									</div>
+									<div class="col-6">
+										<label class="form-label">First Name</label> <input
+											type="text" class="form-control" th:field="*{firstName}"
+											required minlength="2" maxlength="128"
+											placeholder="first name">
+									</div>
+									<div class="col-6">
+										<label class="form-label">Last Name</label> <input type="text"
+											class="form-control" th:field="*{lastName}" required
+											minlength="2" maxlength="128" placeholder="last name">
+									</div>
+									<div class="col-6">
+										<label class="form-label">Password</label> <input
+											th:if="${user.id == null}" type="password"
+											class="form-control" th:field="*{password}" required
+											minlength="4" maxlength="20" placeholder="password">
+										<label class="form-label">Password</label> <input
+											th:if="${user.id != null}" type="password"
+											class="form-control" th:field="*{password}" minlength="4"
+											maxlength="20" placeholder="password">
+									</div>
+									<div class="col-6">
+										<label class="form-label">Role</label>
+										<div class="col-sm-8">
+											<th:block th:each="role : ${listRoles}">
+												<input type="checkbox" th:field="*{roles}"
+													th:text="${role.name}" th:value="${role.id}" />
+													-<small>[[${role.description}]]</small>
+												<br>
+											</th:block>
+										</div>
+									</div>
+									<div class="col-6">
+										<label class="form-label">Enable</label> <input
+											type="checkbox" th:field="*{enabled}" />
+									</div>
+								</div>
+								<div class="mt-3" align="center">
+									<input type="submit" class="btn btn-dark px-4" value="Save" />
+									<a type="button" class="btn btn-blue px-4"
+										th:href="@{/users/list_users}">Cancel</a>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- warning -->
+			<div class="modal  text-center" id="modalDialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 style="color: rgb(190, 40, 40);" class="modal-title"
+								id="modalTitle"></h4>
+							<button style="color: red" type="button" class="close"
+								data-dismiss="modal">x</button>
+						</div>
+						<div class="modal-body">
+							<span id="modalBody"></span>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- end warning -->
+
+			<!--Start Rightbar-->
+			<div th:replace="fragments/right-bar" id="right-bar"></div>
+
+			<!--Start Footer-->
+			<div th:replace="fragments/inc-footer" id="inc-footer"></div>
+
+		</div>
+	</div>
+
+	<!-- Javascript  -->
+	<script type="text/javascript">
+		MAX_FILE_SIZE = 500768;
+		
+		function checkEmailUnique(form) {
+			url = "[[@{/users/check_email}]]";
+			userEmail = $("#email").val();
+			userId = $("#id").val();
+			csrfValue = $("input[name='_csrf']").val();
+			params = {
+				id : userId,
+				email : userEmail,
+				_csrf : csrfValue
+			};
+
+			$.post(url, params, function(response) {
+				if (response == "ok") {
+					form.submit();
+				} else if (response == "Duplicated") {
+					showWarningModal("Email đã được đăng kí: " + userEmail);
+				} else {
+					showErrorModal("Không thể kết nối tới máy chủ");
+				}
+			}).fail(function() {
+				showErrorModal("Không thể kết nối tới máy chủ");
+			});
+			return false;
+		}
+
+	</script>
+
+	<!-- App js -->
+        <script src="js/app.js"></script>
+</body>
+</html>

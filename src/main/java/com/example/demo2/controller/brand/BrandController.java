@@ -70,7 +70,7 @@ public class BrandController {
 			brand.setLogo(fileName);
 			
 			Brand saveBrand = brandService.save(brand);
-			String uploadDir = "brands-logos/"+ saveBrand.getId();
+			String uploadDir = "fileupload/brands-logos/"+ saveBrand.getId();
 			
 			FileUploadUtil.clearDir(uploadDir);
 			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
@@ -106,7 +106,7 @@ public class BrandController {
 	public String deleteBrand(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {
 		try {
 			brandService.delete(id);
-			String brandDir = "brands-logos/" + id;
+			String brandDir = "fileupload/brands-logos/" + id;
 			FileUploadUtil.removeDir(brandDir);
 			
 			redirectAttributes.addFlashAttribute("message", "Xoá thương hiệu id " + id + " thành công!");

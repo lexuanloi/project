@@ -139,7 +139,7 @@ public class User {
 	public String getPhotoImagePath() {
 		if (id == null || photo == null) return "/images/user.jpg";
 		
-		return "/users/" + this.id + "/" + this.photo;
+		return "/fileupload/users/" + this.id + "/" + this.photo;
 	}
 	
 	public boolean hasRole(String roleName) {

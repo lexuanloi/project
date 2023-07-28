@@ -20,7 +20,7 @@ public class ProductSaveHelper {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductSaveHelper.class);
 	
 	public static void deleteExtraImagesWereRemoveOnForm(Product product) {
-		String extraImageDir = "product-images/" + product.getId() + "/extras";
+		String extraImageDir = "fileupload/product-images/" + product.getId() + "/extras";
 		Path dirPath = Paths.get(extraImageDir);
 		
 		try {
@@ -79,12 +79,12 @@ public class ProductSaveHelper {
 		
 		if (!mainImageMultipart.isEmpty()) {
 			String fileName = StringUtils.cleanPath(mainImageMultipart.getOriginalFilename());
-			String uploadDir = "product-images/"+ saveProduct.getId();
+			String uploadDir = "fileupload/product-images/"+ saveProduct.getId();
 			FileUploadUtil.clearDir(uploadDir);
 			FileUploadUtil.saveFile(uploadDir, fileName, mainImageMultipart);
 		}
 		if (extraImageMultiparts.length > 0) {
-			String uploadDir = "product-images/"+ saveProduct.getId() + "/extras";
+			String uploadDir = "fileupload/product-images/"+ saveProduct.getId() + "/extras";
 			for (MultipartFile multipartFile : extraImageMultiparts) {
 				if (multipartFile.isEmpty()) continue;
 				
